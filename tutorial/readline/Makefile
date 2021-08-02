@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/01 16:47:39 by smun              #+#    #+#              #
-#    Updated: 2021/08/02 23:31:34 by smun             ###   ########.fr        #
+#    Updated: 2021/08/02 23:32:41 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 READLINE_ROOT = /usr/local/opt/readline
+
+# Install package 'readline-devel'.
 ifeq ($(shell uname -s), Linux)
 	READLINE_ROOT = /usr
 endif
