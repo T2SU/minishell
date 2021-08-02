@@ -6,24 +6,27 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/01 16:47:39 by smun              #+#    #+#              #
-#    Updated: 2021/08/01 17:14:23 by smun             ###   ########.fr        #
+#    Updated: 2021/08/02 14:42:00 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-INC = -I./ -I/usr/local/opt/readline/include
-LIB = -L/usr/local/opt/readline/lib -lreadline
+INC = -I./
+LIB =
 
-TEST_SRC = test_readline \
-			test_add_history \
-			test_rl_redisplay
-TEST_OUT = $(TEST_SRC:.c=.out)
+TEST_SRC = stat
+TEST_OUT = $(addsuffix .out, $(TEST_SRC))
 
 %.out : %.c
 	$(CC) $(CFLAGS) $(INC) $(LIB) -o $@ $<
 
-test: $(addsuffix .out, $(TEST_SRC))
+all: $(TEST_OUT)
 
-.PHONY: test
+clean:
+	rm -rf $(TEST_OUT)
+
+re: clean all
+
+.PHONY: all clean re
