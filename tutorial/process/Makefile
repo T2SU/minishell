@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/01 16:47:39 by smun              #+#    #+#              #
-#    Updated: 2021/08/02 14:41:28 by smun             ###   ########.fr        #
+#    Updated: 2021/08/02 15:33:47 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CFLAGS = -Wall -Wextra -Werror
 INC = -I./
 LIB =
 
-TEST_SRC = fork
+TEST_SRC = fork \
+			env
 TEST_OUT = $(addsuffix .out, $(TEST_SRC))
 
 %.out : %.c

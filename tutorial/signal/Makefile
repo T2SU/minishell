@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/01 16:47:39 by smun              #+#    #+#              #
-#    Updated: 2021/08/02 14:42:07 by smun             ###   ########.fr        #
+#    Updated: 2021/08/02 15:53:32 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ INC = -I./
 LIB =
 
 TEST_SRC = kill \
-			signal
+			signal \
+			sub
 TEST_OUT = $(addsuffix .out, $(TEST_SRC))
 
 %.out : %.c
