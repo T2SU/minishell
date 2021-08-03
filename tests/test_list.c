@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 14:15:47 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 14:36:31 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 14:40:31 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	test_list_add_one(void)
 	assert(list.tail->data == (void*)1);
 	assert(list.head->next == NULL);
 	assert(list.tail->prev == NULL);
+	assert(list.length == 1);
 }
 
 static void	test_list_add_twice(void)
@@ -43,6 +44,7 @@ static void	test_list_add_twice(void)
 	assert(list.tail->prev == list.head);
 	assert(list.head->next->next == NULL);
 	assert(list.tail->prev->prev == NULL);
+	assert(list.length == 2);
 }
 
 static void	test_list_add_triple(void)
@@ -63,6 +65,7 @@ static void	test_list_add_triple(void)
 	assert(list.tail->prev->prev->data == (void*)1);
 	assert(list.head->next->next->next == NULL);
 	assert(list.tail->prev->prev->prev == NULL);
+	assert(list.length == 3);
 }
 
 static void	test_list_free(void)
@@ -73,16 +76,6 @@ static void	test_list_free(void)
 	assert(list_add(&list, (void*)1, NULL) != NULL);
 	assert(list_add(&list, (void*)2, NULL) != NULL);
 	assert(list_add(&list, (void*)3, NULL) != NULL);
-	assert(list.head != NULL);
-	assert(list.tail != NULL);
-	assert(list.head->data == (void*)1);
-	assert(list.head->next->data == (void*)2);
-	assert(list.head->next->next->data == (void*)3);
-	assert(list.tail->data == (void*)3);
-	assert(list.tail->prev->data == (void*)2);
-	assert(list.tail->prev->prev->data == (void*)1);
-	assert(list.head->next->next->next == NULL);
-	assert(list.tail->prev->prev->prev == NULL);
 	list_free(&list);
 }
 

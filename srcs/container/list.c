@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 14:01:01 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 14:36:57 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 14:40:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_elem	*list_add(t_list *list, void *data, void(*destructor)(void *))
 	list->tail = elem;
 	if (list->head == NULL)
 		list->head = elem;
+	list->length++;
 	return (elem);
 }
 
