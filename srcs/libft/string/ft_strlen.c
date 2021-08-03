@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _memory.h                                          :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/03 16:45:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 17:02:39 by smun             ###   ########.fr       */
+/*   Created: 2020/09/30 22:17:07 by smun              #+#    #+#             */
+/*   Updated: 2021/08/03 16:58:53 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _MEMORY_H
-# define _MEMORY_H
-# include <stddef.h>
+#include "libft/_string.h"
 
-void	*ft_memset(void *b, int c, size_t len);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
+size_t	ft_strlen(const char *s)
+{
+	size_t	l;
 
-#endif
+	l = 0;
+	while (s[l])
+		l++;
+	return (l);
+}

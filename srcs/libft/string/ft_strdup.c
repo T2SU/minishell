@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _memory.h                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/03 16:45:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 17:02:39 by smun             ###   ########.fr       */
+/*   Created: 2020/10/01 23:21:00 by smun              #+#    #+#             */
+/*   Updated: 2021/08/03 17:11:34 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _MEMORY_H
-# define _MEMORY_H
-# include <stddef.h>
+#include "libft/_string.h"
+#include <stdlib.h>
 
-void	*ft_memset(void *b, int c, size_t len);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
+char	*ft_strdup(const char *s1)
+{
+	size_t	len;
+	char	*s;
 
-#endif
+	len = ft_strlen(s1);
+	s = (char *)malloc(len + 1);
+	if (s == NULL)
+		return (NULL);
+	ft_strlcpy(s, s1, len + 1);
+	return (s);
+}
