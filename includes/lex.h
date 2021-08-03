@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 17:37:49 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 18:35:58 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 00:52:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,14 @@
 
 enum	e_lex
 {
-	kRedirection,
+	kInRedirection,
+	kOutRedirection,
 	kPipe,
 	kParenthesis,
 	kOperator,
 	kIdentifier,
 	kString,
 	kSplitter
-};
-
-enum	e_direction
-{
-	kIn,
-	kOut
 };
 
 enum	e_open
@@ -45,7 +40,9 @@ enum	e_operator
 enum	e_mode
 {
 	kWrite,
-	kAppend
+	kAppend,
+	kRead,
+	kReadTillDelim
 };
 
 typedef struct s_lex
@@ -53,10 +50,15 @@ typedef struct s_lex
 	int			type;
 	union		u_data
 	{
-		struct s_redirection
+		struct s_in
 		{
 			int	mode;
-		}	redirection;
+		}	in;
+		struct s_out
+		{
+			int	mode;
+			int	fd;
+		}	out;
 		struct s_parenthesis
 		{
 			int	data;

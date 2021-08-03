@@ -1,11 +1,12 @@
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
-INC = -I../includes -I.
-LIBSRCS = $(wildcard ../srcs/container/list/*.c) \
-			$(wildcard ../srcs/libft/memory/*.c) \
-			$(wildcard ../srcs/libft/string/*.c) \
-			$(wildcard ../srcs/stringutil/*.c)
+INC = -I../includes -I../lib/includes -I.
+LIBSRCS = $(wildcard ../lib/srcs/container/list/*.c) \
+			$(wildcard ../lib/srcs/libft/memory/*.c) \
+			$(wildcard ../lib/srcs/libft/string/*.c) \
+			$(wildcard ../lib/srcs/error/*.c) \
+			$(wildcard ../srcs/lex/*.c)
 
 LIBOBJ = $(LIBSRCS:.c=.o)
 TESTSRCS = $(wildcard test_*.c)

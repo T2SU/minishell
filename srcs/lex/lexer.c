@@ -6,14 +6,14 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 18:21:29 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 18:46:50 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 00:55:05 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-static t_bool	add_lex(int type, int data, t_list *list)
+t_bool	add_lex(int type, int data, int data2, t_list *list)
 {
 	t_lex	*lex;
 
@@ -23,6 +23,15 @@ static t_bool	add_lex(int type, int data, t_list *list)
 	lex->type = type;
 	if (type == kParenthesis)
 		lex->data.parenthesis.data = data;
+	else if (type == kOperator)
+		lex->data.op.type = data;
+	else if (type == kInRedirection)
+		lex->data.in.mode = data;
+	else if (type == kOutRedirection)
+	{
+		lex->data.out.mode = data;
+		lex->data.out.fd = data2;
+	}
 	if (!list_add(list, lex, &free))
 		return (FALSE);
 	return (TRUE);
@@ -35,27 +44,15 @@ static t_bool	parse_string(const char *command, char quote, t_list *list)
 
 t_bool	parse_lex(const char *command, t_list *list)
 {
-	int	i;
+	t_lexer	lexer;
 
-	i = 0;
-	while (command[i] == '\0')
+	lexer.str = command;
+	lexer.state = kLexerNormal;
+	lexer.cursor = 0;
+	while (lexer.str[lexer.cursor] != '\0')
 	{
-		if (command[i] == '(')
-			if (!add_lex(kParenthesis, kOpen, list))
-				return (FALSE);
-		if (command[i] == ')')
-			if (!add_lex(kParenthesis, kClose, list))
-				return (FALSE);
-		if (!ft_strncmp(&command[i], "&&", 2))
-			if (!add_lex(kOperator, kAnd, list))
-				return (FALSE);
-		if (!ft_strncmp(&command[i], "||", 2))
-			if (!add_lex(kOperator, kOr, list))
-				return (FALSE);
-		if (command[i] == '\'' || command[i] == '\"' || command[i] == '`')
-			if (!parse_string(&command[i], command[i], list))
-				return (FALSE);
-		i++;
+		
+		
 	}
 	return (0);
 }
