@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 INC = -I../includes -I.
 LIBSRCS = $(wildcard ../srcs/container/list/*.c) \
