@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 14:15:47 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 14:53:31 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 15:31:10 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,56 @@ static void	test_list_get_failed(void)
 	list_free(&list);
 }
 
+static void	test_list_remove_one(void)
+{
+	t_list	list;
+
+	ft_memset(&list, 0, sizeof(t_list));
+	list_add(&list, (void*)1, NULL);
+	list_add(&list, (void*)2, NULL);
+	list_add(&list, (void*)3, NULL);
+	list_add(&list, (void*)4, NULL);
+	list_add(&list, (void*)5, NULL);
+	list_add(&list, (void*)6, NULL);
+	list_add(&list, (void*)7, NULL);
+	assert(list.length == 7);
+	assert(list_remove(&list, 0) == 1);
+	assert(list.length == 6);
+	assert(list.head->prev == NULL);
+	assert(list.head->data == (void*)2);
+	assert(list_remove(&list, 1) == 1);
+	assert(list.length == 5);
+	assert(list.head->next->prev == list.head);
+	assert(list.head->next->data == (void*)4);
+	assert(list_remove(&list, 5) == 0);
+	list_free(&list);
+}
+
+static void	test_list_remove_tail(void)
+{
+	t_list	list;
+
+	ft_memset(&list, 0, sizeof(t_list));
+	list_add(&list, (void*)1, NULL);
+	list_add(&list, (void*)2, NULL);
+	list_add(&list, (void*)3, NULL);
+	list_add(&list, (void*)4, NULL);
+	list_add(&list, (void*)5, NULL);
+	list_add(&list, (void*)6, NULL);
+	list_add(&list, (void*)7, NULL);
+	assert(list.length == 7);
+	assert(list_remove(&list, 6) == 1);
+	assert(list.length == 6);
+	assert(list.tail->next == NULL);
+	assert(list.tail->data == (void*)6);
+	assert(list.tail->prev->next == list.tail);
+	assert(list_remove(&list, 4) == 1);
+	assert(list.length == 5);
+	assert(list.tail->prev->next == list.tail);
+	assert(list.tail->prev->data == (void*)4);
+	list_free(&list);
+}
+
 int		main(int argc, char *argv[])
 {
 	do_test(&test_list_add_one);
@@ -178,6 +228,8 @@ int		main(int argc, char *argv[])
 	do_test(&test_list_get_sequence);
 	do_test(&test_list_get_random);
 	do_test(&test_list_get_failed);
+	do_test(&test_list_remove_one);
+	do_test(&test_list_remove_tail);
 	print_test_result(argc, argv[0]);
 	return (0);
 }

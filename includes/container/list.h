@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 13:57:44 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 14:11:36 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 15:28:40 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_elem
 void	list_free(t_list *list);
 t_elem	*list_add(t_list *list, void *data, void(*destructor)(void *));
 t_elem	*list_get(t_list *list, int index);
-t_elem	*list_remove(t_list *list, int index);
+int		list_remove(t_list *list, int index);
 int		list_remove_if(t_list *list, void *data);
 
 #endif

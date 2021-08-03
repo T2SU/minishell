@@ -2,7 +2,7 @@ CC = clang
 CFLAGS = -Wall -Wextra -Werror -g
 
 INC = -I../includes -I.
-LIBSRCS = $(wildcard ../srcs/container/*.c) \
+LIBSRCS = $(wildcard ../srcs/container/list/*.c) \
 			$(wildcard ../srcs/libft/*.c)
 
 LIBOBJ = $(LIBSRCS:.c=.o)
