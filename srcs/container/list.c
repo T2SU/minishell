@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 14:01:01 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 14:40:06 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 14:45:30 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,27 @@ t_elem	*list_add(t_list *list, void *data, void(*destructor)(void *))
 
 t_elem	*list_get(t_list *list, int index)
 {
-	(void)list;
-	(void)index;
-	return (NULL);
+	t_elem	*cur;
+	int		i;
+	
+	if (index < 0 || index >= list->length)
+		return (NULL);
+	if ((list->length >> 1) > index)
+	{
+		cur = list->head;
+		i = -1;
+		while (++i < index)
+			cur = cur->next;
+		return (cur);
+	}
+	else
+	{
+		cur = list->tail;
+		i = list->length;
+		while (--i > index)
+			cur = cur->prev;
+		return (cur);
+	}
 }
 
 t_elem	*list_remove(t_list *list, int index)

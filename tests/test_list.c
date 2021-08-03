@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 14:15:47 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 14:40:31 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 14:53:31 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,105 @@ static void	test_list_free(void)
 	list_free(&list);
 }
 
+static void	test_list_get_sequence(void)
+{
+	t_list	list;
+	long	i;
+
+	ft_memset(&list, 0, sizeof(t_list));
+	i = 0;
+	while (i < 10)
+	{
+		list_add(&list, (void*)i, NULL);
+		i++;	
+	}
+	assert(list.length == 10);
+	assert(list_get(&list, 0) != NULL);
+	assert(list_get(&list, 0)->data == (void*)0);
+	assert(list_get(&list, 1) != NULL);
+	assert(list_get(&list, 1)->data == (void*)1);
+	assert(list_get(&list, 2) != NULL);
+	assert(list_get(&list, 2)->data == (void*)2);
+	assert(list_get(&list, 3) != NULL);
+	assert(list_get(&list, 3)->data == (void*)3);
+	assert(list_get(&list, 4) != NULL);
+	assert(list_get(&list, 4)->data == (void*)4);
+	assert(list_get(&list, 5) != NULL);
+	assert(list_get(&list, 5)->data == (void*)5);
+	assert(list_get(&list, 6) != NULL);
+	assert(list_get(&list, 6)->data == (void*)6);
+	assert(list_get(&list, 7) != NULL);
+	assert(list_get(&list, 7)->data == (void*)7);
+	assert(list_get(&list, 8) != NULL);
+	assert(list_get(&list, 8)->data == (void*)8);
+	assert(list_get(&list, 9) != NULL);
+	assert(list_get(&list, 9)->data == (void*)9);
+	list_free(&list);
+}
+
+static void	test_list_get_random(void)
+{
+	t_list	list;
+	long	i;
+
+	ft_memset(&list, 0, sizeof(t_list));
+	i = 0;
+	while (i < 1000)
+	{
+		list_add(&list, (void*)i, NULL);
+		i++;	
+	}
+	assert(list.length == 1000);
+	assert(list_get(&list, 0) != NULL);
+	assert(list_get(&list, 0)->data == (void*)0);
+	assert(list_get(&list, 137) != NULL);
+	assert(list_get(&list, 137)->data == (void*)137);
+	assert(list_get(&list, 499) != NULL);
+	assert(list_get(&list, 499)->data == (void*)499);
+	assert(list_get(&list, 500) != NULL);
+	assert(list_get(&list, 500)->data == (void*)500);
+	assert(list_get(&list, 501) != NULL);
+	assert(list_get(&list, 501)->data == (void*)501);
+	assert(list_get(&list, 674) != NULL);
+	assert(list_get(&list, 674)->data == (void*)674);
+	assert(list_get(&list, 236) != NULL);
+	assert(list_get(&list, 236)->data == (void*)236);
+	assert(list_get(&list, 796) != NULL);
+	assert(list_get(&list, 796)->data == (void*)796);
+	assert(list_get(&list, 999) != NULL);
+	assert(list_get(&list, 999)->data == (void*)999);
+	list_free(&list);
+}
+
+static void	test_list_get_failed(void)
+{
+	t_list	list;
+	long	i;
+
+	ft_memset(&list, 0, sizeof(t_list));
+	i = 0;
+	while (i < 1000)
+	{
+		list_add(&list, (void*)i, NULL);
+		i++;	
+	}
+	assert(list.length == 1000);
+	assert(list_get(&list, -1) == NULL);
+	assert(list_get(&list, -10) == NULL);
+	assert(list_get(&list, 1000) == NULL);
+	assert(list_get(&list, 1001) == NULL);
+	list_free(&list);
+}
+
 int		main(int argc, char *argv[])
 {
 	do_test(&test_list_add_one);
 	do_test(&test_list_add_twice);
 	do_test(&test_list_add_triple);
 	do_test(&test_list_free);
+	do_test(&test_list_get_sequence);
+	do_test(&test_list_get_random);
+	do_test(&test_list_get_failed);
 	print_test_result(argc, argv[0]);
 	return (0);
 }
