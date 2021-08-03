@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 15:30:13 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 14:32:09 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 15:54:58 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static size_t	make_big_one(size_t c)
 	data = (c & 0xff);
 	data |= (data << 8);
 	data |= (data << 16);
-	if (sizeof(size_t) >= 8)
+	if (sizeof(size_t) == 8)
 		data |= (data << 32);
 	return (data);
 }
