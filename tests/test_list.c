@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 14:15:47 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 16:34:57 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 16:40:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	test_list_add_one(void)
 	assert(list.head->next == NULL);
 	assert(list.tail->prev == NULL);
 	assert(list.length == 1);
+	free(list.head);
 }
 
 static void	test_list_add_twice(void)
@@ -47,6 +48,8 @@ static void	test_list_add_twice(void)
 	assert(list.head->next->next == NULL);
 	assert(list.tail->prev->prev == NULL);
 	assert(list.length == 2);
+	free(list.head);
+	free(list.tail);
 }
 
 static void	test_list_add_triple(void)
@@ -68,6 +71,9 @@ static void	test_list_add_triple(void)
 	assert(list.head->next->next->next == NULL);
 	assert(list.tail->prev->prev->prev == NULL);
 	assert(list.length == 3);
+	free(list.head->next);
+	free(list.head);
+	free(list.tail);
 }
 
 static void	test_list_free(void)
