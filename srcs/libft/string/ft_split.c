@@ -6,11 +6,11 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 18:23:56 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 17:10:41 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 17:33:30 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/_string.h"
+#include "libft/_libft_string.h"
 #include <stdlib.h>
 
 static char	**allfree(char **as, size_t n)

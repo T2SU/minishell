@@ -6,12 +6,12 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 22:51:57 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 17:11:06 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 17:34:12 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/_string.h"
-#include "libft/_memory.h"
+#include "libft/_libft_string.h"
+#include "libft/_libft_memory.h"
 
 static size_t	truncate_len(size_t slen, size_t dstsize)
 {
