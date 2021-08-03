@@ -6,11 +6,11 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 15:12:33 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 15:28:31 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 16:43:13 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "container/list.h"
+#include "container/_list.h"
 #include <stdlib.h>
 
 static void	remove_element(t_list *list, t_elem *elem)

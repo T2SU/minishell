@@ -6,11 +6,11 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 15:30:13 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 15:54:58 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 16:45:19 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "libft/_memory.h"
 
 static size_t	make_big_one(size_t c)
 {

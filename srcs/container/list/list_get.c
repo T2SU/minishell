@@ -6,18 +6,18 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 15:12:19 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 15:19:06 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 16:49:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "container/list.h"
+#include "container/_list.h"
 #include <stddef.h>
 
 t_elem	*list_get(t_list *list, int index)
 {
 	t_elem	*cur;
 	int		i;
-	
+
 	if (index < 0 || index >= list->length)
 		return (NULL);
 	if ((list->length >> 1) > index)

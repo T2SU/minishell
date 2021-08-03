@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_free.c                                        :+:      :+:    :+:   */
+/*   _memory.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/03 15:11:50 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 16:43:05 by smun             ###   ########.fr       */
+/*   Created: 2021/08/03 16:45:26 by smun              #+#    #+#             */
+/*   Updated: 2021/08/03 16:45:54 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "container/_list.h"
-#include <stdlib.h>
+#ifndef _MEMORY_H
+# define _MEMORY_H
+# include <stddef.h>
 
-void	list_free(t_list *list)
-{
-	t_elem	*cur;
-	t_elem	*next;
+void	*ft_memset(void *b, int c, size_t len);
 
-	cur = list->head;
-	while (cur != NULL)
-	{
-		next = cur->next;
-		if (cur->destructor)
-			(cur->destructor)(cur->data);
-		free(cur);
-		cur = next;
-	}
-}
+#endif

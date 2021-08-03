@@ -6,12 +6,12 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 15:11:27 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 15:11:40 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 16:50:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "container/list.h"
-#include "libft/libft.h"
+#include "container/_list.h"
+#include "libft.h"
 #include <stdlib.h>
 
 t_elem	*list_add(t_list *list, void *data, void(*destructor)(void *))
@@ -27,7 +27,7 @@ t_elem	*list_add(t_list *list, void *data, void(*destructor)(void *))
 	if (list->tail)
 	{
 		list->tail->next = elem;
-		elem->prev = list->tail;	
+		elem->prev = list->tail;
 	}
 	list->tail = elem;
 	if (list->head == NULL)

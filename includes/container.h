@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   container.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/03 14:18:31 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 14:23:43 by smun             ###   ########.fr       */
+/*   Created: 2021/08/03 16:43:18 by smun              #+#    #+#             */
+/*   Updated: 2021/08/03 16:48:23 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
-# include <stddef.h>
-
-void	*ft_memset(void *b, int c, size_t len);
+#ifndef CONTAINER_H
+# define CONTAINER_H
+# include "container/_list.h"
 
 #endif

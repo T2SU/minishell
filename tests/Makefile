@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 INC = -I../includes -I.
 LIBSRCS = $(wildcard ../srcs/container/list/*.c) \
-			$(wildcard ../srcs/libft/*.c)
+			$(wildcard ../srcs/libft/memory/*.c)
 
 LIBOBJ = $(LIBSRCS:.c=.o)
 TESTSRCS = $(wildcard test_*.c)

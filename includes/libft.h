@@ -1,30 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_free.c                                        :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/03 15:11:50 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 16:43:05 by smun             ###   ########.fr       */
+/*   Created: 2021/08/03 14:18:31 by smun              #+#    #+#             */
+/*   Updated: 2021/08/03 16:48:28 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "container/_list.h"
-#include <stdlib.h>
+#ifndef LIBFT_H
+# define LIBFT_H
+# include "libft/_memory.h"
 
-void	list_free(t_list *list)
-{
-	t_elem	*cur;
-	t_elem	*next;
-
-	cur = list->head;
-	while (cur != NULL)
-	{
-		next = cur->next;
-		if (cur->destructor)
-			(cur->destructor)(cur->data);
-		free(cur);
-		cur = next;
-	}
-}
+#endif
