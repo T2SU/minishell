@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 INC = -I../includes -I.
 LIBSRCS = $(wildcard ../srcs/container/list/*.c) \

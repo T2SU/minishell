@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 14:15:47 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 16:31:16 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/03 16:34:57 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,6 +316,10 @@ int		main(int argc, char *argv[])
 	do_test(&test_list_remove_with_destructor);
 	print_test_result(argc, argv[0]);
 	
-	system("leaks test_list.out");
+	char buffer[260];
+	ft_memset(buffer, 0, sizeof(buffer));
+	strcat(buffer, "leaks ");
+	strcat(buffer, argv[0]);
+	system(buffer);
 	return (0);
 }
