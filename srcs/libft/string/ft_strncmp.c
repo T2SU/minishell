@@ -1,17 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   container.h                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/03 16:43:18 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 17:33:23 by smun             ###   ########.fr       */
+/*   Created: 2020/10/01 06:24:30 by smun              #+#    #+#             */
+/*   Updated: 2021/08/03 18:32:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTAINER_H
-# define CONTAINER_H
-# include "container/_container_list.h"
+#include "libft/_libft_string.h"
 
-#endif
+int		ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	while ((*s1 || *s2) && n-- > 0)
+	{
+		if (*s1 != *s2)
+			return ((unsigned char)(*s1) - (unsigned char)(*s2));
+		s1++;
+		s2++;
+	}
+	return (0);
+}
