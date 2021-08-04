@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:52 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 15:31:42 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 16:50:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,14 @@ static void		free_lex_string(void *ptr)
 	free(lex);
 }
 
-static t_bool	add_lex_string(char *str, t_list *list)
+static t_bool	add_lex_string(t_strbuf *strbuf, t_list *list)
 {
 	t_lex	*lex;
+	char	*str;
 
+	str = strbuf_get(strbuf, TRUE);
+	if (str == NULL)
+		return (FALSE);
 	lex = malloc(sizeof(t_lex));
 	if (lex == NULL)
 		return (FALSE);
@@ -35,29 +39,60 @@ static t_bool	add_lex_string(char *str, t_list *list)
 	return (TRUE);
 }
 
+static char	do_escape(t_lexer *lexer)
+{
+	const char	ch = lexer->str[++lexer->cursor];
+
+	if (ch == 'n')
+		return ('\n');
+	else if (ch == 'r')
+		return ('\r');
+	else if (ch == 't')
+		return ('\t');
+	else if (ch == 'b')
+		return ('\b');
+	else if (ch == '\'')
+		return ('\'');
+	else if (ch == '"')
+		return ('"');
+	else if (ch == '`')
+		return ('`');
+	else if (ch == '?')
+		return ('?');
+	else if (ch == '\\')
+		return ('\\');
+	else if (ch == 'a')
+		return ('\a');
+	else if (ch == 'v')
+		return ('\v');
+	return (ch);
+}
+
 t_bool	lexer_parse_string(t_lexer *lexer, t_list *list)
 {
-	const char	*begin;
-	const char	*end;
-	char		*str;
+	t_strbuf	strbuf;
+	char		quote;
 	char		c;
-	size_t		len;
 
-	c = lexer->str[lexer->cursor];
-	if (c != '\'' && c != '\"' && c != '`')
+	quote = lexer->str[lexer->cursor];
+	if (quote != '\'' && quote != '\"' && quote != '`')
 		return (FALSE);
-	begin = &lexer->str[lexer->cursor];
-	end = ft_strchr(begin + 1, c);
-	if (end == NULL)
-		end = begin + ft_strlen(begin);
-	len = (size_t)(end - begin + 1);
-	str = malloc(len + 1);
-	if (str == NULL)
+	lexer->cursor++;
+	ft_memset(&strbuf, 0, sizeof(t_strbuf));
+	while (TRUE)
+	{
+		c = lexer->str[lexer->cursor];
+		if (c == quote || c == '\0')
+			break ;
+		if (c == '\\')
+			c = do_escape(lexer);
+		if (!strbuf_append(&strbuf, c))
+			exit_error(get_context()->executable_name, NULL, NULL);
+		lexer->cursor++;
+	}
+	if (c == quote)
+		lexer->cursor++;
+	if (!add_lex_string(&strbuf, list))
 		exit_error(get_context()->executable_name, NULL, NULL);
-	ft_memcpy(str, begin, len);
-	str[len] = '\0';
-	if (!add_lex_string(str, list))
-		exit_error(get_context()->executable_name, NULL, NULL);
-	lexer->cursor += len;
 	return (TRUE);
 }

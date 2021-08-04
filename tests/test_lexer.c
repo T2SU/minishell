@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:20:08 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 15:39:12 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 16:51:45 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,36 @@
 #include <string.h>
 #include <stdlib.h>
 
-static void	test_parse_string(void)
+static t_bool	parse_string_as_lex(const char *str, const char *expected)
 {
 	t_lexer	lexer;
 	t_list	list;
+	t_lex 	*lex;
 
 	memset(&lexer, 0, sizeof(t_lexer));
 	memset(&list, 0, sizeof(t_list));
-	lexer.str = "\"Hello World' d\"  gogo";
-	assert(lexer_parse_string(&lexer, &list));
-	assert(list.length == 1);
-	lexer.cursor = 0;
-	lexer.str = "\"Hello World' d  gogo";
-	assert(lexer_parse_string(&lexer, &list));
-	assert(list.length == 2);
-
-	t_lex *lex = (t_lex *)list.head->data;
-	(void)lex;
-
+	lexer.str = str;
+	if (!lexer_parse_string(&lexer, &list))
+		return (FALSE);
+	if (list.length != 1)
+		return (FALSE);
+	lex = (t_lex *)list.head->data;
+	if (strcmp(lex->data.identifier.data, expected))
+		return (FALSE);
 	list_free(&list);
+	return (TRUE);
+}
+
+static void	test_parse_string(void)
+{
+	assert(parse_string_as_lex("\"Hello World \" gogo", "Hello World "));
+	assert(parse_string_as_lex("\"Hello \\\" GoGo\"   ", "Hello \" GoGo"));
+	assert(parse_string_as_lex("\"Hello ' \\\\ GoGo\"   ", "Hello ' \\ GoGo"));
 }
 
 int		main(int argc, char *argv[])
 {
-	test_parse_string();
-	//do_test(&test_parse_string);
+	do_test(&test_parse_string);
 	print_test_result(argc, argv[0]);
 	return (0);
 }

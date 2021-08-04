@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 15:11:50 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 17:33:53 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 16:38:49 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,7 @@ void	list_free(t_list *list)
 		free(cur);
 		cur = next;
 	}
+	list->head = NULL;
+	list->tail = NULL;
+	list->length = 0;
 }
