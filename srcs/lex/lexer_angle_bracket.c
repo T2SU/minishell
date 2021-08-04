@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:43 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 15:06:06 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 17:16:35 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,12 @@ static void	parse_in_redirection(t_lexer *lexer, t_list *list)
 	}
 }
 
-t_bool	lexer_parse_angle_bracket(t_lexer *lexer, t_list *list)
+void	lexer_parse_angle_bracket(t_lexer *lexer, t_list *list)
 {
 	const char	c = lexer->str[lexer->cursor];
 
 	if (c == '>')
 		parse_out_redirection(lexer, list);
-	else if (c == '<')
+	if (c == '<')
 		parse_in_redirection(lexer, list);
-	else
-		return (FALSE);
-	return (TRUE);
 }

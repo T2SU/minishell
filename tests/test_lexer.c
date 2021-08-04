@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:20:08 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 17:02:10 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 17:45:57 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static t_bool	parse_string_as_lex(const char *str, const char *expected)
 	memset(&lexer, 0, sizeof(t_lexer));
 	memset(&list, 0, sizeof(t_list));
 	lexer.str = str;
-	if (!lexer_parse_string(&lexer, &list))
-		return (FALSE);
+	lexer_parse_string(&lexer, &list);
 	if (list.length != 1)
 		return (FALSE);
 	lex = (t_lex *)list.head->data;

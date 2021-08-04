@@ -6,18 +6,16 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:31 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 15:27:42 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 17:16:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	lexer_parse_bar(t_lexer *lexer, t_list *list)
+void	lexer_parse_bar(t_lexer *lexer, t_list *list)
 {
 	const char	c = lexer->str[lexer->cursor];
 
-	if (c != '|')
-		return (FALSE);
 	lexer->cursor++;
 	if (lexer->str[lexer->cursor + 1] == '|')
 	{
@@ -30,5 +28,4 @@ t_bool	lexer_parse_bar(t_lexer *lexer, t_list *list)
 		if (!add_lex(kPipe, 0, list))
 			exit_error(get_context()->executable_name, NULL, NULL);
 	}
-	return (TRUE);
 }

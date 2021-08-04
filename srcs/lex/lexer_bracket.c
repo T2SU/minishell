@@ -6,25 +6,22 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:06 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 15:06:18 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 17:17:13 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	lexer_parse_bracket(t_lexer *lexer, t_list *list)
+void	lexer_parse_bracket(t_lexer *lexer, t_list *list)
 {
 	const char	c = lexer->str[lexer->cursor];
 	int			mode;
 
-	if (c != '(' && c != ')')
-		return (FALSE);
 	if (c == '(')
 		mode = kOpen;
 	else
 		mode = kClose;
 	if (!add_lex(kParenthesis, mode, list))
-		return (FALSE);
+		return (exit_error(get_context()->executable_name, NULL, NULL));
 	lexer->cursor++;
-	return (TRUE);
 }

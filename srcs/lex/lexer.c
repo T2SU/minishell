@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 18:21:29 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 15:27:33 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 17:50:37 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,74 @@ t_bool	add_lex(int type, int data, t_list *list)
 	return (TRUE);
 }
 
-t_bool	parse_lex(const char *command, t_list *list)
+static void		free_lex_string(void *ptr)
 {
-	t_lexer	lexer;
+	t_lex	*lex;
 
+	lex = (t_lex *)ptr;
+	free(lex->data.identifier.data);
+	free(lex);
+}
+
+t_bool	add_lex_string(int type, t_strbuf *strbuf, t_list *list)
+{
+	t_lex	*lex;
+	char	*str;
+
+	str = strbuf_get(strbuf, TRUE);
+	if (str == NULL)
+		return (FALSE);
+	lex = malloc(sizeof(t_lex));
+	if (lex == NULL)
+		return (FALSE);
+	lex->type = type;
+	lex->data.identifier.data = str;
+	list_add(list, lex, &free_lex_string);
+	return (TRUE);
+}
+
+static t_bool	try_parse_lex(t_lexer *lexer, t_list *list)
+{
+	char	ch;
+
+	ch = lexer->str[lexer->cursor];
+	if (ch == '&')
+		lexer_parse_and(lexer, list);
+	else if (ch == '|')
+		lexer_parse_bar(lexer, list);
+	else if (ch == '<' || ch == '>')
+		lexer_parse_angle_bracket(lexer, list);
+	else if (ch == '(' || ch == ')')
+		lexer_parse_bracket(lexer, list);
+	else if (ch == '\'' || ch == '"' || ch == '`')
+		lexer_parse_string(lexer, list);
+	else if (ch == ' ' || ch == '\t')
+		lexer_parse_splitter(lexer, list);
+	else if (ch == '$')
+		lexer_parse_variable(lexer, list);
+	else
+		return (FALSE);
+	return (TRUE);
+}
+
+void	parse_lex(const char *command, t_list *list)
+{
+	t_lexer		lexer;
+	t_strbuf	strbuf;
+	char		ch;
+
+	ft_memset(&strbuf, 0, sizeof(t_strbuf));
+	ft_memset(&lexer, 0, sizeof(t_lexer));
 	lexer.str = command;
-	lexer.state = kLexerNormal;
-	lexer.cursor = 0;
-	while (lexer.str[lexer.cursor] != '\0')
+	while (TRUE)
 	{
-
-
+		ch = lexer.str[lexer.cursor];
+		if (ch == '\0')
+			break ;
+		if (try_parse_lex(&lexer, list))
+			lexer_lush_identifier(&strbuf, list);
+		else
+			lexer_build_identifier(&strbuf, ch);
+		lexer.cursor++;
 	}
-	(void)list;
-	return (0);
 }
