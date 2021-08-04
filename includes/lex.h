@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 17:37:49 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 00:52:55 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 15:31:18 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct s_lex
 		struct s_out
 		{
 			int	mode;
-			int	fd;
 		}	out;
 		struct s_parenthesis
 		{
@@ -69,7 +68,7 @@ typedef struct s_lex
 		}	op;
 		struct s_identifier
 		{
-			const char	*data;
+			char	*data;
 		}	identifier;
 	}			data;
 }				t_lex;

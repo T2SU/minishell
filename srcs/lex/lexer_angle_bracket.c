@@ -6,33 +6,24 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:43 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 14:55:17 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 15:06:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_bool	parse_out_fd(t_lexer *lexer, int *pfd)
-{
-
-}
-
 static void	parse_out_redirection(t_lexer *lexer, t_list *list)
 {
-	int	out_fd;
-
 	lexer->cursor++;
 	if (lexer->str[lexer->cursor] == '>')
 	{
 		lexer->cursor++;
-		parse_out_fd(lexer, &out_fd);
-		if (!add_lex(kOutRedirection, kAppend, out_fd, list))
+		if (!add_lex(kOutRedirection, kAppend, list))
 			exit_error(get_context()->executable_name, NULL, NULL);
 	}
 	else
 	{
-		parse_out_fd(lexer, &out_fd);
-		if (!add_lex(kOutRedirection, kWrite, out_fd, list))
+		if (!add_lex(kOutRedirection, kWrite, list))
 			exit_error(get_context()->executable_name, NULL, NULL);
 	}
 }
@@ -43,12 +34,12 @@ static void	parse_in_redirection(t_lexer *lexer, t_list *list)
 	if (lexer->str[lexer->cursor + 1] == '<')
 	{
 		lexer->cursor++;
-		if (!add_lex(kInRedirection, kReadTillDelim, 0, list))
+		if (!add_lex(kInRedirection, kReadTillDelim, list))
 			exit_error(get_context()->executable_name, NULL, NULL);
 	}
 	else
 	{
-		if (!add_lex(kInRedirection, kRead, 0, list))
+		if (!add_lex(kInRedirection, kRead, list))
 			exit_error(get_context()->executable_name, NULL, NULL);
 	}
 }

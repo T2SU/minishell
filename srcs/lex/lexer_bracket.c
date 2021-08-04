@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:06 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 00:54:52 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 15:06:18 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_bool	lexer_parse_bracket(t_lexer *lexer, t_list *list)
 		mode = kOpen;
 	else
 		mode = kClose;
-	if (!add_lex(kParenthesis, mode, 0, list))
+	if (!add_lex(kParenthesis, mode, list))
 		return (FALSE);
 	lexer->cursor++;
 	return (TRUE);

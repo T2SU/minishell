@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 13:54:31 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 14:59:17 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 15:05:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_bool	lexer_parse_and(t_lexer *lexer, t_list *list);
 t_bool	lexer_parse_bar(t_lexer *lexer, t_list *list);
 t_bool	lexer_parse_angle_bracket(t_lexer *lexer, t_list *list);
 t_bool	lexer_parse_string(t_lexer *lexer, t_list *list);
-t_bool	add_lex(int type, int data, int data2, t_list *list);
+t_bool	add_lex(int type, int data, t_list *list);
 t_bool	parse_lex(const char *command, t_list *list);
 
 #endif
