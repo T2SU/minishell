@@ -6,13 +6,14 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 13:54:31 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 15:05:27 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 16:16:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <container/_container_list.h>
+# include <container/_container_strbuf.h>
 # include <libft/_libft_memory.h>
 # include <libft/_libft_string.h>
 # include <error/_error_handling.h>
