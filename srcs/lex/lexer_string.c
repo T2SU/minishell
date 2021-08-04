@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:52 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 16:50:55 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 17:01:15 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,13 @@ static t_bool	add_lex_string(t_strbuf *strbuf, t_list *list)
 
 static char	do_escape(t_lexer *lexer)
 {
-	const char	ch = lexer->str[++lexer->cursor];
+	const char	ch = lexer->str[lexer->cursor];
 
-	if (ch == 'n')
+	if (ch != '\0')
+		lexer->cursor++;
+	if (ch == '\0' || ch == '\\')
+		return ('\\');
+	else if (ch == 'n')
 		return ('\n');
 	else if (ch == 'r')
 		return ('\r');
@@ -59,10 +63,6 @@ static char	do_escape(t_lexer *lexer)
 		return ('`');
 	else if (ch == '?')
 		return ('?');
-	else if (ch == '\\')
-		return ('\\');
-	else if (ch == 'a')
-		return ('\a');
 	else if (ch == 'v')
 		return ('\v');
 	return (ch);
@@ -81,17 +81,14 @@ t_bool	lexer_parse_string(t_lexer *lexer, t_list *list)
 	ft_memset(&strbuf, 0, sizeof(t_strbuf));
 	while (TRUE)
 	{
-		c = lexer->str[lexer->cursor];
+		c = lexer->str[lexer->cursor++];
 		if (c == quote || c == '\0')
 			break ;
 		if (c == '\\')
 			c = do_escape(lexer);
 		if (!strbuf_append(&strbuf, c))
 			exit_error(get_context()->executable_name, NULL, NULL);
-		lexer->cursor++;
 	}
-	if (c == quote)
-		lexer->cursor++;
 	if (!add_lex_string(&strbuf, list))
 		exit_error(get_context()->executable_name, NULL, NULL);
 	return (TRUE);

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:20:08 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 16:51:45 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 17:02:10 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	test_parse_string(void)
 	assert(parse_string_as_lex("\"Hello World \" gogo", "Hello World "));
 	assert(parse_string_as_lex("\"Hello \\\" GoGo\"   ", "Hello \" GoGo"));
 	assert(parse_string_as_lex("\"Hello ' \\\\ GoGo\"   ", "Hello ' \\ GoGo"));
+	assert(parse_string_as_lex("\"Hi\\", "Hi\\"));
 }
 
 int		main(int argc, char *argv[])
