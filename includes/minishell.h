@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 13:54:31 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 01:01:05 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 14:59:17 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct	s_context
 	char	*prompt;
 }			t_context;
 
-t_context *get_context();
+t_context	*get_context();
 
 enum	e_lexer_state
 {

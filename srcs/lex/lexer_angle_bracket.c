@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:43 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 01:05:45 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/04 14:55:17 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_bool	parse_out_fd(t_lexer *lexer, int *pfd)
 {
-	
+
 }
 
 static void	parse_out_redirection(t_lexer *lexer, t_list *list)
@@ -25,15 +25,15 @@ static void	parse_out_redirection(t_lexer *lexer, t_list *list)
 	if (lexer->str[lexer->cursor] == '>')
 	{
 		lexer->cursor++;
-		out_fd = parse_out_fd(lexer);
+		parse_out_fd(lexer, &out_fd);
 		if (!add_lex(kOutRedirection, kAppend, out_fd, list))
 			exit_error(get_context()->executable_name, NULL, NULL);
 	}
 	else
 	{
-		out_fd = parse_out_fd(lexer);
+		parse_out_fd(lexer, &out_fd);
 		if (!add_lex(kOutRedirection, kWrite, out_fd, list))
-			exit_error(get_context()->executable_name, NULL, NULL);	
+			exit_error(get_context()->executable_name, NULL, NULL);
 	}
 }
 
@@ -49,7 +49,7 @@ static void	parse_in_redirection(t_lexer *lexer, t_list *list)
 	else
 	{
 		if (!add_lex(kInRedirection, kRead, 0, list))
-			exit_error(get_context()->executable_name, NULL, NULL);	
+			exit_error(get_context()->executable_name, NULL, NULL);
 	}
 }
 
