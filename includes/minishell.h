@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 13:54:31 by smun              #+#    #+#             */
-/*   Updated: 2021/08/08 23:59:07 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 01:28:48 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	lexer_parse_splitter(t_lexer *lexer, t_list *list);
 void	lexer_parse_variable(t_lexer *lexer, t_list *list);
 void	lexer_flush_identifier(t_strbuf *strbuf, t_list *list);
 void	lexer_build_identifier(t_strbuf *strbuf, char ch);
-t_bool	add_lex(int type, char *data, t_list *list);
-t_bool	add_lex_string(int type, t_strbuf *strbuf, t_list *list);
+void	add_lex(int type, char *data, t_list *list);
+void	add_lex_string(int type, t_strbuf *strbuf, t_list *list);
 void	parse_lex(const char *command, t_list *list);
 void	print_lexes(t_list *list);
 

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:52 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 01:02:23 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 01:31:08 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,20 @@ static void	interpolate(t_lexer *lexer, t_list *list, t_strbuf *strbuf, char q)
 {
 	char	c;
 
-	if (strbuf_length(strbuf) > 0)
-		if (!add_lex_string(kString, strbuf, list))
-			exit_error(get_context()->executable_name, NULL, NULL);
-	if (!add_lex(kInnerDollar, NULL, list))
-		exit_error(get_context()->executable_name, NULL, NULL);
+	add_lex_string(kString, strbuf, list);
+	add_lex(kInnerDollar, NULL, list);
 	ft_memset(strbuf, 0, sizeof(t_strbuf));
 	c = lexer->str[lexer->cursor];
 	if (c == '\0' || c == q)
 		return ;
 	while (ft_isalnum(c) || c == '_')
 	{
-		strbuf_append(strbuf, c);
+		if (!strbuf_append(strbuf, c))
+			exit_error(get_context()->executable_name, NULL, NULL);
 		c = lexer->str[++lexer->cursor];
 	}
+	add_lex_string(kIdentifier, strbuf, list);
+	ft_memset(strbuf, 0, sizeof(t_strbuf));
 }
 
 static void	parse_character(t_lexer *lexer, t_strbuf *strbuf, char c)
@@ -93,6 +93,5 @@ void	lexer_parse_string(t_lexer *lexer, t_list *list)
 	if (strbuf_length(&strbuf) == 0)
 		if (!strbuf_append(&strbuf, quote))
 			exit_error(get_context()->executable_name, NULL, NULL);
-	if (!add_lex_string(kString, &strbuf, list))
-		exit_error(get_context()->executable_name, NULL, NULL);
+	add_lex_string(kString, &strbuf, list);
 }

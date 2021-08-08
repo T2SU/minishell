@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:20:08 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 01:08:09 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 01:32:36 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ static void test_parse_lexes(void)
 
 int		main(int argc, char *argv[])
 {
-	do_test(&test_parse_string);
+	//do_test(&test_parse_string);
+	test_parse_string();
 	(void)argc;
 	(void)argv;
 	//print_test_result(argc, argv[0]);

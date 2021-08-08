@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:43 by smun              #+#    #+#             */
-/*   Updated: 2021/08/08 22:31:23 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 01:29:26 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ static void	parse_greater(t_lexer *lexer, t_list *list)
 	if (lexer->str[lexer->cursor + 1] == '>')
 	{
 		lexer->cursor += 2;
-		if (!add_lex(kDoubleGreater, NULL, list))
-			exit_error(get_context()->executable_name, NULL, NULL);
+		add_lex(kDoubleGreater, NULL, list);
 	}
 	else
 	{
 		lexer->cursor += 1;
-		if (!add_lex(kGreater, NULL, list))
-			exit_error(get_context()->executable_name, NULL, NULL);
+		add_lex(kGreater, NULL, list);
 	}
 }
 
@@ -33,14 +31,12 @@ static void	parse_lesser(t_lexer *lexer, t_list *list)
 	if (lexer->str[lexer->cursor + 1] == '<')
 	{
 		lexer->cursor += 2;
-		if (!add_lex(kDoubleLesser, NULL, list))
-			exit_error(get_context()->executable_name, NULL, NULL);
+		add_lex(kDoubleLesser, NULL, list);
 	}
 	else
 	{
 		lexer->cursor += 1;
-		if (!add_lex(kLesser, NULL, list))
-			exit_error(get_context()->executable_name, NULL, NULL);
+		add_lex(kLesser, NULL, list);
 	}
 }
 
