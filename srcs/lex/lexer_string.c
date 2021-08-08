@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:52 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 17:49:03 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 23:33:48 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,25 @@ static char	do_escape(t_lexer *lexer)
 	return (ch);
 }
 
+static void	interpolate(t_lexer *lexer, t_list *list, t_strbuf *strbuf, char q)
+{
+	char	c;
+
+	if (!add_lex_string(kString, strbuf, list))
+		exit_error(get_context()->executable_name, NULL, NULL);
+	if (!add_lex(kDollar, NULL, list))
+		exit_error(get_context()->executable_name, NULL, NULL);
+	ft_memset(strbuf, 0, sizeof(t_strbuf));
+	c = lexer->str[++lexer->cursor];
+	if (c == '\0' || c == q)
+		return ;
+	while (ft_isalnum(c) || c == '_')
+	{
+		strbuf_append(strbuf, c);
+		c = lexer->str[++lexer->cursor];
+	}
+}
+
 void	lexer_parse_string(t_lexer *lexer, t_list *list)
 {
 	t_strbuf	strbuf;
@@ -56,7 +75,12 @@ void	lexer_parse_string(t_lexer *lexer, t_list *list)
 		c = lexer->str[lexer->cursor++];
 		if (c == quote || c == '\0')
 			break ;
-		if (c == '\\')
+		else if (c == '$')
+		{
+			interpolate(lexer, list, &strbuf, quote);
+			continue ;
+		}
+		else if (c == '\\')
 			c = do_escape(lexer);
 		if (!strbuf_append(&strbuf, c))
 			exit_error(get_context()->executable_name, NULL, NULL);

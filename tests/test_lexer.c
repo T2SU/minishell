@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:20:08 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 17:45:57 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 23:46:03 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_bool	parse_string_as_lex(const char *str, const char *expected)
 	if (list.length != 1)
 		return (FALSE);
 	lex = (t_lex *)list.head->data;
-	if (strcmp(lex->data.identifier.data, expected))
+	if (strcmp(lex->data, expected))
 		return (FALSE);
 	list_free(&list);
 	return (TRUE);

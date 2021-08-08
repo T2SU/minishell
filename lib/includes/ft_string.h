@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 16:56:43 by smun              #+#    #+#             */
-/*   Updated: 2021/08/08 22:10:32 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 22:41:51 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ char	**ft_split(const char *s, char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 t_bool	ft_atoi_strict(const char *s, int *pvalue);
 char	*ft_strchr(const char *s, int c);
+int		ft_isalnum(char c);
 
 #endif

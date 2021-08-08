@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:55:07 by smun              #+#    #+#             */
-/*   Updated: 2021/08/08 22:13:43 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 23:44:35 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "ft_bool.h"
 #include <stdlib.h>
 
-static size_t	get_total_length(t_strbuf *strbuf)
+size_t	strbuf_length(t_strbuf *strbuf)
 {
 	size_t		len;
 	t_elem		*elem;
@@ -53,7 +53,7 @@ static void	copy_chunks_into_buffer(t_strbuf *strbuf, char *buffer)
 
 char	*strbuf_get(t_strbuf *strbuf, t_bool free_strbuf_after_get)
 {
-	const size_t	len = get_total_length(strbuf);
+	const size_t	len = strbuf_length(strbuf);
 	char			*buffer;
 
 	buffer = malloc(len + 1);

@@ -6,14 +6,14 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 18:21:29 by smun              #+#    #+#             */
-/*   Updated: 2021/08/08 22:14:54 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 23:40:38 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-t_bool	add_lex(int type, int data, t_list *list)
+t_bool	add_lex(int type, char *data, t_list *list)
 {
 	t_lex	*lex;
 
@@ -21,14 +21,7 @@ t_bool	add_lex(int type, int data, t_list *list)
 	if (lex == NULL)
 		return (FALSE);
 	lex->type = type;
-	if (type == kParenthesis)
-		lex->data.parenthesis.data = data;
-	else if (type == kOperator)
-		lex->data.op.type = data;
-	else if (type == kInRedirection)
-		lex->data.in.mode = data;
-	else if (type == kOutRedirection)
-		lex->data.out.mode = data;
+	lex->data = data;
 	if (!list_add(list, lex, &free))
 		return (FALSE);
 	return (TRUE);
@@ -39,7 +32,7 @@ static void		free_lex_string(void *ptr)
 	t_lex	*lex;
 
 	lex = (t_lex *)ptr;
-	free(lex->data.identifier.data);
+	free(lex->data);
 	free(lex);
 }
 
@@ -55,7 +48,7 @@ t_bool	add_lex_string(int type, t_strbuf *strbuf, t_list *list)
 	if (lex == NULL)
 		return (FALSE);
 	lex->type = type;
-	lex->data.identifier.data = str;
+	lex->data = str;
 	list_add(list, lex, &free_lex_string);
 	return (TRUE);
 }

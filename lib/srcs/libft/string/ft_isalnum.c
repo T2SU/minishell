@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_bar.c                                        :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/03 23:32:31 by smun              #+#    #+#             */
-/*   Updated: 2021/08/08 22:32:06 by smun             ###   ########.fr       */
+/*   Created: 2021/08/08 22:40:33 by smun              #+#    #+#             */
+/*   Updated: 2021/08/08 22:41:36 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_string.h"
 
-void	lexer_parse_bar(t_lexer *lexer, t_list *list)
+int	ft_isalnum(char c)
 {
-	if (lexer->str[lexer->cursor + 1] == '|')
-	{
-		lexer->cursor += 2;
-		if (!add_lex(kDoubleBar, NULL, list))
-			exit_error(get_context()->executable_name, NULL, NULL);
-	}
-	else
-	{
-		lexer->cursor += 1;
-		if (!add_lex(kBar, NULL, list))
-			exit_error(get_context()->executable_name, NULL, NULL);
-	}
+	return ((c >= '0' && c <= '9') ||
+			(c >= 'a' && c <= 'z') ||
+			(c >= 'A' && c <= 'Z'));
 }
