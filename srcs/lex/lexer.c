@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 18:21:29 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 17:50:37 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 22:14:54 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	parse_lex(const char *command, t_list *list)
 		if (ch == '\0')
 			break ;
 		if (try_parse_lex(&lexer, list))
-			lexer_lush_identifier(&strbuf, list);
+			lexer_flush_identifier(&strbuf, list);
 		else
 			lexer_build_identifier(&strbuf, ch);
 		lexer.cursor++;

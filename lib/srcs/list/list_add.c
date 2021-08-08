@@ -6,12 +6,12 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 15:11:27 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 15:33:10 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 22:13:09 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "container/_container_list.h"
-#include "libft/_libft_memory.h"
+#include "list.h"
+#include "ft_memory.h"
 #include <stdlib.h>
 
 t_elem	*list_add(t_list *list, void *data, void(*destructor)(void *))

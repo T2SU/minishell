@@ -6,11 +6,11 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:16:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 15:11:51 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 22:12:31 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/_libft_string.h"
+#include "ft_string.h"
 #include "ft_bool.h"
 
 /*

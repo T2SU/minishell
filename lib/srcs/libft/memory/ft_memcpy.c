@@ -6,11 +6,11 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 14:24:54 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 17:33:41 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 22:12:20 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/_libft_memory.h"
+#include "ft_memory.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {

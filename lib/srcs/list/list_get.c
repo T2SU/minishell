@@ -6,11 +6,11 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 15:12:19 by smun              #+#    #+#             */
-/*   Updated: 2021/08/03 17:33:57 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 22:13:18 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "container/_container_list.h"
+#include "list.h"
 #include <stddef.h>
 
 t_elem	*list_get(t_list *list, int index)

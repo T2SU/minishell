@@ -6,11 +6,11 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 15:11:50 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 16:38:49 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 22:13:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "container/_container_list.h"
+#include "list.h"
 #include <stdlib.h>
 
 void	list_free(t_list *list)

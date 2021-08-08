@@ -6,13 +6,13 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:55:07 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 17:40:47 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 22:13:43 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "container/_container_strbuf.h"
-#include "libft/_libft_memory.h"
-#include "libft/_libft_string.h"
+#include "strbuf.h"
+#include "ft_memory.h"
+#include "ft_string.h"
 #include "ft_bool.h"
 #include <stdlib.h>
 

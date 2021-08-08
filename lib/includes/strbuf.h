@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _libft_string.h                                    :+:      :+:    :+:   */
+/*   strbuf.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/03 16:56:43 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 15:27:16 by smun             ###   ########.fr       */
+/*   Created: 2021/08/04 15:49:26 by smun              #+#    #+#             */
+/*   Updated: 2021/08/08 22:09:42 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _LIBFT_STRING_H
-# define _LIBFT_STRING_H
-# include <stddef.h>
+#ifndef STRBUF_H
+# define STRBUF_H
+# include "list.h"
 # include "ft_bool.h"
+# include <stddef.h>
 
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *s1);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-char	**ft_split(const char *s, char c);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-t_bool	ft_atoi_strict(const char *s, int *pvalue);
-char	*ft_strchr(const char *s, int c);
+typedef struct s_strbuf
+{
+	t_list	list;
+}			t_strbuf;
+
+typedef struct s_strchunk
+{
+	size_t	length;
+	char	data[32];
+}			t_strchunk;
+
+t_bool	strbuf_append(t_strbuf *strbuf, char ch);
+char	*strbuf_get(t_strbuf *strbuf, t_bool free_strbuf_after_get);
 
 #endif

@@ -6,11 +6,11 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/01 05:41:48 by smun              #+#    #+#             */
-/*   Updated: 2021/08/04 15:10:45 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 22:12:39 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/_libft_string.h"
+#include "ft_string.h"
 
 char	*ft_strchr(const char *s, int c)
 {
