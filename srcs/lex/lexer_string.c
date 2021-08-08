@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:52 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 00:48:10 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 01:02:23 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ static void	interpolate(t_lexer *lexer, t_list *list, t_strbuf *strbuf, char q)
 {
 	char	c;
 
-	if (!add_lex_string(kString, strbuf, list))
-		exit_error(get_context()->executable_name, NULL, NULL);
-	if (!add_lex(kDollar, NULL, list))
+	if (strbuf_length(strbuf) > 0)
+		if (!add_lex_string(kString, strbuf, list))
+			exit_error(get_context()->executable_name, NULL, NULL);
+	if (!add_lex(kInnerDollar, NULL, list))
 		exit_error(get_context()->executable_name, NULL, NULL);
 	ft_memset(strbuf, 0, sizeof(t_strbuf));
 	c = lexer->str[lexer->cursor];

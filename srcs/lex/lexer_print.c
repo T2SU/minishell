@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 23:46:55 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 00:52:11 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 01:02:40 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static void	init_lex_types(const char *names[])
 	names[kDoubleGreater] = "kDoubleGreater";
 	names[kLesser] = "kLesser";
 	names[kDoubleLesser] = "kDoubleLesser";
-	names[kDollar] = "kDollar";
+	names[kInnerDollar] = "kInnerDollar";
+	names[kOuterDollar] = "kOuterDollar";
 	names[kAmpersand] = "kAmpersand";
 	names[kDoubleAmpersand] = "kDoubleAmpersand";
 	names[kBar] = "kBar";
@@ -29,6 +30,7 @@ static void	init_lex_types(const char *names[])
 	names[kCloseBracket] = "kCloseBracket";
 	names[kString] = "kString";
 	names[kSplitter] = "kSplitter";
+	names[kIdentifier] = "kIdentifier";
 }
 
 static void	print_lex(t_lex *lex, t_bool has_next)

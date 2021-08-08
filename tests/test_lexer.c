@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:20:08 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 00:49:54 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 01:08:09 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,12 @@ static void	parse_lexes(const char *str)
 
 static void test_parse_lexes(void)
 {
+	parse_lexes("\"\\$USER\"");
+	parse_lexes("\\$\"USER\"");
 	parse_lexes("$\"");
 	parse_lexes("$");
+	parse_lexes("echo $\"USER\"");
+	parse_lexes("echo \"$USER\"");
 	parse_lexes("ls -al");
 	parse_lexes("git add .");
 	parse_lexes("echo \"Hello World\"");

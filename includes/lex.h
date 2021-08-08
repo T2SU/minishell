@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 17:37:49 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 00:52:16 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 01:02:21 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ enum	e_lex
 	kDoubleGreater,
 	kLesser,
 	kDoubleLesser,
-	kDollar,
+	kInnerDollar,
+	kOuterDollar,
 	kAmpersand,
 	kDoubleAmpersand,
 	kBar,
