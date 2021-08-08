@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:20:08 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 00:07:52 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 00:49:54 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,21 @@ static void	parse_lexes(const char *str)
 	parse_lex(str, &list);
 	printf("input=[%s]\n", str);
 	print_lexes(&list);
+	printf("-----------------------------------\n");
 	list_free(&list);
 }
 
 static void test_parse_lexes(void)
 {
+	parse_lexes("$\"");
+	parse_lexes("$");
 	parse_lexes("ls -al");
 	parse_lexes("git add .");
 	parse_lexes("echo \"Hello World\"");
 	parse_lexes("echo \"Hello $USER\"");
 	parse_lexes("echo $PATH | cat -e > hello.log");
+	parse_lexes("cat << \"Hello\"WORLD`.lo`'g'");
+	parse_lexes("(./run.sh && sudo /usr/bin/make -C \'../sources\' dev) || echo \"$USER has error\" >> `\"hello\".log` && $");
 }
 
 int		main(int argc, char *argv[])

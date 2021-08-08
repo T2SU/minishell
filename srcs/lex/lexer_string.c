@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:52 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 00:06:32 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 00:48:10 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,14 @@ static void	interpolate(t_lexer *lexer, t_list *list, t_strbuf *strbuf, char q)
 	}
 }
 
+static void	parse_character(t_lexer *lexer, t_strbuf *strbuf, char c)
+{
+	if (c == '\\')
+		c = do_escape(lexer);
+	if (!strbuf_append(strbuf, c))
+		exit_error(get_context()->executable_name, NULL, NULL);
+}
+
 void	lexer_parse_string(t_lexer *lexer, t_list *list)
 {
 	t_strbuf	strbuf;
@@ -71,19 +79,19 @@ void	lexer_parse_string(t_lexer *lexer, t_list *list)
 	ft_memset(&strbuf, 0, sizeof(t_strbuf));
 	while (TRUE)
 	{
-		c = lexer->str[lexer->cursor++];
+		c = lexer->str[lexer->cursor];
+		if (c != '\0')
+			lexer->cursor++;
 		if (c == quote || c == '\0')
 			break ;
-		else if (c == '$')
-		{
+		if (c == '$')
 			interpolate(lexer, list, &strbuf, quote);
-			continue ;
-		}
-		else if (c == '\\')
-			c = do_escape(lexer);
-		if (!strbuf_append(&strbuf, c))
-			exit_error(get_context()->executable_name, NULL, NULL);
+		else
+			parse_character(lexer, &strbuf, c);
 	}
+	if (strbuf_length(&strbuf) == 0)
+		if (!strbuf_append(&strbuf, quote))
+			exit_error(get_context()->executable_name, NULL, NULL);
 	if (!add_lex_string(kString, &strbuf, list))
 		exit_error(get_context()->executable_name, NULL, NULL);
 }
