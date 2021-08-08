@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:20:08 by smun              #+#    #+#             */
-/*   Updated: 2021/08/08 23:46:03 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 00:01:50 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,31 @@ static void	test_parse_string(void)
 	assert(parse_string_as_lex("\"Hi\\", "Hi\\"));
 }
 
+static void	parse_lexes(const char *str)
+{
+	t_list	list;
+
+	memset(&list, 0, sizeof(t_list));
+	parse_lex(str, &list);
+	print_lexes(&list);
+	list_free(&list);
+}
+
+static void test_parse_lexes(void)
+{
+	parse_lexes("ls -al");
+	parse_lexes("git add .");
+	parse_lexes("echo \"Hello World\"");
+	parse_lexes("echo \"Hello $USER\"");
+	parse_lexes("echo $PATH | cat -e > hello.log");
+}
+
 int		main(int argc, char *argv[])
 {
 	do_test(&test_parse_string);
-	print_test_result(argc, argv[0]);
+	(void)argc;
+	(void)argv;
+	//print_test_result(argc, argv[0]);
+	test_parse_lexes();
 	return (0);
 }

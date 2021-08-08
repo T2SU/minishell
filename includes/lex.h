@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 17:37:49 by smun              #+#    #+#             */
-/*   Updated: 2021/08/08 22:28:32 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/08 23:52:04 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ enum	e_lex
 	kString,
 	kSplitter,
 	kIdentifier,
+	kLexNum
 };
 
 enum	e_open
