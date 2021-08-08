@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:20:08 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 00:01:50 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 00:07:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minishell.h"
 #include <assert.h>
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 static t_bool	parse_string_as_lex(const char *str, const char *expected)
@@ -49,6 +50,7 @@ static void	parse_lexes(const char *str)
 
 	memset(&list, 0, sizeof(t_list));
 	parse_lex(str, &list);
+	printf("input=[%s]\n", str);
 	print_lexes(&list);
 	list_free(&list);
 }

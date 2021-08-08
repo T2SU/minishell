@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 17:49:17 by smun              #+#    #+#             */
-/*   Updated: 2021/08/08 23:36:44 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 00:04:13 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	lexer_parse_variable(t_lexer *lexer, t_list *list)
 	ft_memset(&strbuf, 0, sizeof(t_strbuf));
 	while (TRUE)
 	{
-		c = lexer->str[lexer->cursor++];
+		c = lexer->str[++lexer->cursor];
 		if (c == '\0')
 			break ;
 		if (!ft_isalnum(c) && c != '_')

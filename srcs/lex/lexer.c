@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 18:21:29 by smun              #+#    #+#             */
-/*   Updated: 2021/08/08 23:40:38 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 00:26:38 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ t_bool	add_lex_string(int type, t_strbuf *strbuf, t_list *list)
 		return (FALSE);
 	lex->type = type;
 	lex->data = str;
-	list_add(list, lex, &free_lex_string);
-	return (TRUE);
+	return (list_add(list, lex, &free_lex_string));
 }
 
 static t_bool	try_parse_lex(t_lexer *lexer, t_list *list)
@@ -81,20 +80,18 @@ void	parse_lex(const char *command, t_list *list)
 {
 	t_lexer		lexer;
 	t_strbuf	strbuf;
-	char		ch;
 
 	ft_memset(&strbuf, 0, sizeof(t_strbuf));
 	ft_memset(&lexer, 0, sizeof(t_lexer));
 	lexer.str = command;
 	while (TRUE)
 	{
-		ch = lexer.str[lexer.cursor];
-		if (ch == '\0')
+		if (lexer.str[lexer.cursor] == '\0')
 			break ;
 		if (try_parse_lex(&lexer, list))
 			lexer_flush_identifier(&strbuf, list);
 		else
-			lexer_build_identifier(&strbuf, ch);
+			lexer_build_identifier(&strbuf, lexer.str[lexer.cursor++]);
 		lexer.cursor++;
 	}
 }
