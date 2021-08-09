@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 17:08:55 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 01:27:02 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 14:43:05 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	lexer_flush_identifier(t_strbuf *strbuf, t_list *list)
 {
-	add_lex_string(kIdentifier, strbuf, list);
+	add_lex_string(Lex_Identifier, strbuf, list);
 	ft_memset(strbuf, 0, sizeof(t_strbuf));
 }
 

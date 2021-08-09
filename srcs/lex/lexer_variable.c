@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 17:49:17 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 01:30:17 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 14:43:05 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	lexer_parse_variable(t_lexer *lexer, t_list *list)
 	t_strbuf	strbuf;
 	char		c;
 
-	add_lex(kOuterDollar, NULL, list);
+	add_lex(Lex_OuterDollar, NULL, list);
 	ft_memset(&strbuf, 0, sizeof(t_strbuf));
 	while (TRUE)
 	{
@@ -29,5 +29,5 @@ void	lexer_parse_variable(t_lexer *lexer, t_list *list)
 		if (!strbuf_append(&strbuf, c))
 			exit_error(get_context()->executable_name, NULL, NULL);
 	}
-	add_lex_string(kIdentifier, &strbuf, list);
+	add_lex_string(Lex_Identifier, &strbuf, list);
 }

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:52 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 01:31:08 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 14:43:05 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static void	interpolate(t_lexer *lexer, t_list *list, t_strbuf *strbuf, char q)
 {
 	char	c;
 
-	add_lex_string(kString, strbuf, list);
-	add_lex(kInnerDollar, NULL, list);
+	add_lex_string(Lex_String, strbuf, list);
+	add_lex(Lex_InnerDollar, NULL, list);
 	ft_memset(strbuf, 0, sizeof(t_strbuf));
 	c = lexer->str[lexer->cursor];
 	if (c == '\0' || c == q)
@@ -58,7 +58,7 @@ static void	interpolate(t_lexer *lexer, t_list *list, t_strbuf *strbuf, char q)
 			exit_error(get_context()->executable_name, NULL, NULL);
 		c = lexer->str[++lexer->cursor];
 	}
-	add_lex_string(kIdentifier, strbuf, list);
+	add_lex_string(Lex_Identifier, strbuf, list);
 	ft_memset(strbuf, 0, sizeof(t_strbuf));
 }
 
@@ -93,5 +93,5 @@ void	lexer_parse_string(t_lexer *lexer, t_list *list)
 	if (strbuf_length(&strbuf) == 0)
 		if (!strbuf_append(&strbuf, quote))
 			exit_error(get_context()->executable_name, NULL, NULL);
-	add_lex_string(kString, &strbuf, list);
+	add_lex_string(Lex_String, &strbuf, list);
 }
