@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 15:08:12 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 16:11:50 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 21:30:10 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 
 static void	flush_argument(t_parser *parser, t_strbuf *strbuf)
 {
+	char	*str;
+
 	if (strbuf_length(strbuf) == 0)
 		return ;
-	if (!list_add(&parser->collected_args, strbuf_get(&strbuf, TRUE), &free))
-		exit_error(get_context()->executable_name, NULL, NULL);
+	str = strbuf_get(&strbuf, TRUE);
+	if (str == NULL)
+		exit_error(get_context()->executable_name);
+	if (!list_add(&parser->collected_args, str, &free))
+		exit_error(get_context()->executable_name);
 }
 
 void	syntax_append_argument(t_parser *parser)
@@ -36,7 +41,7 @@ void	syntax_append_argument(t_parser *parser)
 	else
 	{
 		if (!strbuf_appends(&strbuf, lex->data))
-			exit_error(get_context()->executable_name, NULL, NULL);
+			exit_error(get_context()->executable_name);
 	}
 }
 
@@ -48,7 +53,7 @@ t_syntax	*syntax_build_command(t_parser *parser)
 		return (NULL);
 	syntax = malloc(sizeof(t_syntax));
 	if (syntax == NULL)
-		exit_error(get_context()->executable_name, NULL, NULL);
+		exit_error(get_context()->executable_name);
 	syntax->type = Syntax_Command;
 	syntax->data.command.list = parser->collected_args;
 	return (syntax);
@@ -81,7 +86,7 @@ t_syntax	*syntax_parse(t_parser *parser)
 		else if (lex->type == Lex_DoubleAmpersand)
 			syntax = syntax_parse_and(parser);
 		else
-			syntax = raise_error("Unexpected token");
+			syntax = raise_error("Unexpected token", NULL);
 		parser->current = parser->current->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 00:29:42 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 01:33:52 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 21:25:51 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	add_lex(int type, char *data, t_list *list)
 
 	lex = malloc(sizeof(t_lex));
 	if (lex == NULL)
-		exit_error(get_context()->executable_name, NULL, NULL);
+		exit_error(get_context()->executable_name);
 	lex->type = type;
 	lex->data = data;
 	if (!list_add(list, lex, &free))
-		exit_error(get_context()->executable_name, NULL, NULL);
+		exit_error(get_context()->executable_name);
 }
 
 static void		free_lex_string(void *ptr)
@@ -44,12 +44,12 @@ void	add_lex_string(int type, t_strbuf *strbuf, t_list *list)
 		return ;
 	str = strbuf_get(strbuf, TRUE);
 	if (str == NULL)
-		exit_error(get_context()->executable_name, NULL, NULL);
+		exit_error(get_context()->executable_name);
 	lex = malloc(sizeof(t_lex));
 	if (lex == NULL)
-		exit_error(get_context()->executable_name, NULL, NULL);
+		exit_error(get_context()->executable_name);
 	lex->type = type;
 	lex->data = str;
 	if (!list_add(list, lex, &free_lex_string))
-		exit_error(get_context()->executable_name, NULL, NULL);
+		exit_error(get_context()->executable_name);
 }

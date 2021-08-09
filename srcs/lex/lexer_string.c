@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 23:32:52 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 14:43:05 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 21:26:08 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	interpolate(t_lexer *lexer, t_list *list, t_strbuf *strbuf, char q)
 	while (ft_isalnum(c) || c == '_')
 	{
 		if (!strbuf_append(strbuf, c))
-			exit_error(get_context()->executable_name, NULL, NULL);
+			exit_error(get_context()->executable_name);
 		c = lexer->str[++lexer->cursor];
 	}
 	add_lex_string(Lex_Identifier, strbuf, list);
@@ -67,7 +67,7 @@ static void	parse_character(t_lexer *lexer, t_strbuf *strbuf, char c)
 	if (c == '\\')
 		c = do_escape(lexer);
 	if (!strbuf_append(strbuf, c))
-		exit_error(get_context()->executable_name, NULL, NULL);
+		exit_error(get_context()->executable_name);
 }
 
 void	lexer_parse_string(t_lexer *lexer, t_list *list)
@@ -92,6 +92,6 @@ void	lexer_parse_string(t_lexer *lexer, t_list *list)
 	}
 	if (strbuf_length(&strbuf) == 0)
 		if (!strbuf_append(&strbuf, quote))
-			exit_error(get_context()->executable_name, NULL, NULL);
+			exit_error(get_context()->executable_name);
 	add_lex_string(Lex_String, &strbuf, list);
 }

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/03 17:37:49 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 16:17:15 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 21:31:45 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ void		add_lex_string(int type, t_strbuf *strbuf, t_list *list);
 void		parse_lex(const char *command, t_list *list);
 const char	*get_lex_name(int type);
 void		print_lexes(t_list *list);
+void		purge_lexes(t_list *list);
 
 #endif
