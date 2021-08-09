@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 14:37:50 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 15:07:29 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 16:06:38 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_parser
 {
 	t_list	*lexes;
 	t_elem	*current;
-	t_list	accumulated_arguments;
+	t_list	collected_args;
 }			t_parser;
 
 typedef struct s_syntax
@@ -86,6 +86,7 @@ typedef struct s_syntax
 }			t_syntax;
 
 void		syntax_append_argument(t_parser *parser);
+t_syntax	*syntax_build_command(t_parser *parser);
 t_syntax	*syntax_parse(t_parser *parser);
 
 #endif

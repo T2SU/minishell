@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:54:48 by smun              #+#    #+#             */
-/*   Updated: 2021/08/08 23:44:41 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 15:14:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,16 @@ t_bool	strbuf_append(t_strbuf *strbuf, char ch)
 	else
 		chunk = (t_strchunk *)strbuf->list.tail->data;
 	chunk->data[chunk->length++] = ch;
+	return (TRUE);
+}
+
+t_bool	strbuf_appends(t_strbuf *strbuf, const char *str)
+{
+	while (*str)
+	{
+		if (!strbuf_append(strbuf, *str))
+			return (FALSE);
+		str++;
+	}
 	return (TRUE);
 }
