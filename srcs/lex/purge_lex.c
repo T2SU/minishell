@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 19:51:29 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 21:36:56 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 22:54:51 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void	purge_lexes(t_list *list)
 			build_and_add(&new_list, &strbuf, cur);
 		cur = cur->next;
 	}
-	build(&new_list, &strbuf);
+	build_and_add(&new_list, &strbuf, cur);
 	*list = new_list;
 }
