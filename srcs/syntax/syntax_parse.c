@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 15:08:12 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 16:06:35 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 16:11:50 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,14 @@ void	syntax_append_argument(t_parser *parser)
 	collected_args = &parser->collected_args;
 	ft_memset(collected_args, 0, sizeof(t_list));
 	ft_memset(&strbuf, 0, sizeof(t_strbuf));
-	while (parser->current != NULL)
+	lex = parser->current->data;
+	if (lex->type != Lex_Splitter)
+		flush_argument(parser, &strbuf);
+	else
 	{
-		lex = parser->current->data;
-		if (lex->type != Lex_Identifier && lex->type != Lex_String)
-			break ;
-		if (lex->type != Lex_Splitter)
-			flush_argument(parser, &strbuf);
-		else
-		{
-			if (!strbuf_appends(&strbuf, lex->data))
-				exit_error(get_context()->executable_name, NULL, NULL);
-		}
-		parser->current = parser->current->next;
+		if (!strbuf_appends(&strbuf, lex->data))
+			exit_error(get_context()->executable_name, NULL, NULL);
 	}
-	add_argument(parser, &strbuf);
 }
 
 t_syntax	*syntax_build_command(t_parser *parser)
@@ -63,8 +56,32 @@ t_syntax	*syntax_build_command(t_parser *parser)
 
 t_syntax	*syntax_parse(t_parser *parser)
 {
+	t_lex		*lex;
+	t_syntax	*syntax;
+
 	while (parser->current != NULL)
 	{
+		lex = parser->current->data;
+		if (lex->type == Lex_Bar)
+			syntax = syntax_parse_pipe(parser);
+		if (lex->type == Lex_DoubleBar)
+			syntax = syntax_parse_or(parser);
+		else if (lex->type == Lex_DoubleBar)
+			syntax = syntax_parse_or(parser);
+		else if (lex->type == Lex_Lesser)
+			syntax = syntax_parse_read(parser);
+		else if (lex->type == Lex_DoubleLesser)
+			syntax = syntax_parse_readdelim(parser);
+		else if (lex->type == Lex_Greater)
+			syntax = syntax_parse_write(parser);
+		else if (lex->type == Lex_DoubleGreater)
+			syntax = syntax_parse_append(parser);
+		else if (lex->type == Lex_OpenBracket)
+			syntax = syntax_parse_subshell(parser);
+		else if (lex->type == Lex_DoubleAmpersand)
+			syntax = syntax_parse_and(parser);
+		else
+			syntax = raise_error("Unexpected token");
 		parser->current = parser->current->next;
 	}
 }

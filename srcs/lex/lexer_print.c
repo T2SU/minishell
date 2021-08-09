@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 23:46:55 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 14:43:12 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 16:16:39 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,18 @@ static void	init_lex_types(const char *names[])
 	names[Lex_Identifier] = "Lex_Identifier";
 }
 
-static void	print_lex(t_lex *lex, t_bool has_next)
+const char	*get_lex_name(int type)
 {
 	static const char *names[Lex_Num];
 
 	if (names[0] == NULL)
 		init_lex_types(names);
-	printf("%s", names[lex->type]);
+	return (names[type]);
+}
+
+static void	print_lex(t_lex *lex, t_bool has_next)
+{
+	printf("%s", get_lex_name(lex->type));
 	if (lex->type == Lex_String || lex->type == Lex_Identifier)
 		printf("(%s)", lex->data);
 	if (has_next)

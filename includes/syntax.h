@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/09 14:37:50 by smun              #+#    #+#             */
-/*   Updated: 2021/08/09 16:06:38 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/09 16:09:09 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,13 @@ typedef struct s_syntax
 void		syntax_append_argument(t_parser *parser);
 t_syntax	*syntax_build_command(t_parser *parser);
 t_syntax	*syntax_parse(t_parser *parser);
+t_syntax	*syntax_parse_pipe(t_parser *parser);
+t_syntax	*syntax_parse_read(t_parser *parser);
+t_syntax	*syntax_parse_readdelim(t_parser *parser);
+t_syntax	*syntax_parse_write(t_parser *parser);
+t_syntax	*syntax_parse_append(t_parser *parser);
+t_syntax	*syntax_parse_subshell(t_parser *parser);
+t_syntax	*syntax_parse_and(t_parser *parser);
+t_syntax	*syntax_parse_or(t_parser *parser);
 
 #endif
