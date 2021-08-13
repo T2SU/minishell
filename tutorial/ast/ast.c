@@ -245,50 +245,37 @@ static t_job	*next_job(t_parser *parser)
 	return ret;
 }
 
-static void print_indentation(int depth)
-{
-	while (depth-- > 0)
-		write(1, "  ", 2);
-}
-
 static void print_ast(t_job *job, int depth)
 {
 	t_elem	*cur;
 	t_word	*word;
 
 	cur = job->cmd->args.head;
-	print_indentation(depth);
-	printf("Job[\n");
-	print_indentation(depth + 1);
-	printf("Command(\n");
+	printf("[ ");
+	printf("(");
 	while (cur != NULL)
 	{
 		word = cur->data;
-		print_indentation(depth + 2);
-		printf("- ");
+		printf(" ");
 		if (word->variable)
 			printf("$");
-		printf("%s\n", word->str);
+		printf("%s", word->str);
 		cur = cur->next;
 	}
 	if (job->cmd->type == Command_Write)
 	{
-		print_indentation(depth + 3);
-		printf("> FileWrite To ");
+		printf(" > ");
 		if (job->cmd->name->variable)
 			printf("$");
-		printf("%s\n", job->cmd->name->str);
+		printf("%s", job->cmd->name->str);
 	}
-	print_indentation(depth + 1);
-	printf(")\n");
+	printf(" )");
 	if (job->pipe_job != NULL)
 	{
-		print_indentation(depth + 1);
-		printf("[[ PIPE(|) ]]\n");
+		printf(" | ");
 		print_ast(job->pipe_job, depth + 1);
 	}
-	print_indentation(depth);
-	printf("]\n");
+	printf(" ]");
 }
 
 static void process_line(char *input)
@@ -368,7 +355,8 @@ static void process_line(char *input)
 	if (job != NULL)
 		print_ast(job, 0);
 	else
-		printf("syntax parse error\n");
+		printf("syntax parse error");
+	printf("\n");
 	list_free(&tokens);
 	//TODO free ast
 }
