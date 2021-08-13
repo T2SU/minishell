@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/01 16:47:39 by smun              #+#    #+#              #
-#    Updated: 2021/08/11 00:04:48 by smun             ###   ########.fr        #
+#    Updated: 2021/08/11 16:52:58 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ INC = -I./
 LIB =
 
 TEST_SRC = fork \
+			fork2 \
 			env \
 			getenv
 TEST_OUT = $(addsuffix .out, $(TEST_SRC))

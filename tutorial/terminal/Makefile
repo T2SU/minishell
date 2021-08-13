@@ -6,12 +6,12 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/01 16:47:39 by smun              #+#    #+#              #
-#    Updated: 2021/08/11 00:42:22 by smun             ###   ########.fr        #
+#    Updated: 2021/08/11 21:49:04 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS =
 
 INC = -I./
 LIB = -ltermcap
@@ -19,7 +19,9 @@ LIB = -ltermcap
 TEST_SRC = cursor0 \
 			cursor1 \
 			cursor2 \
-			tty
+			tty \
+			shell1 \
+			shell2
 TEST_OUT = $(addsuffix .out, $(TEST_SRC))
 
 %.out : %.c
