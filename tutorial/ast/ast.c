@@ -227,13 +227,13 @@ static void print_ast(t_job *job)
 	{
 		word = cur->data;
 		printf(" ");
-		printf("'%s'", word);
+		printf("{%s}", word);
 		cur = cur->next;
 	}
 	if (job->cmd->type == Command_Write)
 	{
 		printf(" > ");
-		printf("%s", job->cmd->name);
+		printf("{%s}", job->cmd->name);
 	}
 	printf(" )");
 	if (job->pipe_job != NULL)
