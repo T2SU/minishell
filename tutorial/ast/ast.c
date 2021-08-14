@@ -17,17 +17,11 @@ typedef struct	s_token
 	char	data;
 } t_token;
 
-typedef struct	s_word
-{
-	int		variable;
-	char	*str;
-} t_word;
-
 typedef struct	s_command
 {
 	int		type;
 	t_list	args;
-	t_word	*name;
+	char	*name;
 } t_command;
 
 typedef struct	s_job
@@ -40,6 +34,7 @@ typedef struct	s_parser
 {
 	t_list	*list;
 	t_elem	*cur;
+	int		current_quote;
 } t_parser;
 
 
@@ -50,10 +45,10 @@ enum e_token
 	Token_Bar,
 	Token_Greater,
 	// Lesser <
-	Token_Dollar,
-	Token_Whitespace
-	// Quote '
-	// DoubleQuote "
+	Token_Whitespace,
+	Token_Quote, // '
+	Token_DoubleQuote, // "
+	Token_HeadQuote // `
 };
 
 enum e_commandtype
@@ -86,14 +81,22 @@ static void skip_whitespaces(t_parser *parser)
 	}
 }
 
-static t_word	*get_word(t_parser *parser)
+static int	is_quote_type(int type)
 {
-	t_word		*word;
+	if (type == Token_DoubleQuote)
+		return 1;
+	if (type == Token_Quote)
+		return 1;
+	if (type == Token_HeadQuote)
+		return 1;
+	return 0;
+}
+
+static char	*get_word(t_parser *parser)
+{
 	t_strbuf	strbuf;
 	t_token		*token;
-	int			is_variable;
 
-	is_variable = -1;
 	ft_memset(&strbuf, 0, sizeof(t_strbuf));
 
 	// 맨 앞에 나오는 공백은 모두 건너뛰기 (ltrim 과 동일)
@@ -104,30 +107,10 @@ static t_word	*get_word(t_parser *parser)
 	{
 		token = parser->cur->data;
 
-		// 문자 또는 $가 아닐 경우 반복문 중단.
-		if (token->type != Token_Character && token->type != Token_Dollar)
-			break ;
-
-		// 맨 처음 나오는 토큰이 $인지, 일반 단어인지 결정.
-		if (is_variable == -1)
+		if (parser->current_quote == Token_Unknown)
 		{
-			is_variable = (token->type == Token_Dollar);
-			if (is_variable)
-				parser->cur = parser->cur->next;
-			continue;
-		}
-
-		// 나오는 문자들을 버퍼에 쌓음.
-		if (is_variable)
-		{
-			// a-zA-Z0-9_ 이외는 변수 명으로 부적절.
-			if (ft_isalnum(token->data) || token->data == '_')
-				strbuf_append(&strbuf, token->data);
-			else
+			if (token->type != Token_Character && !is_quote_type(token->type))
 				break ;
-		}
-		else
-		{
 			strbuf_append(&strbuf, token->data);
 		}
 		parser->cur = parser->cur->next;
@@ -137,21 +120,8 @@ static t_word	*get_word(t_parser *parser)
 	if (strbuf_length(&strbuf) == 0)
 		return (NULL);
 
-	// t_word 구조체를 만들어서 반환.
-	word = malloc(sizeof(t_word));
-	ft_memset(word, 0, sizeof(t_word));
-	word->variable = is_variable;
-	word->str = strbuf_get(&strbuf, TRUE);
-	return word;
-}
-
-static void		free_word(void *ptr)
-{
-	t_word		*word;
-
-	word = (t_word *)ptr;
-	free(word->str);
-	free(word);
+	// 버퍼에 쌓인 문자열들을 char * 형태로 리턴.
+	return strbuf_get(&strbuf, TRUE);
 }
 
 static int		is_acceptable(t_elem *elem, int type)
@@ -167,7 +137,7 @@ static int		is_acceptable(t_elem *elem, int type)
 static t_command	*next_command(t_parser *parser)
 {
 	t_command	*ret;
-	t_word		*word;
+	char		*word;
 
 	ret = malloc(sizeof(t_command));
 	ft_memset(ret, 0, sizeof(t_command));
@@ -182,7 +152,7 @@ static t_command	*next_command(t_parser *parser)
 			break;
 
 		// 읽어온 word가 있다면, words의 args 연결리스트에 읽어온 word를 추가.
-		list_add(&ret->args, word, &free_word);
+		list_add(&ret->args, word, &free);
 	}
 
 	// 누적된 읽어온 word가 하나도 없다면, t_command를 free하고 NULL 리턴. (에러)
@@ -248,7 +218,7 @@ static t_job	*next_job(t_parser *parser)
 static void print_ast(t_job *job)
 {
 	t_elem	*cur;
-	t_word	*word;
+	char	*word;
 
 	cur = job->cmd->args.head;
 	printf("[ ");
@@ -257,17 +227,13 @@ static void print_ast(t_job *job)
 	{
 		word = cur->data;
 		printf(" ");
-		if (word->variable)
-			printf("$");
-		printf("%s", word->str);
+		printf("'%s'", word);
 		cur = cur->next;
 	}
 	if (job->cmd->type == Command_Write)
 	{
 		printf(" > ");
-		if (job->cmd->name->variable)
-			printf("$");
-		printf("%s", job->cmd->name->str);
+		printf("%s", job->cmd->name);
 	}
 	printf(" )");
 	if (job->pipe_job != NULL)
@@ -295,6 +261,7 @@ static void process_line(char *input)
 	//
 	//const char	*input = "echo hello | $abc > smile.log";
 	int			i = 0;
+	char		quote = 0;
 
 	while (input[i] != '\0')
 	{
@@ -302,12 +269,22 @@ static void process_line(char *input)
 			add_token(&tokens, Token_Bar, input[i]);
 		else if (input[i] == '>')
 			add_token(&tokens, Token_Greater, input[i]);
-		else if (input[i] == '$')
-			add_token(&tokens, Token_Dollar, input[i]);
-		else if (input[i] == ' ' || input[i] == '\t')
+		else if (input[i] == '\"')
+			add_token(&tokens, Token_DoubleQuote, input[i]);
+		else if (input[i] == '\'')
+			add_token(&tokens, Token_Quote, input[i]);
+		else if (input[i] == '`')
+			add_token(&tokens, Token_HeadQuote, input[i]);
+		// 처리 중인 따옴표가 있다면, 공백은 공백이 아닌 "문자열"로 토큰을 처리함.
+		else if (quote == 0 && (input[i] == ' ' || input[i] == '\t'))
 			add_token(&tokens, Token_Whitespace, input[i]);
 		else
 			add_token(&tokens, Token_Character, input[i]);
+
+		// 따옴표를 만났을 경우,
+		if (input[i] == '\'' || input[i] == '\"' || input[i] == '`')
+			if (quote == 0 || quote == input[i])
+				quote ^= input[i];
 		i++;
 	}
 
@@ -350,6 +327,7 @@ static void process_line(char *input)
 
 	parser.list = &tokens;
 	parser.cur = tokens.head;
+	parser.current_quote = Token_Unknown;
 
 	t_job	*job = next_job(&parser);
 	if (job != NULL)
