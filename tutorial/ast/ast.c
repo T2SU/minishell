@@ -245,7 +245,7 @@ static t_job	*next_job(t_parser *parser)
 	return ret;
 }
 
-static void print_ast(t_job *job, int depth)
+static void print_ast(t_job *job)
 {
 	t_elem	*cur;
 	t_word	*word;
@@ -273,7 +273,7 @@ static void print_ast(t_job *job, int depth)
 	if (job->pipe_job != NULL)
 	{
 		printf(" | ");
-		print_ast(job->pipe_job, depth + 1);
+		print_ast(job->pipe_job);
 	}
 	printf(" ]");
 }
@@ -353,7 +353,7 @@ static void process_line(char *input)
 
 	t_job	*job = next_job(&parser);
 	if (job != NULL)
-		print_ast(job, 0);
+		print_ast(job);
 	else
 		printf("syntax parse error");
 	printf("\n");
