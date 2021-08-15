@@ -58,6 +58,7 @@ fclean : clean
 	$(RM) $(NAME)
 re : fclean all
 bonus : $(OBJS) $(BOBJS)
-	$(GCC) $(CFLAGS) -c $(SRCS) $(BSRCS)
-	ar rcs $(NAME) $(OBJS) $(BOBJS)
+	@echo "Building libft"
+	@$(GCC) $(CFLAGS) -c $(SRCS) $(BSRCS)
+	@ar rcs $(NAME) $(OBJS) $(BOBJS)
 .PHONY : all clean fclean re
