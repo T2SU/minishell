@@ -6,13 +6,14 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 14:58:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 15:07:24 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 16:48:02 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdio.h>
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -29,6 +30,9 @@ int	main(int argc, char *argv[], char *envp[])
 			break ; // TODO: type 'exit'
 		statement = parse(line);
 		free(line);
+		print_statement(statement);
+		free_statement(statement);
+		printf("\n");
 	}
 	return (EXIT_SUCCESS);
 }

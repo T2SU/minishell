@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 15:17:22 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 15:56:47 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 16:44:37 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ void	print_statement(t_statement *statement)
 	{
 		print_statement(statement->first);
 		if (statement->type == StatementType_And)
-			printf(" && ");
+			printf("&& ");
 		else if (statement->type == StatementType_Or)
-			printf(" || ");
+			printf("|| ");
 		if (statement->type != StatementType_Normal)
 			print_statement(statement->second);
 	}

@@ -13,7 +13,8 @@ SRCS = context \
 		syntax/syntax_parser_job \
 		syntax/syntax_parser_statement \
 		syntax/syntax_parser_word \
-		syntax/syntax_parser
+		syntax/syntax_parser \
+		syntax/syntax_print
 
 SRCS_FULL = $(addsuffix .c, $(addprefix $(ROOT_PATH)/srcs/, $(SRCS)))
 OBJ = $(SRCS_FULL:.c=.o)

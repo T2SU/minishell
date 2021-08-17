@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 13:54:14 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 14:38:18 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 16:44:07 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	get_statement_type(t_parser *parser)
 	int	ret;
 
 	ret = StatementType_Normal;
+	skip_whitespaces(parser);
 	if (is_acceptable(parser->cur, Token_And))
 		ret = StatementType_And;
 	if (is_acceptable(parser->cur, Token_Or))

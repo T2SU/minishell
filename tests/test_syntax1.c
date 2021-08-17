@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 15:16:19 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 16:33:47 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 16:46:02 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 	test_syntax("(echo hello)");
 	test_syntax("(echo hello) && cat");
 	test_syntax("(echo hello && cat) || hexdump");
+	test_syntax("(echo hello && cat && (true || false)) || hexdump > c d e < d >> e h f > g2 g << f | gello && echo hello world > g f d | da d");
 	(void)argc;
 	(void)argv;
 	//print_test_result(argc, argv[0]);
