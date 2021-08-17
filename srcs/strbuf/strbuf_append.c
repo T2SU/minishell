@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strbuf.c                                           :+:      :+:    :+:   */
+/*   strbuf_append.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 16:11:11 by smun              #+#    #+#             */
-/*   Updated: 2021/08/15 16:16:45 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 13:33:56 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,9 @@ t_bool	strbuf_append(t_strbuf *strbuf, char ch)
 	if (should_new_chunk(strbuf))
 	{
 		chunk = new_chunk();
-		if (chunk == NULL)
-			return (FALSE);
 		new = ft_lstnew(chunk);
-		if (new == NULL)
-		{
-			free(chunk);
-			return (FALSE);
-		}
+		if (chunk == NULL || new == NULL)
+			exit_error();
 		ft_lstadd_back(&strbuf->head, new);
 	}
 	else
@@ -64,7 +59,7 @@ t_bool	strbuf_appends(t_strbuf *strbuf, const char *str)
 	while (*str)
 	{
 		if (!strbuf_append(strbuf, *str))
-			return (FALSE);
+			exit_error();
 		str++;
 	}
 	return (TRUE);

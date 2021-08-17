@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/15 17:40:14 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 14:56:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,39 +78,99 @@ void	shell_clean(void);
 ** ------------------------------------------------
 */
 
-typedef struct	s_syntax
+enum e_token
 {
+	Token_Unknown,
+	Token_Character,
+	Token_Dollar,
+	Token_Read,
+	Token_ReadDelim,
+	Token_Write,
+	Token_Append,
+	Token_Quote,
+	Token_Bar,
+	Token_DoubleQuote,
+	Token_WhiteSpace,
+	Token_OpenBracket,
+	Token_CloseBracket,
+	Token_Or,
+	Token_And
+};
 
-}	t_syntax;
-
-t_syntax	*syntax_parse(const char *command);
-
-/*
-** ------------------------------------------------
-**   Module - Utilize Command
-** ------------------------------------------------
-*/
-
-void	process_run(t_syntax *syntax);
-void	process_exec_pipe(t_syntax *syntax);
-void	process_exec_cmd(t_syntax *syntax);
-
-/*
-** ------------------------------------------------
-**   Module - I/O (|, >, >>, <, <<)
-** ------------------------------------------------
-*/
-
-typedef struct s_command
+typedef struct	s_tokenizer
 {
-	char	*redir_in;
-	char	*redir_out;
-	int		pipe_in;
-	int		pipe_out;
+	const char	*str;
+	int			quote;
+}	t_tokenizer;
+
+typedef struct	s_token
+{
+	int		type;
+	char	data[3];
+}	t_token;
+
+typedef struct	s_parser
+{
+	t_list	*lst;
+	t_list	*cur;
+	int		scope;
+}	t_parser;
+
+enum e_redirectiontype
+{
+	RedirType_None,
+	RedirType_Write,
+	RedirType_Append,
+	RedirType_Read,
+	RedirType_ReadDelim
+};
+
+typedef struct	s_redirection
+{
+	int		type;
+	char	*name;
+}	t_redirection;
+
+typedef struct	s_command
+{
+	t_list	*args;
+	t_list	*redirs;
 }	t_command;
 
-void		io_prepare(t_command *cmd);
-void		io_clean(t_command *cmd);
+typedef struct	s_job
+{
+	t_command		*cmd;
+	struct s_job	*pipejob;
+}	t_job;
+
+enum e_statementtype
+{
+	StatementType_Normal,
+	StatementType_Or,
+	StatementType_And,
+	StatementType_SingleJob
+};
+
+typedef struct	s_statement
+{
+	int					type;
+	t_job				*job;
+	struct s_statement	*first;
+	struct s_statement	*second;
+}	t_statement;
+
+t_list		*tokenize(t_tokenizer *tokenizer);
+void		skip_whitespaces(t_parser *parser);
+int			is_acceptable(t_list *lst, int type);
+char		*get_word(t_parser *parser);
+char		*expand_variable(char *name);
+t_command	*next_command(t_parser *parser);
+void		free_command(t_command *cmd);
+t_job		*next_job(t_parser *parser);
+void		free_job(t_job *job);
+t_statement	*next_statement(t_parser *parser);
+void		free_statement(t_statement *statement);
+t_statement	*parse(const char *command);
 
 /*
 ** ------------------------------------------------
@@ -180,9 +240,12 @@ typedef struct s_context
 {
 	t_env	env;
 	char	*app_name;
+	int		error;
 }	t_context;
 
 void		context_init(char *argv0);
 t_context	*context_get(void);
+void		print_error(const char *str);
+void		exit_error(void);
 
 #endif

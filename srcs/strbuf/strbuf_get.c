@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 16:17:56 by smun              #+#    #+#             */
-/*   Updated: 2021/08/15 16:20:22 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 13:32:34 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*strbuf_get(t_strbuf *strbuf, t_bool free_strbuf_after_get)
 
 	buffer = malloc(len + 1);
 	if (buffer == NULL)
-		return (NULL);
+		exit_error();
 	copy_chunks_into_buffer(strbuf, buffer);
 	if (free_strbuf_after_get)
 		ft_lstclear(&strbuf->head, &free);
