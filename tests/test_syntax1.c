@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 15:16:19 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 16:46:02 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 18:34:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void test_syntax(const char *cmd)
 
 int main(int argc, char *argv[])
 {
+	test_syntax("echo )hello");
 	test_syntax("echo hello world");
 	test_syntax("echo \"hello world\"");
 	test_syntax("echo \"hello \"world\"");

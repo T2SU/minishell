@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 17:15:59 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 18:27:11 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,14 @@ typedef struct	s_statement
 	struct s_statement	*first;
 	struct s_statement	*second;
 }	t_statement;
+
+enum	e_parsecmd_status
+{
+	CmdStatus_Success = 1 << 0,
+	CmdStatus_Pass = 1 << 1,
+	CmdStatus_Error = 1 << 2,
+	CmdStatus_NotFound = 1 << 3
+};
 
 t_list		*tokenize(t_tokenizer *tokenizer);
 void		skip_whitespaces(t_parser *parser);
