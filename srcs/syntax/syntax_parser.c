@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:52:02 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 14:57:49 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 15:36:16 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	skip_whitespaces(t_parser *parser)
 {
 	t_token		*token;
 
-	while (parser->lst != NULL)
+	while (parser->cur != NULL)
 	{
-		token = parser->lst->content;
+		token = parser->cur->content;
 		if (token->type != Token_WhiteSpace)
 			break ;
 		parser->cur = parser->cur->next;

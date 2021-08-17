@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 14:56:06 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 15:25:22 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void		free_job(t_job *job);
 t_statement	*next_statement(t_parser *parser);
 void		free_statement(t_statement *statement);
 t_statement	*parse(const char *command);
+void		print_statement(t_statement *statement);
 
 /*
 ** ------------------------------------------------

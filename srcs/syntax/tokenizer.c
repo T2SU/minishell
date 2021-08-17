@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:29:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 14:45:09 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 15:46:46 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ static int	consecutive_chars(t_tokenizer *t, int t1, int t2, char *chars)
 	return (t2);
 }
 
-static int	escape_sequence(t_tokenizer *t)
+static int	escape_sequence(t_tokenizer *t, char *chars)
 {
 	const char	next = *(t->str + 1);
 
 	if (next == '\'' && t->quote == Token_Quote)
 	{
-		t->str++;
+		chars[0] = *(++t->str);
 		return (Token_Character);
 	}
 	if (next == '"' && t->quote == Token_DoubleQuote)
 	{
-		t->str++;
+		chars[0] = *(++t->str);
 		return (Token_Character);
 	}
 	return (Token_Character);
@@ -55,7 +55,7 @@ static int	get_token_type(t_tokenizer *t, char *chars)
 	if (t->quote == 0 && (*t->str == ' ' || *t->str == '\t'))
 		return (Token_WhiteSpace);
 	if (*t->str == '\\')
-		return (escape_sequence(t));
+		return (escape_sequence(t, chars));
 	if (*t->str == '(')
 		return (Token_OpenBracket);
 	if (*t->str == ')')
@@ -92,7 +92,7 @@ t_list	*tokenize(t_tokenizer *tokenizer)
 	char	chars[3];
 
 	lst = NULL;
-	while (tokenizer->str)
+	while (*tokenizer->str)
 	{
 		ft_memset(chars, 0, sizeof(chars));
 		type = get_token_type(tokenizer, chars);
