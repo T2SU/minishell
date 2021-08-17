@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:52:02 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 17:19:43 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 17:36:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	print_syntax_error(t_parser *parser)
 	t_token		*token;
 
 	ft_memset(errmsg, 0, sizeof(errmsg));
-	ft_strlcat(errmsg, "syntax error near `", sizeof(errmsg));
+	ft_strlcat(errmsg, "syntax error near unexpected token `", sizeof(errmsg));
 	if (parser->cur == NULL)
 		ft_strlcat(errmsg, "EOF", sizeof(errmsg));
 	else
@@ -72,6 +72,11 @@ t_statement	*parse(const char *command)
 		statement = next_statement(&parser);
 		if (statement == NULL)
 			print_syntax_error(&parser);
+		else if (parser.scope != 0)
+		{
+			statement = NULL;
+			print_error("syntax error unclosed parenthesiss by `)`");
+		}
 	}
 	ft_lstclear(&parser.lst, &free);
 	return (statement);
