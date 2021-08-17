@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:51:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 17:25:43 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 18:44:35 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ char	*get_word(t_parser *parser)
 	}
 	if (strbuf_length(&strbuf) == 0)
 		return (NULL);
-	return (strbuf_get(&strbuf, TRUE));
+	return (strbuf_get(&strbuf));
 }

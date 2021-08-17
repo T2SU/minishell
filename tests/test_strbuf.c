@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 15:20:08 by smun              #+#    #+#             */
-/*   Updated: 2021/08/15 16:27:04 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 18:44:42 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	test_strbuf1(void)
 	ft_memset(&strbuf, 0, sizeof(t_strbuf));
 	for (int i = 0; i < len; i++)
 		assert(strbuf_append(&strbuf, str[i]));
-	buffer = strbuf_get(&strbuf, TRUE);
+	buffer = strbuf_get(&strbuf);
 	assert(!strcmp(buffer, str));
 }
 
@@ -43,7 +43,7 @@ static void	test_strbuf2(void)
 	assert(strbuf_appends(&strbuf, "o"));
 	assert(strbuf_appends(&strbuf, " World!!"));
 	assert(strbuf_appends(&strbuf, ""));
-	buffer = strbuf_get(&strbuf, TRUE);
+	buffer = strbuf_get(&strbuf);
 	assert(!strcmp(buffer, "Hello World!!"));
 }
 

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 18:27:11 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 18:44:26 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_strchunk
 
 t_bool		strbuf_append(t_strbuf *strbuf, char ch);
 t_bool		strbuf_appends(t_strbuf *strbuf, const char *str);
-char		*strbuf_get(t_strbuf *strbuf, t_bool free_strbuf_after_get);
+char		*strbuf_get(t_strbuf *strbuf);
 size_t		strbuf_length(t_strbuf *strbuf);
 
 /*
