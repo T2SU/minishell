@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 18:44:26 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 19:04:57 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,11 +180,11 @@ t_bool		is_acceptable(t_list *lst, int type);
 char		*get_word(t_parser *parser);
 char		*expand_variable(char *name);
 t_command	*next_command(t_parser *parser);
-void		free_command(t_command *cmd);
+void		*free_command(t_command *cmd);
 t_job		*next_job(t_parser *parser);
-void		free_job(t_job *job);
+void		*free_job(t_job *job);
 t_statement	*next_statement(t_parser *parser);
-void		free_statement(t_statement *statement);
+void		*free_statement(t_statement *statement);
 t_statement	*parse(const char *command);
 void		print_statement(t_statement *statement);
 

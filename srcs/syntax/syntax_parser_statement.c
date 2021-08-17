@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 13:54:14 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 16:44:07 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 19:06:15 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_statement	*next_statement(t_parser *parser)
 	if (is_acceptable(parser->cur, Token_CloseBracket))
 	{
 		if (--(parser->scope) < 0)
-			return (NULL);
+			return (free_statement(ret.first));
 		parser->cur = parser->cur->next;
 		return (make_statement(&ret));
 	}
@@ -96,10 +96,7 @@ t_statement	*next_statement(t_parser *parser)
 	{
 		ret.second = parse_statement(parser, 2);
 		if (ret.second == NULL)
-		{
-			free_statement(ret.first);
-			return (NULL);
-		}
+			return (free_statement(ret.first));
 	}
 	return (make_statement(&ret));
 }

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:52:02 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 17:36:52 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 19:11:00 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_statement	*parse(const char *command)
 			print_syntax_error(&parser);
 		else if (parser.scope != 0)
 		{
-			statement = NULL;
+			statement = free_statement(statement);
 			print_error("syntax error unclosed parenthesiss by `)`");
 		}
 	}
