@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 15:17:22 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 17:26:48 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 19:20:11 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	print_redir(t_redirection *redir)
 		printf(RED" >> ");
 	if (redir->type == RedirType_Read)
 		printf(RED" < ");
-	printf(CYAN"{%s}", redir->name);
+	printf(RED"{%s}", redir->name);
 }
 
 static void	print_command(t_command *cmd)
