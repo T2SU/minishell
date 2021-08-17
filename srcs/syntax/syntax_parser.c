@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:52:02 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 16:00:16 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 17:19:43 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,14 @@ t_statement	*parse(const char *command)
 	parser.lst = tokenize(&tokenizer);
 	parser.scope = 0;
 	parser.cur = parser.lst;
-	statement = next_statement(&parser);
+	skip_whitespaces(&parser);
+	statement = NULL;
+	if (parser.cur != NULL)
+	{
+		statement = next_statement(&parser);
+		if (statement == NULL)
+			print_syntax_error(&parser);
+	}
 	ft_lstclear(&parser.lst, &free);
-	if (statement == NULL)
-		print_syntax_error(&parser);
 	return (statement);
 }

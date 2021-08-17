@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 16:00:29 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 17:15:59 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 # include <stddef.h>
 # define TRUE 1
 # define FALSE 0
+# define RED "\033[31m"
+# define GREEN "\033[32m"
+# define YELLOW "\033[33m"
+# define CYAN "\033[36m"
+# define WHITE "\033[37m"
+# define BLUE "\033[34m"
+# define RESET "\033[0m"
 
 typedef int	t_bool;
 

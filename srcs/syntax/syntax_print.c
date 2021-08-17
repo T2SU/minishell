@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 15:17:22 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 16:44:37 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 17:16:08 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static void print_job(t_job *job)
 	t_redirection	*redir;
 
 	cur = job->cmd->args;
-	printf("[ ");
-	printf("(");
+	printf(GREEN"[ ");
+	printf(RED"(");
 	while (cur != NULL)
 	{
 		word = cur->content;
 		printf(" ");
-		printf("{%s}", word);
+		printf(CYAN"{%s}", word);
 		cur = cur->next;
 	}
 	curr = job->cmd->redirs;
@@ -35,28 +35,28 @@ static void print_job(t_job *job)
 	{
 		redir = curr->content;
 		if (redir->type == RedirType_Write)
-			printf(" > ");
+			printf(RED" > ");
 		if (redir->type == RedirType_ReadDelim)
-			printf(" << ");
+			printf(RED" << ");
 		if (redir->type == RedirType_Append)
-			printf(" >> ");
+			printf(RED" >> ");
 		if (redir->type == RedirType_Read)
-			printf(" < ");
-		printf("{%s}", redir->name);
+			printf(RED" < ");
+		printf(CYAN"{%s}", redir->name);
 		curr = curr->next;
 	}
-	printf(" )");
+	printf(RED" )");
 	if (job->pipejob != NULL)
 	{
-		printf(" | ");
+		printf(GREEN" | ");
 		print_job(job->pipejob);
 	}
-	printf(" ]");
+	printf(GREEN" ]");
 }
 
 void	print_statement(t_statement *statement)
 {
-	printf("《");
+	printf(BLUE"《");
 	if (statement->type == StatementType_SingleJob)
 	{
 		print_job(statement->job);
@@ -66,11 +66,11 @@ void	print_statement(t_statement *statement)
 	{
 		print_statement(statement->first);
 		if (statement->type == StatementType_And)
-			printf("&& ");
+			printf(BLUE"&& ");
 		else if (statement->type == StatementType_Or)
-			printf("|| ");
+			printf(BLUE"|| ");
 		if (statement->type != StatementType_Normal)
 			print_statement(statement->second);
 	}
-	printf("》");
+	printf(BLUE"》"RESET);
 }
