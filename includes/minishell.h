@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 15:25:22 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 16:00:29 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ typedef struct	s_statement
 
 t_list		*tokenize(t_tokenizer *tokenizer);
 void		skip_whitespaces(t_parser *parser);
-int			is_acceptable(t_list *lst, int type);
+t_bool		is_acceptable(t_list *lst, int type);
 char		*get_word(t_parser *parser);
 char		*expand_variable(char *name);
 t_command	*next_command(t_parser *parser);

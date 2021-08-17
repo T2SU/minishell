@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:29:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 15:46:46 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 15:53:41 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ static int	escape_sequence(t_tokenizer *t, char *chars)
 
 	if (next == '\'' && t->quote == Token_Quote)
 	{
-		chars[0] = *(++t->str);
+		chars[1] = *(++t->str);
 		return (Token_Character);
 	}
 	if (next == '"' && t->quote == Token_DoubleQuote)
 	{
-		chars[0] = *(++t->str);
+		chars[1] = *(++t->str);
 		return (Token_Character);
 	}
 	return (Token_Character);

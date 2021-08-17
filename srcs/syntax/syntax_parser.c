@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:52:02 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 15:36:16 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 16:00:16 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void	skip_whitespaces(t_parser *parser)
 	}
 }
 
-int	is_acceptable(t_list *lst, int type)
+t_bool	is_acceptable(t_list *lst, int type)
 {
 	t_token		*token;
 
 	if (lst == NULL)
-		return 0;
+		return (FALSE);
 	token = (t_token *)lst->content;
-	return token->type == type;
+	return (token->type == type);
 }
 
 static void	print_syntax_error(t_parser *parser)

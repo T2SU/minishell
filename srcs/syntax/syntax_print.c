@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 15:17:22 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 15:40:34 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 15:56:47 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void print_job(t_job *job)
 		if (redir->type == RedirType_Read)
 			printf(" < ");
 		printf("{%s}", redir->name);
+		curr = curr->next;
 	}
 	printf(" )");
 	if (job->pipejob != NULL)
