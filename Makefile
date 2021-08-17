@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g
 
 ROOT_PATH = .
 SRCS = context \
@@ -28,10 +28,12 @@ LIBFT_ROOT = $(ROOT_PATH)/libft
 # Install package 'readline-devel'.
 ifeq ($(shell uname -s), Linux)
 	READLINE_ROOT = /usr
+else ifeq ($(shell ./is_cluster.sh; echo $$?), 1)
+	READLINE_ROOT = /usr
 endif
 
 INC = -I$(ROOT_PATH)/includes -I$(LIBFT_ROOT)
-LIB = -L$(READLINE_ROOT)/lib -L$(LIBFT_ROOT) -lreadline -lhistory -ltermcap -lft
+LIB = -L$(READLINE_ROOT)/lib -L$(LIBFT_ROOT) -lreadline -ltermcap -lft
 NAME = minishell
 
 all: $(NAME)
