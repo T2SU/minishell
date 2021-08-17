@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 14:58:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 17:20:12 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 17:22:28 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		line = readline("PROMPT$ ");
 		if (line == NULL)
-			break ; // TODO: type 'exit'
+			break ;
 		statement = parse(line);
 		free(line);
 		if (statement != NULL)

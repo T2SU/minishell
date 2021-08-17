@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:17:14 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 14:50:13 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 17:22:41 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <errno.h>
 #include <unistd.h>
 
-void		context_init(char *argv0)
+void	context_init(char *argv0)
 {
 	context_get()->app_name = argv0;
 }

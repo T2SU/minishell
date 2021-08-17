@@ -6,22 +6,33 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 15:17:22 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 17:16:08 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/17 17:26:48 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
-static void print_job(t_job *job)
+static void	print_redir(t_redirection *redir)
 {
-	t_list			*cur;
-	t_list			*curr;
-	char			*word;
-	t_redirection	*redir;
+	if (redir->type == RedirType_Write)
+		printf(RED" > ");
+	if (redir->type == RedirType_ReadDelim)
+		printf(RED" << ");
+	if (redir->type == RedirType_Append)
+		printf(RED" >> ");
+	if (redir->type == RedirType_Read)
+		printf(RED" < ");
+	printf(CYAN"{%s}", redir->name);
+}
 
-	cur = job->cmd->args;
-	printf(GREEN"[ ");
+static void	print_command(t_command *cmd)
+{
+	char	*word;
+	t_list	*cur;
+	t_list	*curr;
+
+	cur = cmd->args;
 	printf(RED"(");
 	while (cur != NULL)
 	{
@@ -30,22 +41,19 @@ static void print_job(t_job *job)
 		printf(CYAN"{%s}", word);
 		cur = cur->next;
 	}
-	curr = job->cmd->redirs;
+	curr = cmd->redirs;
 	while (curr != NULL)
 	{
-		redir = curr->content;
-		if (redir->type == RedirType_Write)
-			printf(RED" > ");
-		if (redir->type == RedirType_ReadDelim)
-			printf(RED" << ");
-		if (redir->type == RedirType_Append)
-			printf(RED" >> ");
-		if (redir->type == RedirType_Read)
-			printf(RED" < ");
-		printf(CYAN"{%s}", redir->name);
+		print_redir(curr->content);
 		curr = curr->next;
 	}
 	printf(RED" )");
+}
+
+static void	print_job(t_job *job)
+{
+	printf(GREEN"[ ");
+	print_command(job->cmd);
 	if (job->pipejob != NULL)
 	{
 		printf(GREEN" | ");
