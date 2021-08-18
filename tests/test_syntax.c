@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 18:03:24 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 02:27:40 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 03:35:28 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,13 @@ static void	test_simple2(void)
 	t_syntax	*syntax;
 
 	tokenizer.quote = 0;
-	tokenizer.str = "$US>ER";
+	tokenizer.str = "ER >> dd << dd g f | cat < b < gogo > dd"; // $US>>ER| A$B\"C\"
 
 	tokens = tokenize(&tokenizer);
 	print_tokens(tokens);
 	syntax = syntax_parse(tokens);
+	if (syntax == NULL)
+		printf("syntax error\n");
 	ft_lstclear(&tokens, &dispose_token);
 	syntax_print(syntax);
 	printf(RESET"\n");

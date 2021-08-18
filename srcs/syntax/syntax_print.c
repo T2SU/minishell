@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 00:17:34 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 02:23:34 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 03:24:46 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	print_word(t_word *word)
 	t_list		*chunklst;
 
 	chunklst = word->wordlist;
-	printf(CYAN"{ ");
+	printf(CYAN"{");
 	while (chunklst != NULL)
 	{
 		chunk = chunklst->content;
@@ -76,7 +76,7 @@ static void	print_simplecmd(t_simplecmd *simplecmd)
 		syntaxlst = syntaxlst->next;
 	}
 	print_redirection(simplecmd->redirs);
-	printf(YELLOW")");
+	printf(YELLOW") ");
 }
 
 static void	print_connection(t_connect *con)
@@ -105,6 +105,7 @@ void	syntax_print(t_syntax *syntax)
 	{
 		printf(BLUE"[ ");
 		syntax_print(syntax->subshell->command);
-		printf(BLUE"]");
+		printf(BLUE"] ");
 	}
+	print_redirection(syntax->redirs);
 }

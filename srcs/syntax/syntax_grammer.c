@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 00:09:04 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 01:38:01 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 03:30:58 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,15 @@ static t_bool	match(t_stack *stack,
 
 t_bool	syntax_reassemble(t_stack *st)
 {
-	if (match(st, kGreaterGreater, kWord, 0))
-		syntax_make_redirection(st, kAppend);
-	else if (match(st, '(', kCommand, ')'))
+
+	if (match(st, '(', kCommand, ')'))
 		syntax_make_subshell(st);
-	else if (match(st, '<', kWord, 0))
-		syntax_make_redirection(st, kRead);
-	else if (match(st, kLessLess, kWord, 0))
-		syntax_make_redirection(st, kReadHeredoc);
-	else if (match(st, '>', kWord, 0))
-		syntax_make_redirection(st, kWrite);
 	else if (match(st, kRedir, kRedir, 0))
 		syntax_make_redirections(st, stack_pop(st));
+	else if (match(st, kSimpleCommand, kWord, 0))
+		syntax_append_argument(st);
+	else if (match(st, kConnection, kWord, 0))
+		syntax_append_argument_to_connect(st);
 	else if (match(st, kCommand, kRedir, 0))
 		syntax_connect_redirection(st, stack_pop(st));
 	else if (match(st, kCommand, '|', kCommand))
@@ -71,7 +68,15 @@ t_bool	syntax_reassemble(t_stack *st)
 
 t_bool	syntax_assemble(t_stack *st)
 {
-	if (match(st, kWord, kWordList, 0))
+	if (match(st, kGreaterGreater, kWord, 0))
+		syntax_make_redirection(st, kAppend);
+	else if (match(st, '<', kWord, 0))
+		syntax_make_redirection(st, kRead);
+	else if (match(st, kLessLess, kWord, 0))
+		syntax_make_redirection(st, kReadHeredoc);
+	else if (match(st, '>', kWord, 0))
+		syntax_make_redirection(st, kWrite);
+	else if (match(st, kWord, kWordList, 0))
 		syntax_make_wordlist(st, stack_pop(st));
 	else if (match(st, kWord, 0, 0))
 		syntax_make_wordlist(st, NULL);

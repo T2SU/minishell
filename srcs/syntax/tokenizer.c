@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:29:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 02:07:24 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 02:51:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	dispatch_type(t_tokenizer *t, int t1, int t2, char *chars)
 
 	if (next == cur)
 	{
-		t->str++;
 		chars[1] = next;
 		return (t1);
 	}
@@ -29,9 +28,9 @@ static int	dispatch_type(t_tokenizer *t, int t1, int t2, char *chars)
 static int	get_token_type(t_tokenizer *t, char *chars)
 {
 	chars[0] = *t->str;
-	if (*t->str == '>')
-		return (dispatch_type(t, kLessLess, '<', chars));
 	if (*t->str == '<')
+		return (dispatch_type(t, kLessLess, '<', chars));
+	if (*t->str == '>')
 		return (dispatch_type(t, kGreaterGreater, '>', chars));
 	if (*t->str == '|')
 		return (dispatch_type(t, kBarBar, '|', chars));
