@@ -8,7 +8,7 @@ SRCS = context \
 		strbuf/strbuf_append \
 		strbuf/strbuf_get \
 		syntax/tokenizer \
-		syntax/syntax_clean \
+		syntax/syntax_dispose \
 		syntax/syntax_parser_command \
 		syntax/syntax_parser_job \
 		syntax/syntax_parser_statement \

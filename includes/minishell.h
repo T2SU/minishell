@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/18 16:29:10 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/18 18:47:44 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_strchunk
 
 t_bool		strbuf_append(t_strbuf *strbuf, char ch);
 t_bool		strbuf_appends(t_strbuf *strbuf, const char *str);
-char		*strbuf_get(t_strbuf *strbuf, t_bool free_strbuf_after_get);
+char		*strbuf_get(t_strbuf *strbuf);
 size_t		strbuf_length(t_strbuf *strbuf);
 
 /*
@@ -97,20 +97,16 @@ void	shell_clean(void);
 enum e_token
 {
 	Token_Unknown,
-	Token_Character,
-	Token_Dollar,
-	Token_Read,
-	Token_ReadDelim,
-	Token_Write,
-	Token_Append,
-	Token_Quote,
+	Token_Word,
+	Token_GreaterGreater,
+	Token_Greater,
+	Token_Less,
+	Token_LessLess,
 	Token_Bar,
-	Token_DoubleQuote,
-	Token_WhiteSpace,
-	Token_OpenBracket,
-	Token_CloseBracket,
-	Token_Or,
-	Token_And
+	Token_BarBar,
+	Token_AndAnd,
+	Token_Open,
+	Token_Close
 };
 
 typedef struct	s_tokenizer
@@ -119,10 +115,29 @@ typedef struct	s_tokenizer
 	int			quote;
 }	t_tokenizer;
 
+enum e_wordflag
+{
+	WordFlag_None = 0,
+	WordFlag_DollarSign = 1 << 0,
+	WordFlag_LastExitCode = 1 << 1
+};
+
+typedef struct	s_wordchunk
+{
+	enum e_wordflag	flag;
+	char			*str;
+}	t_wordchunk;
+
+typedef struct	s_word
+{
+	t_list	*wordlist;
+}	t_word;
+
 typedef struct	s_token
 {
-	int		type;
-	char	data[3];
+	int				type;
+	struct s_word	word;
+	char			chars[3];
 }	t_token;
 
 typedef struct	s_parser
@@ -131,23 +146,6 @@ typedef struct	s_parser
 	t_list	*cur;
 	int		scope;
 }	t_parser;
-
-enum e_wordflag
-{
-	WordFlag_None = 0,
-	WordFlag_DollarSign = 1 << 0
-};
-
-typedef struct	s_word
-{
-	enum e_wordflag	flag;
-	char			*str;
-}	t_word;
-
-typedef struct	s_wordlist
-{
-	t_list	*words;
-}	t_wordlist;
 
 enum e_redirtype
 {
@@ -163,7 +161,7 @@ typedef struct	s_redir
 	enum e_redirtype	type;
 	int					fd;
 	int					flags;
-	t_wordlist			*filename;
+	t_word				*filename;
 	char				*heredoc_eof;
 }	t_redir;
 
@@ -193,6 +191,11 @@ typedef struct	s_subshell
 
 }	t_subshell;
 
+t_word	get_word(t_tokenizer *tokenizer);
+t_list	*tokenize(t_tokenizer *tokenizer);
+
+void	dispose_wordchunk(void *ptr);
+void	dispose_token(void *ptr);
 
 /*
 ** ------------------------------------------------

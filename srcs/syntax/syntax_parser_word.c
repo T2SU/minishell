@@ -6,36 +6,87 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:51:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/18 16:40:22 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/18 18:50:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_bool	is_quote(int type)
+static t_bool	flush(t_word *word, t_strbuf *strbuf, int quote)
 {
-	if (type == Token_Quote)
-		return (TRUE);
-	if (type == Token_DoubleQuote)
-		return (TRUE);
-	return (FALSE);
+	t_wordchunk	*chunk;
+	t_list		*lst;
+
+	(void)quote;
+	if (strbuf_length(strbuf) == 0)
+		return (FALSE);
+	chunk = malloc(sizeof(t_wordchunk));
+	lst = ft_lstnew(chunk);
+	if (chunk == NULL || lst == NULL)
+		exit_error();
+	chunk->str = strbuf_get(strbuf);
+	chunk->flag = WordFlag_None;
+	ft_lstadd_back(&word->wordlist, lst);
+	return (TRUE);
 }
 
-char	*get_word(t_parser *parser)
+static void	parse_variable(t_word *word, t_strbuf *wsb, t_tokenizer *t)
 {
 	t_strbuf	strbuf;
-	t_token		*token;
+	t_wordchunk	*chunk;
+	t_list		*lst;
+
+	flush(word, wsb, t->quote);
+	chunk = malloc(sizeof(t_wordchunk));
+	lst = ft_lstnew(chunk);
+	if (chunk == NULL || lst == NULL)
+		exit_error();
+	ft_memset(&strbuf, 0, sizeof(t_strbuf));
+	if (*(++t->str) == '?')
+		chunk->flag = WordFlag_LastExitCode;
+	else
+		chunk->flag = WordFlag_DollarSign;
+	if (chunk->flag == WordFlag_LastExitCode)
+		strbuf_append(&strbuf, *(t->str++));
+	else if (chunk->flag == WordFlag_DollarSign)
+		while (*(++t->str) && (ft_isalnum(*t->str) || *t->str == '_'))
+			strbuf_append(&strbuf, *(t->str));
+	chunk->str = strbuf_get(&strbuf);
+	ft_lstadd_back(&word->wordlist, lst);
+}
+
+static void	escape_char(t_tokenizer *t)
+{
+	const char	next = *(t->str + 1);
+
+	if (t->quote != '\"')
+		return ;
+	if (next == '\"')
+		t->str++;
+}
+
+t_word	get_word(t_tokenizer *t)
+{
+	t_word		word;
+	t_strbuf	strbuf;
 
 	ft_memset(&strbuf, 0, sizeof(t_strbuf));
-	while (parser->cur != NULL)
+	ft_memset(&word, 0, sizeof(t_word));
+	while (*t->str != '\0')
 	{
-		token = parser->cur->content;
-		if (token->type != Token_Character && !is_quote(token->type))
+		if (t->quote == 0 && ft_strchr(" \t<>&|()", *t->str))
 			break ;
-		strbuf_appends(&strbuf, token->data);
-		parser->cur = parser->cur->next;
+		if (*t->str == '\'' || *t->str == '"')
+			if (t->quote == 0 || t->quote == *t->str)
+				if (flush(&word, &strbuf, t->quote ^= *(t->str++)))
+					continue ;
+		if (*t->str == '\\')
+			escape_char(t);
+		if (*t->str == '$')
+			parse_variable(&word, &strbuf, t);
+		else if (*t->str != '\0')
+			strbuf_append(&strbuf, *(t->str++));
 	}
-	if (strbuf_length(&strbuf) == 0)
-		return (NULL);
-	return strbuf_get(&strbuf, TRUE);
+	flush(&word, &strbuf, 0);
+	return (word);
 }

@@ -6,13 +6,13 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:29:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 14:45:09 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/18 18:33:07 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	consecutive_chars(t_tokenizer *t, int t1, int t2, char *chars)
+static int	dispatch_type(t_tokenizer *t, int t1, int t2, char *chars)
 {
 	const char	cur = *(t->str);
 	const char	next = *(t->str + 1);
@@ -26,52 +26,25 @@ static int	consecutive_chars(t_tokenizer *t, int t1, int t2, char *chars)
 	return (t2);
 }
 
-static int	escape_sequence(t_tokenizer *t)
-{
-	const char	next = *(t->str + 1);
-
-	if (next == '\'' && t->quote == Token_Quote)
-	{
-		t->str++;
-		return (Token_Character);
-	}
-	if (next == '"' && t->quote == Token_DoubleQuote)
-	{
-		t->str++;
-		return (Token_Character);
-	}
-	return (Token_Character);
-}
-
 static int	get_token_type(t_tokenizer *t, char *chars)
 {
 	chars[0] = *t->str;
-	if (*t->str == '\'')
-		return (Token_Quote);
-	if (*t->str == '\"')
-		return (Token_DoubleQuote);
-	if (*t->str == '$')
-		return (Token_Dollar);
-	if (t->quote == 0 && (*t->str == ' ' || *t->str == '\t'))
-		return (Token_WhiteSpace);
-	if (*t->str == '\\')
-		return (escape_sequence(t));
-	if (*t->str == '(')
-		return (Token_OpenBracket);
-	if (*t->str == ')')
-		return (Token_CloseBracket);
 	if (*t->str == '>')
-		return (consecutive_chars(t, Token_Append, Token_Write, chars));
+		return (dispatch_type(t, Token_LessLess, Token_Less, chars));
 	if (*t->str == '<')
-		return (consecutive_chars(t, Token_ReadDelim, Token_Read, chars));
+		return (dispatch_type(t, Token_GreaterGreater, Token_Greater, chars));
 	if (*t->str == '|')
-		return (consecutive_chars(t, Token_Or, Token_Bar, chars));
+		return (dispatch_type(t, Token_BarBar, Token_Bar, chars));
 	if (*t->str == '&')
-		return (consecutive_chars(t, Token_And, Token_Character, chars));
-	return (Token_Character);
+		return (dispatch_type(t, Token_AndAnd, Token_Word, chars));
+	if (*t->str == '(')
+		return (Token_Open);
+	if (*t->str == ')')
+		return (Token_Close);
+	return (Token_Word);
 }
 
-static t_list	*new_token_list(int type, char *chars)
+static t_list	*generate_token(t_tokenizer *t, int type, char *chars)
 {
 	t_list	*lst;
 	t_token	*token;
@@ -80,7 +53,13 @@ static t_list	*new_token_list(int type, char *chars)
 	lst = ft_lstnew(token);
 	if (lst == NULL || token == NULL)
 		exit_error();
-	ft_memcpy(token->data, chars, sizeof(token->data));
+	if (type == Token_Word)
+		token->word = get_word(t);
+	else
+	{
+		ft_memcpy(token->chars, chars, sizeof(token->chars));
+		t->str += ft_strlen(chars);
+	}
 	token->type = type;
 	return (lst);
 }
@@ -92,15 +71,16 @@ t_list	*tokenize(t_tokenizer *tokenizer)
 	char	chars[3];
 
 	lst = NULL;
-	while (tokenizer->str)
+	while (*tokenizer->str)
 	{
+		if (*tokenizer->str == ' ' || *tokenizer->str == '\t')
+		{
+			tokenizer->str++;
+			continue ;
+		}
 		ft_memset(chars, 0, sizeof(chars));
 		type = get_token_type(tokenizer, chars);
-		ft_lstadd_back(&lst, new_token_list(type, chars));
-		if (type == Token_DoubleQuote || type == Token_Quote)
-			if (tokenizer->quote == type || tokenizer->quote == 0)
-				tokenizer->quote ^= type;
-		tokenizer->str++;
+		ft_lstadd_back(&lst, generate_token(tokenizer, type, chars));
 	}
 	return (lst);
 }

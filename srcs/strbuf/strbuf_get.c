@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 16:17:56 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 13:32:34 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/18 17:32:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	copy_chunks_into_buffer(t_strbuf *strbuf, char *buffer)
 	buffer[i] = '\0';
 }
 
-char	*strbuf_get(t_strbuf *strbuf, t_bool free_strbuf_after_get)
+char	*strbuf_get(t_strbuf *strbuf)
 {
 	const size_t	len = strbuf_length(strbuf);
 	char			*buffer;
@@ -56,7 +56,6 @@ char	*strbuf_get(t_strbuf *strbuf, t_bool free_strbuf_after_get)
 	if (buffer == NULL)
 		exit_error();
 	copy_chunks_into_buffer(strbuf, buffer);
-	if (free_strbuf_after_get)
-		ft_lstclear(&strbuf->head, &free);
+	ft_lstclear(&strbuf->head, &free);
 	return (buffer);
 }
