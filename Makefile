@@ -5,11 +5,20 @@ ROOT_PATH = .
 SRCS = context \
 		main \
 		variable \
+		safe_memory \
 		strbuf/strbuf_append \
 		strbuf/strbuf_get \
 		syntax/dispose \
 		syntax/tokenizer \
-		syntax/tokenizer_word
+		syntax/tokenizer_word \
+		syntax/syntax_grammer \
+		syntax/syntax_make_connect \
+		syntax/syntax_make_redir \
+		syntax/syntax_make_simplecmd \
+		syntax/syntax_make_subshell \
+		syntax/syntax_make_word \
+		syntax/syntax_parser \
+		syntax/syntax
 
 SRCS_FULL = $(addsuffix .c, $(addprefix $(ROOT_PATH)/srcs/, $(SRCS)))
 OBJ = $(SRCS_FULL:.c=.o)
@@ -23,10 +32,12 @@ LIBFT_ROOT = $(ROOT_PATH)/libft
 # Install package 'readline-devel'.
 ifeq ($(shell uname -s), Linux)
 	READLINE_ROOT = /usr
+else ifeq ($(shell ./is_cluster.sh; echo $$?), 1)
+	READLINE_ROOT = /usr
 endif
 
 INC = -I$(ROOT_PATH)/includes -I$(LIBFT_ROOT)
-LIB = -L$(READLINE_ROOT)/lib -L$(LIBFT_ROOT) -lreadline -lhistory -ltermcap -lft
+LIB = -L$(READLINE_ROOT)/lib -L$(LIBFT_ROOT) -lreadline -ltermcap -lft
 NAME = minishell
 
 all: $(NAME)

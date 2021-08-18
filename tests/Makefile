@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/15 16:22:38 by smun              #+#    #+#              #
-#    Updated: 2021/08/18 16:38:49 by smun             ###   ########.fr        #
+#    Updated: 2021/08/19 00:44:49 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 INC = -I../includes -I. -I../libft
 LIBSRCS = ../srcs/context.c \
 			../srcs/variable.c \
+			../srcs/safe_memory.c \
 			$(wildcard ../srcs/strbuf/*.c) \
 			$(wildcard ../srcs/stack/*.c) \
 			$(wildcard ../srcs/syntax/*.c)

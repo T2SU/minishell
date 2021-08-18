@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_tokenizer.c                                   :+:      :+:    :+:   */
+/*   test_syntax.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 18:03:24 by smun              #+#    #+#             */
-/*   Updated: 2021/08/18 21:42:32 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 01:05:34 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,77 +48,25 @@ static void	print_tokens(t_list *tokens)
 	printf("\n");
 }
 
-static void	test_simple1(void)
-{
-	t_tokenizer	tokenizer;
-	t_list		*tokens;
-
-	tokenizer.quote = 0;
-	tokenizer.str = "hello \"wor\"rd$USER'gogo'  ";
-
-	tokens = tokenize(&tokenizer);
-	print_tokens(tokens);
-	ft_lstclear(&tokens, &dispose_token);
-}
-
 static void	test_simple2(void)
 {
 	t_tokenizer	tokenizer;
 	t_list		*tokens;
+	t_syntax	*syntax;
 
 	tokenizer.quote = 0;
 	tokenizer.str = "$US>ER";
 
 	tokens = tokenize(&tokenizer);
 	print_tokens(tokens);
+	syntax = syntax_parse(tokens);
 	ft_lstclear(&tokens, &dispose_token);
-}
+	syntax_print(syntax);
 
-static void	test_simple3(void)
-{
-	t_tokenizer	tokenizer;
-	t_list		*tokens;
-
-	tokenizer.quote = 0;
-	tokenizer.str = "echo $USER> 'c'a\"t\"| hex -C>Fantasy|h'e'llo";
-
-	tokens = tokenize(&tokenizer);
-	print_tokens(tokens);
-	ft_lstclear(&tokens, &dispose_token);
-}
-
-static void	test_simple4(void)
-{
-	t_tokenizer	tokenizer;
-	t_list		*tokens;
-
-	tokenizer.quote = 0;
-	tokenizer.str = "'hello'>go$?go";
-
-	tokens = tokenize(&tokenizer);
-	print_tokens(tokens);
-	ft_lstclear(&tokens, &dispose_token);
-}
-
-static void	test_simple5(void)
-{
-	t_tokenizer	tokenizer;
-	t_list		*tokens;
-
-	tokenizer.quote = 0;
-	tokenizer.str = "echo $USER<< 'c'a\"t\"| hex -C<Fantasy|h'e'l(l) && (hello || gog | g'\\l' \\\" \")o\"&";
-
-	tokens = tokenize(&tokenizer);
-	print_tokens(tokens);
-	ft_lstclear(&tokens, &dispose_token);
 }
 
 int		main(void)
 {
-	test_simple4();
-	test_simple1();
 	test_simple2();
-	test_simple3();
-	test_simple5();
 	return (0);
 }

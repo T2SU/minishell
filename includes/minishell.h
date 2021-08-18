@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/18 18:47:44 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 01:02:23 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 # include <stddef.h>
 # define TRUE 1
 # define FALSE 0
+# define RED "\033[31m"
+# define GREEN "\033[32m"
+# define YELLOW "\033[33m"
+# define CYAN "\033[36m"
+# define WHITE "\033[37m"
+# define BLUE "\033[34m"
+# define RESET "\033[0m"
 
 typedef int	t_bool;
 
@@ -96,17 +103,23 @@ void	shell_clean(void);
 
 enum e_token
 {
-	Token_Unknown,
-	Token_Word,
-	Token_GreaterGreater,
-	Token_Greater,
-	Token_Less,
-	Token_LessLess,
-	Token_Bar,
-	Token_BarBar,
-	Token_AndAnd,
-	Token_Open,
-	Token_Close
+	kUnknown,
+	kWord,
+	kGreaterGreater,
+	kLessLess,
+	kBarBar,
+	kAndAnd,
+	kWordList,
+	kRedir,
+	kSimpleCommand,
+	kConnection,
+	kSubShell,
+	kGreater = '>',
+	kLess = '<',
+	kBar = '|',
+	kOpen = '(',
+	kClose = ')',
+	kCommand
 };
 
 typedef struct	s_tokenizer
@@ -135,25 +148,17 @@ typedef struct	s_word
 
 typedef struct	s_token
 {
-	int				type;
-	struct s_word	word;
+	enum e_token	type;
+	struct s_word	*word;
 	char			chars[3];
 }	t_token;
 
-typedef struct	s_parser
-{
-	t_list	*lst;
-	t_list	*cur;
-	int		scope;
-}	t_parser;
-
 enum e_redirtype
 {
-	RedirectionType_None,
-	RedirectionType_Write,
-	RedirectionType_Append,
-	RedirectionType_Read,
-	RedirectionType_ReadHeredoc,
+	kWrite,
+	kAppend,
+	kRead,
+	kReadHeredoc,
 };
 
 typedef struct	s_redir
@@ -173,29 +178,58 @@ typedef struct	s_simplecmd
 
 enum e_connector
 {
-	ConnectorType_None,
-	ConnectorType_Pipe,
-	ConnectorType_And,
-	ConnectorType_Or
+	kPipe,
+	kAnd,
+	kOr
 };
 
 typedef struct	s_connect
 {
 	enum e_connector	connector;
-	struct s_command	*first;
-	struct s_command	*second;
+	struct s_syntax		*first;
+	struct s_syntax		*second;
 }	t_connect;
 
 typedef struct	s_subshell
 {
-
+	struct s_syntax		*command;
 }	t_subshell;
 
-t_word	get_word(t_tokenizer *tokenizer);
-t_list	*tokenize(t_tokenizer *tokenizer);
+typedef struct	s_syntax
+{
+	enum e_token		type;
+	struct s_simplecmd	*simplecmd;
+	struct s_connect	*connect;
+	struct s_subshell	*subshell;
+	struct s_word		*word;
+	t_list				*wordlist;
+	t_list				*redirs;
+}	t_syntax;
 
-void	dispose_wordchunk(void *ptr);
-void	dispose_token(void *ptr);
+t_word		*get_word(t_tokenizer *tokenizer);
+t_list		*tokenize(t_tokenizer *tokenizer);
+
+t_syntax	*syntax_parse(t_list *tokens);
+t_syntax	*syntax_make(void *data, enum e_token desired_type);
+void		*syntax_strip(t_syntax *syntax, enum e_token desired_type);
+t_bool		syntax_is_command(t_syntax *syntax);
+void		syntax_print(t_syntax *syntax);
+
+t_bool		syntax_assemble(t_stack *st);
+void		syntax_build_from_token(t_stack *st, t_token *token);
+void		syntax_make_wordlist(t_stack *st, t_syntax *syntax);
+void		syntax_make_redirection(t_stack *st, int type);
+void		syntax_make_redirections(t_stack *st, t_syntax *next);
+void		syntax_make_simplecmd(t_stack *st, t_syntax *redir);
+void		syntax_connect_redirection(t_stack *st, t_syntax *redir);
+void		syntax_make_connection(t_stack *st, int type);
+void		syntax_make_subshell(t_stack *st);
+
+void		dispose_wordchunk(void *ptr);
+void		dispose_token(void *ptr);
+void		dispose_word(void *ptr);
+void		dispose_redirection(void *ptr);
+void		dispose_syntax(void *ptr);
 
 /*
 ** ------------------------------------------------
@@ -272,5 +306,7 @@ void		context_init(char *argv0);
 t_context	*context_get(void);
 void		print_error(const char *str);
 void		exit_error(void);
+void		*safe_malloc(size_t size);
+char		*word_get(t_word *word, t_bool expand_vars);
 
 #endif

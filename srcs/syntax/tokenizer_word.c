@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_parser_word.c                               :+:      :+:    :+:   */
+/*   tokenizer_word.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:51:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/18 18:50:52 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 01:08:09 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static t_bool	flush(t_word *word, t_strbuf *strbuf, int quote)
 	(void)quote;
 	if (strbuf_length(strbuf) == 0)
 		return (FALSE);
-	chunk = malloc(sizeof(t_wordchunk));
+	chunk = safe_malloc(sizeof(t_wordchunk));
 	lst = ft_lstnew(chunk);
-	if (chunk == NULL || lst == NULL)
+	if (lst == NULL)
 		exit_error();
 	chunk->str = strbuf_get(strbuf);
 	chunk->flag = WordFlag_None;
@@ -37,9 +37,9 @@ static void	parse_variable(t_word *word, t_strbuf *wsb, t_tokenizer *t)
 	t_list		*lst;
 
 	flush(word, wsb, t->quote);
-	chunk = malloc(sizeof(t_wordchunk));
+	chunk = safe_malloc(sizeof(t_wordchunk));
 	lst = ft_lstnew(chunk);
-	if (chunk == NULL || lst == NULL)
+	if (lst == NULL)
 		exit_error();
 	ft_memset(&strbuf, 0, sizeof(t_strbuf));
 	if (*(++t->str) == '?')
@@ -49,8 +49,8 @@ static void	parse_variable(t_word *word, t_strbuf *wsb, t_tokenizer *t)
 	if (chunk->flag == WordFlag_LastExitCode)
 		strbuf_append(&strbuf, *(t->str++));
 	else if (chunk->flag == WordFlag_DollarSign)
-		while (*(++t->str) && (ft_isalnum(*t->str) || *t->str == '_'))
-			strbuf_append(&strbuf, *(t->str));
+		while (*(t->str) && (ft_isalnum(*t->str) || *t->str == '_'))
+			strbuf_append(&strbuf, *(t->str++));
 	chunk->str = strbuf_get(&strbuf);
 	ft_lstadd_back(&word->wordlist, lst);
 }
@@ -65,7 +65,16 @@ static void	escape_char(t_tokenizer *t)
 		t->str++;
 }
 
-t_word	get_word(t_tokenizer *t)
+t_word	*dup_word(t_word *ref)
+{
+	t_word	*ret;
+
+	ret = safe_malloc(sizeof(t_word));
+	*ret = *ref;
+	return (ret);
+}
+
+t_word	*get_word(t_tokenizer *t)
 {
 	t_word		word;
 	t_strbuf	strbuf;
@@ -88,5 +97,5 @@ t_word	get_word(t_tokenizer *t)
 			strbuf_append(&strbuf, *(t->str++));
 	}
 	flush(&word, &strbuf, 0);
-	return (word);
+	return (dup_word(&word));
 }

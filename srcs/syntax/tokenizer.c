@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:29:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/18 18:33:07 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/18 21:34:25 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ static int	get_token_type(t_tokenizer *t, char *chars)
 {
 	chars[0] = *t->str;
 	if (*t->str == '>')
-		return (dispatch_type(t, Token_LessLess, Token_Less, chars));
+		return (dispatch_type(t, kLessLess, '<', chars));
 	if (*t->str == '<')
-		return (dispatch_type(t, Token_GreaterGreater, Token_Greater, chars));
+		return (dispatch_type(t, kGreaterGreater, '>', chars));
 	if (*t->str == '|')
-		return (dispatch_type(t, Token_BarBar, Token_Bar, chars));
+		return (dispatch_type(t, kBarBar, '|', chars));
 	if (*t->str == '&')
-		return (dispatch_type(t, Token_AndAnd, Token_Word, chars));
+		return (dispatch_type(t, kAndAnd, kWord, chars));
 	if (*t->str == '(')
-		return (Token_Open);
+		return ('(');
 	if (*t->str == ')')
-		return (Token_Close);
-	return (Token_Word);
+		return (')');
+	return (kWord);
 }
 
 static t_list	*generate_token(t_tokenizer *t, int type, char *chars)
@@ -49,11 +49,11 @@ static t_list	*generate_token(t_tokenizer *t, int type, char *chars)
 	t_list	*lst;
 	t_token	*token;
 
-	token = malloc(sizeof(t_token));
+	token = safe_malloc(sizeof(t_token));
 	lst = ft_lstnew(token);
-	if (lst == NULL || token == NULL)
+	if (lst == NULL)
 		exit_error();
-	if (type == Token_Word)
+	if (type == kWord)
 		token->word = get_word(t);
 	else
 	{
