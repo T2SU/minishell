@@ -7,13 +7,9 @@ SRCS = context \
 		variable \
 		strbuf/strbuf_append \
 		strbuf/strbuf_get \
+		syntax/dispose \
 		syntax/tokenizer \
-		syntax/syntax_dispose \
-		syntax/syntax_parser_command \
-		syntax/syntax_parser_job \
-		syntax/syntax_parser_statement \
-		syntax/syntax_parser_word \
-		syntax/syntax_parser
+		syntax/tokenizer_word
 
 SRCS_FULL = $(addsuffix .c, $(addprefix $(ROOT_PATH)/srcs/, $(SRCS)))
 OBJ = $(SRCS_FULL:.c=.o)
