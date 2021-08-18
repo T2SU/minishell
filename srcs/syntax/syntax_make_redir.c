@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 20:54:12 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 00:44:08 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 02:13:26 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	syntax_make_redirection(t_stack *st, int type)
 {
 	t_word		*word;
 	t_redir		*redir;
-	t_list		*lst;
+	t_list		*redirlst;
 
 	word = syntax_strip(stack_pop(st), kWord);
 	(void)syntax_strip(stack_pop(st), type);
@@ -41,21 +41,21 @@ void	syntax_make_redirection(t_stack *st, int type)
 		redir->filename = word;
 	redir->type = type;
 	set_open_flags(&redir->flags, type);
-	lst = ft_lstnew(redir);
-	if (lst == NULL)
+	redirlst = ft_lstnew(redir);
+	if (redirlst == NULL)
 		exit_error();
-	stack_push(st, syntax_make(lst, kRedir));
+	stack_push(st, syntax_make(redirlst, kRedir));
 }
 
 void	syntax_make_redirections(t_stack *st, t_syntax *next)
 {
-	t_syntax	*prev;
-	t_list		*lst_next;
+	t_syntax	*prev_syntax;
+	t_list		*nextredir_lst;
 
-	prev = stack_pop(st);
-	lst_next = syntax_strip(next, kRedir);
-	ft_lstadd_back(&prev->redirs, lst_next);
-	stack_push(st, prev);
+	prev_syntax = stack_pop(st);
+	nextredir_lst = syntax_strip(next, kRedir);
+	ft_lstadd_back(&prev_syntax->redirs, nextredir_lst);
+	stack_push(st, prev_syntax);
 }
 
 void	syntax_connect_redirection(t_stack *st, t_syntax *redir)

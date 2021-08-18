@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 00:09:04 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 00:53:09 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 01:38:01 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,19 @@ static t_bool	match(t_stack *stack,
 	return (TRUE);
 }
 
-static t_bool	assemble_redir(t_stack *st)
+t_bool	syntax_reassemble(t_stack *st)
 {
-	if (match(st, kRedir, kRedir, 0))
+	if (match(st, kGreaterGreater, kWord, 0))
+		syntax_make_redirection(st, kAppend);
+	else if (match(st, '(', kCommand, ')'))
+		syntax_make_subshell(st);
+	else if (match(st, '<', kWord, 0))
+		syntax_make_redirection(st, kRead);
+	else if (match(st, kLessLess, kWord, 0))
+		syntax_make_redirection(st, kReadHeredoc);
+	else if (match(st, '>', kWord, 0))
+		syntax_make_redirection(st, kWrite);
+	else if (match(st, kRedir, kRedir, 0))
 		syntax_make_redirections(st, stack_pop(st));
 	else if (match(st, kCommand, kRedir, 0))
 		syntax_connect_redirection(st, stack_pop(st));
@@ -61,15 +71,7 @@ static t_bool	assemble_redir(t_stack *st)
 
 t_bool	syntax_assemble(t_stack *st)
 {
-	if (match(st, '<', kWord, 0))
-		syntax_make_redirection(st, kRead);
-	else if (match(st, kLessLess, kWord, 0))
-		syntax_make_redirection(st, kReadHeredoc);
-	else if (match(st, '>', kWord, 0))
-		syntax_make_redirection(st, kWrite);
-	else if (match(st, kGreaterGreater, kWord, 0))
-		syntax_make_redirection(st, kAppend);
-	else if (match(st, kWord, kWordList, 0))
+	if (match(st, kWord, kWordList, 0))
 		syntax_make_wordlist(st, stack_pop(st));
 	else if (match(st, kWord, 0, 0))
 		syntax_make_wordlist(st, NULL);
@@ -77,10 +79,6 @@ t_bool	syntax_assemble(t_stack *st)
 		syntax_make_simplecmd(st, stack_pop(st));
 	else if (match(st, kWordList, 0, 0))
 		syntax_make_simplecmd(st, NULL);
-	else if (match(st, '(', kCommand, ')'))
-		syntax_make_subshell(st);
-	else if (assemble_redir(st))
-		return (TRUE);
 	else
 		return (FALSE);
 	return (TRUE);

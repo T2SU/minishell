@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 00:17:34 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 00:34:06 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 02:23:34 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,31 @@
 static void	print_word(t_word *word)
 {
 	t_wordchunk	*chunk;
-	t_list		*lst;
+	t_list		*chunklst;
 
-	lst = word->wordlist;
+	chunklst = word->wordlist;
 	printf(CYAN"{ ");
-	while (lst != NULL)
+	while (chunklst != NULL)
 	{
-		chunk = lst->content;
+		chunk = chunklst->content;
 		if (chunk->flag == WordFlag_DollarSign)
 			printf("$%s", chunk->str);
 		else if (chunk->flag == WordFlag_LastExitCode)
 			printf("$?");
 		else
 			printf("%s", chunk->str);
-		lst = lst->next;
+		chunklst = chunklst->next;
 	}
 	printf(CYAN"} ");
 }
 
-static void	print_redirection(t_list *lst)
+static void	print_redirection(t_list *redirlst)
 {
-	t_redir	*redir;
+	t_redir		*redir;
 
-	while (lst != NULL)
+	while (redirlst != NULL)
 	{
-		redir = lst->content;
+		redir = redirlst->content;
 		if (redir->type == kRead)
 		{
 			printf(RED"< ");
@@ -58,22 +58,24 @@ static void	print_redirection(t_list *lst)
 		}
 		if (redir->type == kReadHeredoc)
 			printf(RED"<< {%s} ", redir->heredoc_eof);
-		lst = lst->next;
+		redirlst = redirlst->next;
 	}
 }
 
 static void	print_simplecmd(t_simplecmd *simplecmd)
 {
-	t_list	*lst;
+	t_list		*syntaxlst;
+	t_word		*word;
 
 	printf(YELLOW"( ");
-	lst = simplecmd->args->content;
-	while (lst != NULL)
+	syntaxlst = simplecmd->args;
+	while (syntaxlst != NULL)
 	{
-		print_word(lst->content);
-		lst = lst->next;
+		word = syntaxlst->content;
+		print_word(word);
+		syntaxlst = syntaxlst->next;
 	}
-	print_redirection(lst);
+	print_redirection(simplecmd->redirs);
 	printf(YELLOW")");
 }
 

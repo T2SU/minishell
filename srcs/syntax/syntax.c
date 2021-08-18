@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 20:31:25 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 01:02:20 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 02:03:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ void	syntax_build_from_token(t_stack *st, t_token *token)
 
 	data = NULL;
 	if (token->type == kWord)
+	{
 		data = token->word;
+		token->word = NULL;
+	}
 	stack_push(st, syntax_make(data, token->type));
 }

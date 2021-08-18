@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:03:18 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 00:49:59 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 01:43:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ t_syntax	*syntax_parse(t_list *tokens)
 	lst = tokens;
 	while (TRUE)
 	{
-		syntax_assemble(&st);
-		if (lst != NULL)
+		if (!syntax_reassemble(&st) && !syntax_assemble(&st))
+		{
+			if (lst == NULL)
+				break ;
 			syntax_build_from_token(&st, lst->content);
-		else
-			return (validate(&st));
+			lst = lst->next;
+		}
 	}
+	return (validate(&st));
 }

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 13:46:05 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 00:41:41 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 02:05:58 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void	dispose_token(void *ptr)
 			ft_lstclear(&token->word->wordlist, &dispose_wordchunk);
 		free(token->word);
 	}
-	else
-		free(token);
+	free(token);
 }
 
 void	dispose_word(void *ptr)

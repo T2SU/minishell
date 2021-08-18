@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 18:03:24 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 01:05:34 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 02:27:40 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static void	test_simple2(void)
 	syntax = syntax_parse(tokens);
 	ft_lstclear(&tokens, &dispose_token);
 	syntax_print(syntax);
-
+	printf(RESET"\n");
+	dispose_syntax(syntax);
 }
 
 int		main(void)

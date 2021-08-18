@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 01:02:23 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 01:19:15 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ t_bool		syntax_is_command(t_syntax *syntax);
 void		syntax_print(t_syntax *syntax);
 
 t_bool		syntax_assemble(t_stack *st);
+t_bool		syntax_reassemble(t_stack *st);
 void		syntax_build_from_token(t_stack *st, t_token *token);
 void		syntax_make_wordlist(t_stack *st, t_syntax *syntax);
 void		syntax_make_redirection(t_stack *st, int type);

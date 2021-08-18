@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:29:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/18 21:34:25 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 02:07:24 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static t_list	*generate_token(t_tokenizer *t, int type, char *chars)
 	t_token	*token;
 
 	token = safe_malloc(sizeof(t_token));
+	ft_memset(token, 0, sizeof(t_token));
 	lst = ft_lstnew(token);
 	if (lst == NULL)
 		exit_error();
