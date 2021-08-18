@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:51:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 14:20:05 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/18 16:40:22 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	*get_word(t_parser *parser)
 	t_token		*token;
 
 	ft_memset(&strbuf, 0, sizeof(t_strbuf));
-	skip_whitespaces(parser);
 	while (parser->cur != NULL)
 	{
 		token = parser->cur->content;

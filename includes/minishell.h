@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 14:56:06 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/18 16:29:10 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ typedef struct s_pair
 t_bool		dict_put(t_dict *dict, char *key, char *value);
 char		*dict_get(t_dict *dict, char *key);
 void		dict_free(t_dict *dict);
+
+/*
+** ------------------------------------------------
+**   Stack
+** ------------------------------------------------
+*/
+
+typedef struct s_stack
+{
+	t_list	*dat;
+}	t_stack;
+
+void	*stack_peek(t_stack *stack, int index);
+void	stack_push(t_stack *stack, void *data);
+void	*stack_pop(t_stack *stack);
+int		stack_size(t_stack *stack);
 
 /*
 ** ------------------------------------------------
@@ -116,61 +132,67 @@ typedef struct	s_parser
 	int		scope;
 }	t_parser;
 
-enum e_redirectiontype
+enum e_wordflag
 {
-	RedirType_None,
-	RedirType_Write,
-	RedirType_Append,
-	RedirType_Read,
-	RedirType_ReadDelim
+	WordFlag_None = 0,
+	WordFlag_DollarSign = 1 << 0
 };
 
-typedef struct	s_redirection
+typedef struct	s_word
 {
-	int		type;
-	char	*name;
-}	t_redirection;
+	enum e_wordflag	flag;
+	char			*str;
+}	t_word;
 
-typedef struct	s_command
+typedef struct	s_wordlist
+{
+	t_list	*words;
+}	t_wordlist;
+
+enum e_redirtype
+{
+	RedirectionType_None,
+	RedirectionType_Write,
+	RedirectionType_Append,
+	RedirectionType_Read,
+	RedirectionType_ReadHeredoc,
+};
+
+typedef struct	s_redir
+{
+	enum e_redirtype	type;
+	int					fd;
+	int					flags;
+	t_wordlist			*filename;
+	char				*heredoc_eof;
+}	t_redir;
+
+typedef struct	s_simplecmd
 {
 	t_list	*args;
 	t_list	*redirs;
-}	t_command;
+}	t_simplecmd;
 
-typedef struct	s_job
+enum e_connector
 {
-	t_command		*cmd;
-	struct s_job	*pipejob;
-}	t_job;
-
-enum e_statementtype
-{
-	StatementType_Normal,
-	StatementType_Or,
-	StatementType_And,
-	StatementType_SingleJob
+	ConnectorType_None,
+	ConnectorType_Pipe,
+	ConnectorType_And,
+	ConnectorType_Or
 };
 
-typedef struct	s_statement
+typedef struct	s_connect
 {
-	int					type;
-	t_job				*job;
-	struct s_statement	*first;
-	struct s_statement	*second;
-}	t_statement;
+	enum e_connector	connector;
+	struct s_command	*first;
+	struct s_command	*second;
+}	t_connect;
 
-t_list		*tokenize(t_tokenizer *tokenizer);
-void		skip_whitespaces(t_parser *parser);
-int			is_acceptable(t_list *lst, int type);
-char		*get_word(t_parser *parser);
-char		*expand_variable(char *name);
-t_command	*next_command(t_parser *parser);
-void		free_command(t_command *cmd);
-t_job		*next_job(t_parser *parser);
-void		free_job(t_job *job);
-t_statement	*next_statement(t_parser *parser);
-void		free_statement(t_statement *statement);
-t_statement	*parse(const char *command);
+typedef struct	s_subshell
+{
+
+}	t_subshell;
+
 
 /*
 ** ------------------------------------------------
@@ -179,7 +201,7 @@ t_statement	*parse(const char *command);
 ** ------------------------------------------------
 */
 
-void		command_run(t_command *cmd, int argc, char *argv[]);
+// void		command_run(t_command *cmd, int argc, char *argv[]);
 
 /*
 ** ------------------------------------------------
