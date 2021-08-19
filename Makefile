@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -Werror
 # Debug Compilation Flags
 # 나중에 제출 등에서는 아래 조건의 코멘트를 해제하여 기본적으로는 디버깅용 CFLAGS가 추가되지 않도록 해야함.
 # ifeq ($(DEBUG),1)
-	CFLAGS += -g
+	CFLAGS += -g -DVERBOSE=1
 # -fsanitize=address
 # endif
 
@@ -16,7 +16,8 @@ SRCS = context \
 		strbuf/strbuf_append \
 		strbuf/strbuf_get \
 		stack/stack \
-		syntax/dispose \
+		syntax/dispose_atom \
+		syntax/dispose_property \
 		syntax/tokenizer \
 		syntax/tokenizer_word \
 		syntax/tokenizer_print \

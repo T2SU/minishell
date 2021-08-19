@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 20:54:12 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 02:48:19 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 15:51:53 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	syntax_make_redirection(t_stack *st, int type)
 	t_list		*redirlst;
 
 	word = syntax_strip(stack_pop(st), kWord);
-	(void)syntax_strip(stack_pop(st), type);
+	free(stack_pop(st));
 	redir = safe_malloc(sizeof(t_redir));
 	ft_memset(redir, 0, sizeof(t_redir));
 	if (type == kReadHeredoc)

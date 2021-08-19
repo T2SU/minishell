@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:58:24 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 03:34:11 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 15:51:39 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	syntax_make_connection(t_stack *st, int type)
 
 	con = safe_malloc(sizeof(t_connect));
 	con->second = stack_pop(st);
-	(void)stack_pop(st);
+	free(stack_pop(st));
 	con->first = stack_pop(st);
 	con->connector = type;
 	stack_push(st, syntax_make(con, kConnection));

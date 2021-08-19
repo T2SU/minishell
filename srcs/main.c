@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 14:58:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 15:20:59 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 16:15:29 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	char		*line;
-	t_syntax	*syntax;
+	enum e_parsestatus	status;
+	char				*line;
+	t_syntax			*syntax;
 
 	(void)envp;
 	(void)argc;
@@ -27,9 +28,14 @@ int	main(int argc, char *argv[], char *envp[])
 		line = readline("PROMPT$ ");
 		if (line == NULL)
 			break ; // TODO: type 'exit'
-		syntax = parse(line);
-		dispose_syntax(syntax);
+		status = parse(&syntax, line);
+		if (status != kEmptyLine)
+			add_history(line);
 		free(line);
+		if (status == kFailed)
+			print_error("syntax parse error");
+		dispose_syntax(syntax);
+
 	}
 	return (EXIT_SUCCESS);
 }

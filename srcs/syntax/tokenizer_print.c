@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 14:54:36 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 15:04:29 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 15:50:32 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	print_tokens(t_list *tokens)
 			{
 				printf("     ");
 				print_word(lst);
+				lst = lst->next;
 			}
 		}
 		else

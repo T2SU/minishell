@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 15:10:04 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 16:12:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,14 @@ typedef struct	s_syntax
 	t_list				*redirs;
 }	t_syntax;
 
-t_syntax	*parse(const char *line);
+enum e_parsestatus
+{
+	kSuccess,
+	kEmptyLine,
+	kFailed
+};
+
+int			parse(t_syntax **syntax, char *line);
 
 t_word		*get_word(t_tokenizer *tokenizer);
 t_list		*tokenize(t_tokenizer *tokenizer);
@@ -237,7 +244,6 @@ void		syntax_append_argument_to_connect(t_stack *st);
 void		dispose_wordchunk(void *ptr);
 void		dispose_token(void *ptr);
 void		dispose_word(void *ptr);
-void		dispose_redirection(void *ptr);
 void		dispose_syntax(void *ptr);
 
 /*

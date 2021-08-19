@@ -6,12 +6,13 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:03:18 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 15:21:15 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 16:14:44 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 static t_syntax	*validate(t_stack *st)
 {
@@ -58,30 +59,26 @@ t_syntax	*syntax_parse(t_list *tokens)
 	return (validate(&st));
 }
 
-t_syntax	*parse(const char *line)
+int	parse(t_syntax **syntax, char *line)
 {
 	t_tokenizer	tokenizer;
 	t_list		*tokens;
-	t_syntax	*ret;
 
 	tokenizer.str = line;
 	tokenizer.quote = 0;
 	tokens = tokenize(&tokenizer);
 	if (tokens == NULL)
-	{
-		printf("\n");
-		return (NULL);
-	}
+		return (kEmptyLine);
 	if (VERBOSE)
 		print_tokens(tokens);
-	ret = syntax_parse(tokens);
-	dispose_token(tokens);
-	if (ret != NULL && VERBOSE)
+	*syntax = syntax_parse(tokens);
+	ft_lstclear(&tokens, dispose_token);
+	if (*syntax != NULL && VERBOSE)
 	{
-		syntax_print(ret);
-		printf(RESET);
+		syntax_print(*syntax);
+		printf(RESET"\n");
 	}
-	if (ret == NULL)
-		print_error("syntax parse error");
-	return (ret);
+	if (*syntax == NULL)
+		return (kFailed);
+	return (kSuccess);
 }

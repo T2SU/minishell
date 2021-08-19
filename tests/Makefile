@@ -6,12 +6,13 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/15 16:22:38 by smun              #+#    #+#              #
-#    Updated: 2021/08/19 00:44:49 by smun             ###   ########.fr        #
+#    Updated: 2021/08/19 15:33:38 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g
+#-fsanitize=address
 
 INC = -I../includes -I. -I../libft
 LIBSRCS = ../srcs/context.c \
