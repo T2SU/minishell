@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:51:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 16:40:34 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 19:39:40 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_word	*get_word(t_tokenizer *t)
 	ft_memset(&word, 0, sizeof(t_word));
 	while (*t->str != '\0')
 	{
-		if (t->quote == 0 && ft_strchr(" \t<>&|()", *t->str))
+		if (t->quote == 0 && ft_strchr(" \t\n\r<>&|()", *t->str))
 			break ;
 		if (ft_strchr("\'\"", *t->str)
 			&& (t->quote == 0 || t->quote == *(t->str)))

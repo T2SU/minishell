@@ -4,7 +4,8 @@ CFLAGS = -Wall -Wextra -Werror
 # Debug Compilation Flags
 # 나중에 제출 등에서는 아래 조건의 코멘트를 해제하여 기본적으로는 디버깅용 CFLAGS가 추가되지 않도록 해야함.
 # ifeq ($(DEBUG),1)
-	CFLAGS += -g -DVERBOSE=1 -fsanitize=address
+	CFLAGS += -g -DVERBOSE=1
+# -fsanitize=address
 # endif
 
 ROOT_PATH = .

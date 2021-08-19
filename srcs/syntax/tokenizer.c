@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:29:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 02:51:27 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 19:39:56 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_list	*tokenize(t_tokenizer *tokenizer)
 	lst = NULL;
 	while (*tokenizer->str)
 	{
-		if (*tokenizer->str == ' ' || *tokenizer->str == '\t')
+		if (ft_strchr(" \t\r\n", *tokenizer->str))
 		{
 			tokenizer->str++;
 			continue ;

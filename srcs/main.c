@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 14:58:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 16:17:46 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 19:38:00 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	main(int argc, char *argv[], char *envp[])
 		free(line);
 		if (status == kFailed)
 			print_error("syntax parse error");
-		dispose_syntax(syntax);
+		if (status == kSuccess)
+			dispose_syntax(syntax);
 	}
 	return (EXIT_SUCCESS);
 }
