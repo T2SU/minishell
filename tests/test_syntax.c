@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 18:03:24 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 18:51:05 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 21:16:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void	test_simple2(void)
 
 	// tokenizer.str = "(ER >> dd << dd g f | cat < b < gogo $US>>ER| A$B\"C\" > dd && (true || false | (go $A << gos)))|cat 43a sda<<dso>das ddd g\"$'sd\"s'";
 	//parse(&syntax, ft_strdup("(ER >> dd << dd g f | cat < b < gogo $US>>ER| A$B\"C\" > dd && (true || false | (go $A << gos)))|cat 43a sda<<dso>das ddd g\"$'sd\"s'"));
-	parse(&syntax, ft_strdup("echo \"hello world\" > hello.log"));
+	//parse(&syntax, ft_strdup("echo \"hello world\" > hello.log"));
+	parse(&syntax, ft_strdup("''\"\""));
 	dispose_syntax(syntax);
 }
 

@@ -13,6 +13,7 @@ SRCS = context \
 		main \
 		variable \
 		safe_memory \
+		ft_basename \
 		strbuf/strbuf_append \
 		strbuf/strbuf_get \
 		stack/stack \
@@ -34,21 +35,11 @@ SRCS = context \
 SRCS_FULL = $(addsuffix .c, $(addprefix $(ROOT_PATH)/srcs/, $(SRCS)))
 OBJ = $(SRCS_FULL:.c=.o)
 
-# Default macOS brew package installation path.
-READLINE_ROOT = /usr/local/opt/readline
-
 # Libft path
 LIBFT_ROOT = $(ROOT_PATH)/libft
 
-# Install package 'readline-devel'.
-ifeq ($(shell uname -s), Linux)
-	READLINE_ROOT = /usr
-else ifeq ($(shell ./is_cluster.sh; echo $$?), 1)
-	READLINE_ROOT = /usr
-endif
-
 INC = -I$(ROOT_PATH)/includes -I$(LIBFT_ROOT)
-LIB = -L$(READLINE_ROOT)/lib -L$(LIBFT_ROOT) -lreadline -ltermcap -lft
+LIB = -L/usr/lib -L$(LIBFT_ROOT) -lreadline -ltermcap -lft
 NAME = minishell
 
 all: $(NAME)

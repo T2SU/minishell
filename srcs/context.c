@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:17:14 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 16:17:57 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 21:25:07 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void	context_init(char *argv0)
 {
-	context_get()->app_name = argv0;
+	context_get()->app_name = ft_basename(argv0);
 }
 
 t_context	*context_get(void)

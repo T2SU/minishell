@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 19:01:35 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 21:24:40 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,7 +320,8 @@ void		context_init(char *argv0);
 t_context	*context_get(void);
 void		print_error(const char *str);
 void		exit_error(void);
-void		*safe_malloc(size_t size);
 char		*word_get(t_word *word, t_bool expand_vars);
+void		*safe_malloc(size_t size);
+char		*ft_basename(char *path);
 
 #endif

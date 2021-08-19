@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:03:18 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 16:19:32 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 21:11:51 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,21 @@ t_syntax	*syntax_parse(t_list *tokens)
 	return (validate(&st));
 }
 
+static t_bool	is_emptyline(char *line)
+{
+	while (*line)
+		if (NULL == ft_strchr(" \t\r\n", *(line++)))
+			return (FALSE);
+	return (TRUE);
+}
+
 int	parse(t_syntax **syntax, char *line)
 {
 	t_tokenizer	tokenizer;
 	t_list		*tokens;
 
+	if (is_emptyline(line))
+		return (kEmptyLine);
 	tokenizer.str = line;
 	tokenizer.quote = 0;
 	tokens = tokenize(&tokenizer);
