@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 18:03:24 by smun              #+#    #+#             */
-/*   Updated: 2021/08/18 21:42:32 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 14:54:20 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-static void	print_tokens(t_list *tokens)
-{
-	t_list		*t;
-	t_token		*token;
-	t_wordchunk	*wc;
-
-	t = tokens;
-	while (t != NULL)
-	{
-		token = t->content;
-		if (token->type == kWord)
-		{
-			t_list	*lst = token->word->wordlist;
-			printf("[%02d] \n", token->type);
-			while (lst != NULL)
-			{
-				wc = lst->content;
-				if (wc->flag != WordFlag_None)
-					printf("     {$%s}\n", wc->str);
-				else
-					printf("     {%s}\n", wc->str);
-				lst = lst->next;
-			}
-		}
-		else
-			printf("[%02d] %s\n", token->type, token->chars);
-		t = t->next;
-	}
-	printf("\n");
-}
 
 static void	test_simple1(void)
 {

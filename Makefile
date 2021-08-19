@@ -1,5 +1,12 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
+
+# Debug Compilation Flags
+# 나중에 제출 등에서는 아래 조건의 코멘트를 해제하여 기본적으로는 디버깅용 CFLAGS가 추가되지 않도록 해야함.
+# ifeq ($(DEBUG),1)
+	CFLAGS += -g
+# -fsanitize=address
+# endif
 
 ROOT_PATH = .
 SRCS = context \
@@ -8,9 +15,11 @@ SRCS = context \
 		safe_memory \
 		strbuf/strbuf_append \
 		strbuf/strbuf_get \
+		stack/stack \
 		syntax/dispose \
 		syntax/tokenizer \
 		syntax/tokenizer_word \
+		syntax/tokenizer_print \
 		syntax/syntax_grammer \
 		syntax/syntax_make_connect \
 		syntax/syntax_make_redir \
@@ -18,6 +27,7 @@ SRCS = context \
 		syntax/syntax_make_subshell \
 		syntax/syntax_make_word \
 		syntax/syntax_parser \
+		syntax/syntax_print \
 		syntax/syntax
 
 SRCS_FULL = $(addsuffix .c, $(addprefix $(ROOT_PATH)/srcs/, $(SRCS)))

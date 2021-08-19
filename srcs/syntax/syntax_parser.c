@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:03:18 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 03:23:39 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 15:21:15 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,22 @@
 
 static t_syntax	*validate(t_stack *st)
 {
+	t_syntax	*syn;
+	t_list		*lst;
 	if (ft_lstsize(st->dat) != 1)
 	{
-		t_list *lst;
-		lst = st->dat;
-		while(lst != NULL)
+		if (VERBOSE)
 		{
-			t_syntax *syn = lst->content;
-			printf("Type=[%d]\n",syn->type);
-			syntax_print(syn);
-			printf(RESET"\n------\n");
-			lst = lst->next;
+			printf(YELLOW"[[Remaining tokens in stack]]\n"RESET);
+			lst = st->dat;
+			while(lst != NULL)
+			{
+				syn = lst->content;
+				printf("Type=[%d]\n",syn->type);
+				syntax_print(syn);
+				printf(RESET"\n------\n");
+				lst = lst->next;
+			}
 		}
 		ft_lstclear(&st->dat, &dispose_syntax);
 		return (NULL);
@@ -51,4 +56,32 @@ t_syntax	*syntax_parse(t_list *tokens)
 		}
 	}
 	return (validate(&st));
+}
+
+t_syntax	*parse(const char *line)
+{
+	t_tokenizer	tokenizer;
+	t_list		*tokens;
+	t_syntax	*ret;
+
+	tokenizer.str = line;
+	tokenizer.quote = 0;
+	tokens = tokenize(&tokenizer);
+	if (tokens == NULL)
+	{
+		printf("\n");
+		return (NULL);
+	}
+	if (VERBOSE)
+		print_tokens(tokens);
+	ret = syntax_parse(tokens);
+	dispose_token(tokens);
+	if (ret != NULL && VERBOSE)
+	{
+		syntax_print(ret);
+		printf(RESET);
+	}
+	if (ret == NULL)
+		print_error("syntax parse error");
+	return (ret);
 }

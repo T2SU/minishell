@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 14:58:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 15:07:24 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 15:20:59 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	main(int argc, char *argv[], char *envp[])
 {
 	char		*line;
-	t_statement	*statement;
+	t_syntax	*syntax;
 
 	(void)envp;
 	(void)argc;
@@ -27,7 +27,8 @@ int	main(int argc, char *argv[], char *envp[])
 		line = readline("PROMPT$ ");
 		if (line == NULL)
 			break ; // TODO: type 'exit'
-		statement = parse(line);
+		syntax = parse(line);
+		dispose_syntax(syntax);
 		free(line);
 	}
 	return (EXIT_SUCCESS);

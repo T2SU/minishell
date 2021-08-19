@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 03:30:38 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 15:10:04 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # define WHITE "\033[37m"
 # define BLUE "\033[34m"
 # define RESET "\033[0m"
+# ifndef VERBOSE
+#  define VERBOSE 0
+# endif
 
 typedef int	t_bool;
 
@@ -206,8 +209,11 @@ typedef struct	s_syntax
 	t_list				*redirs;
 }	t_syntax;
 
+t_syntax	*parse(const char *line);
+
 t_word		*get_word(t_tokenizer *tokenizer);
 t_list		*tokenize(t_tokenizer *tokenizer);
+void		print_tokens(t_list *tokens);
 
 t_syntax	*syntax_parse(t_list *tokens);
 t_syntax	*syntax_make(void *data, enum e_token desired_type);
