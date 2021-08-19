@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 00:17:34 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 03:24:46 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 19:00:11 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static void	print_simplecmd(t_simplecmd *simplecmd)
 		print_word(word);
 		syntaxlst = syntaxlst->next;
 	}
-	print_redirection(simplecmd->redirs);
 	printf(YELLOW") ");
 }
 

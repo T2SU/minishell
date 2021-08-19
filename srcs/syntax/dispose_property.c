@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 13:46:05 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 16:08:41 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 19:00:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	dispose_redirection(void *ptr)
 static void	dispose_simplecmd(t_simplecmd *simplecmd)
 {
 	ft_lstclear(&simplecmd->args, &dispose_word);
-	ft_lstclear(&simplecmd->redirs, &dispose_redirection);
 	free(simplecmd);
 }
 

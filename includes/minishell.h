@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 18:48:53 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 19:01:35 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,6 @@ typedef struct	s_redir
 typedef struct	s_simplecmd
 {
 	t_list	*args;
-	t_list	*redirs;
 }	t_simplecmd;
 
 enum e_connector
@@ -234,13 +233,12 @@ void		syntax_build_from_token(t_stack *st, t_token *token);
 void		syntax_make_wordlist(t_stack *st, t_syntax *syntax);
 void		syntax_make_redirection(t_stack *st, int type);
 void		syntax_make_redirections(t_stack *st, t_syntax *next);
-void		syntax_make_simplecmd(t_stack *st, t_syntax *redir);
+void		syntax_make_simplecmd(t_stack *st);
 void		syntax_connect_redirection(t_stack *st, t_syntax *redir);
 void		syntax_make_connection(t_stack *st, int type);
 void		syntax_make_subshell(t_stack *st);
 void		syntax_append_argument_to_simplecmd(t_stack *st);
 void		syntax_append_argument_to_connect(t_stack *st);
-void		syntax_append_redirection_to_simplecmd(t_stack *st);
 
 void		dispose_wordchunk(void *ptr);
 void		dispose_token(void *ptr);
