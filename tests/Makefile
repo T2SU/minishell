@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/15 16:22:38 by smun              #+#    #+#              #
-#    Updated: 2021/08/19 15:33:38 by smun             ###   ########.fr        #
+#    Updated: 2021/08/19 21:30:25 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ INC = -I../includes -I. -I../libft
 LIBSRCS = ../srcs/context.c \
 			../srcs/variable.c \
 			../srcs/safe_memory.c \
+			../srcs/ft_basename.c \
 			$(wildcard ../srcs/strbuf/*.c) \
 			$(wildcard ../srcs/stack/*.c) \
 			$(wildcard ../srcs/syntax/*.c)

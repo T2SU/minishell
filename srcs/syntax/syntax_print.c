@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 00:17:34 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 19:00:11 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 21:32:16 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,7 @@ void	syntax_print(t_syntax *syntax)
 {
 	if (syntax == NULL)
 		return ;
-	if (syntax->type == kRedir)
-		print_redirection(syntax->redirs);
-	else if (syntax->type == kSimpleCommand)
+	if (syntax->type == kSimpleCommand)
 		print_simplecmd(syntax->simplecmd);
 	else if (syntax->type == kConnection)
 		print_connection(syntax->connect);
