@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:28:10 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 03:00:09 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 18:48:48 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	syntax_make_simplecmd(t_stack *st, t_syntax *redir)
 	stack_push(st, syntax_make(simplecmd, kSimpleCommand));
 }
 
-void	syntax_append_argument(t_stack *st)
+void	syntax_append_argument_to_simplecmd(t_stack *st)
 {
 	t_list		*wordlst;
 	t_word		*word;
@@ -36,5 +36,20 @@ void	syntax_append_argument(t_stack *st)
 	if (wordlst == NULL)
 		exit_error();
 	ft_lstadd_back(&cmdsyntax->simplecmd->args, wordlst);
+	stack_push(st, cmdsyntax);
+}
+
+void	syntax_append_redirection_to_simplecmd(t_stack *st)
+{
+	t_list		*redirlst;
+	t_redir		*redir;
+	t_syntax	*cmdsyntax;
+
+	redir = syntax_strip(stack_pop(st), kRedir);
+	cmdsyntax = stack_pop(st);
+	redirlst = ft_lstnew(redir);
+	if (redirlst == NULL)
+		exit_error();
+	ft_lstadd_back(&cmdsyntax->simplecmd->redirs, redirlst);
 	stack_push(st, cmdsyntax);
 }
