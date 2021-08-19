@@ -6,14 +6,14 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:24:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 00:40:01 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 16:18:10 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-char		*expand_variable(char *name)
+char	*expand_variable(char *name)
 {
 	char	*ret;
 
@@ -23,7 +23,7 @@ char		*expand_variable(char *name)
 	return (ret);
 }
 
-char		*word_get(t_word *word, t_bool expand_vars)
+char	*word_get(t_word *word, t_bool expand_vars)
 {
 	t_strbuf	strbuf;
 	t_list		*lst;
@@ -31,7 +31,7 @@ char		*word_get(t_word *word, t_bool expand_vars)
 
 	ft_memset(&strbuf, 0, sizeof(t_strbuf));
 	lst = word->wordlist;
-	while(lst != NULL)
+	while (lst != NULL)
 	{
 		chunk = lst->content;
 		if (!expand_vars && chunk->flag != WordFlag_None)

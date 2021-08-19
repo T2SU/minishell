@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 00:09:04 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 03:30:58 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 16:19:42 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static t_bool	match(t_stack *stack,
 
 t_bool	syntax_reassemble(t_stack *st)
 {
-
 	if (match(st, '(', kCommand, ')'))
 		syntax_make_subshell(st);
 	else if (match(st, kRedir, kRedir, 0))

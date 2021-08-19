@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 14:58:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 16:15:29 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 16:17:46 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		line = readline("PROMPT$ ");
 		if (line == NULL)
-			break ; // TODO: type 'exit'
+			break ;
 		status = parse(&syntax, line);
 		if (status != kEmptyLine)
 			add_history(line);
@@ -35,7 +35,6 @@ int	main(int argc, char *argv[], char *envp[])
 		if (status == kFailed)
 			print_error("syntax parse error");
 		dispose_syntax(syntax);
-
 	}
 	return (EXIT_SUCCESS);
 }

@@ -6,18 +6,17 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:51:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 01:08:09 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 16:40:34 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_bool	flush(t_word *word, t_strbuf *strbuf, int quote)
+static t_bool	flush(t_word *word, t_strbuf *strbuf)
 {
 	t_wordchunk	*chunk;
 	t_list		*lst;
 
-	(void)quote;
 	if (strbuf_length(strbuf) == 0)
 		return (FALSE);
 	chunk = safe_malloc(sizeof(t_wordchunk));
@@ -36,7 +35,7 @@ static void	parse_variable(t_word *word, t_strbuf *wsb, t_tokenizer *t)
 	t_wordchunk	*chunk;
 	t_list		*lst;
 
-	flush(word, wsb, t->quote);
+	flush(word, wsb);
 	chunk = safe_malloc(sizeof(t_wordchunk));
 	lst = ft_lstnew(chunk);
 	if (lst == NULL)
@@ -85,10 +84,13 @@ t_word	*get_word(t_tokenizer *t)
 	{
 		if (t->quote == 0 && ft_strchr(" \t<>&|()", *t->str))
 			break ;
-		if (*t->str == '\'' || *t->str == '"')
-			if (t->quote == 0 || t->quote == *t->str)
-				if (flush(&word, &strbuf, t->quote ^= *(t->str++)))
-					continue ;
+		if (ft_strchr("\'\"", *t->str)
+			&& (t->quote == 0 || t->quote == *(t->str)))
+		{
+			t->quote ^= *(t->str++);
+			if (flush(&word, &strbuf))
+				continue ;
+		}
 		if (*t->str == '\\')
 			escape_char(t);
 		if (*t->str == '$')
@@ -96,6 +98,6 @@ t_word	*get_word(t_tokenizer *t)
 		else if (*t->str != '\0')
 			strbuf_append(&strbuf, *(t->str++));
 	}
-	flush(&word, &strbuf, 0);
+	flush(&word, &strbuf);
 	return (dup_word(&word));
 }

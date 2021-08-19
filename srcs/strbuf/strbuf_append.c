@@ -6,13 +6,13 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 16:11:11 by smun              #+#    #+#             */
-/*   Updated: 2021/08/17 13:33:56 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 16:18:20 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_strchunk *new_chunk(void)
+static t_strchunk	*new_chunk(void)
 {
 	t_strchunk	*chunk;
 

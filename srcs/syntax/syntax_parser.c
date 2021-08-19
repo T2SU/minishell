@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:03:18 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 16:14:44 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/19 16:19:32 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ static t_syntax	*validate(t_stack *st)
 {
 	t_syntax	*syn;
 	t_list		*lst;
+
 	if (ft_lstsize(st->dat) != 1)
 	{
 		if (VERBOSE)
 		{
 			printf(YELLOW"[[Remaining tokens in stack]]\n"RESET);
 			lst = st->dat;
-			while(lst != NULL)
+			while (lst != NULL)
 			{
 				syn = lst->content;
-				printf("Type=[%d]\n",syn->type);
+				printf("Type=[%d]\n", syn->type);
 				syntax_print(syn);
 				printf(RESET"\n------\n");
 				lst = lst->next;
