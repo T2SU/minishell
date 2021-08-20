@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:06:30 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/19 18:28:42 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/21 00:26:52 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,17 @@ t_bool	dict_put(t_dict *dict, char *key, char *value)
 {
 	t_pair	*pair;
 
-	pair = malloc(sizeof(t_pair));
-	if (!pair)
-		return (FALSE);
-	pair->key = ft_strdup(key);
-	pair->value = ft_strdup(value);
-	ft_lstadd_back(&dict->head, ft_lstnew(pair));
+	if (dict_get(dict, key))
+		dict_update(dict, key, value);
+	else
+	{
+		pair = malloc(sizeof(t_pair));
+		if (!pair)
+			return (FALSE);
+		pair->key = ft_strdup(key);
+		pair->value = ft_strdup(value);
+		ft_lstadd_back(&dict->head, ft_lstnew(pair));
+	}
 	return (TRUE);
 }
 
@@ -87,6 +92,23 @@ t_bool	dict_del(t_dict *dict, char *key)
 	}
 	return (TRUE);
 }
+
+void	dict_update(t_dict *dict, char *key, char *value)
+{
+	t_list	*lst;
+
+	lst = dict->head;
+	while (lst)
+	{
+		if (!ft_strncmp(((t_pair *)lst->content)->key, key, ft_strlen(key)))
+		{
+			free(((t_pair *)lst->content)->value);
+			((t_pair *)lst->content)->value = ft_strdup(value);
+		}
+		lst = lst->next;
+	}
+}
+
 
 char	*dict_get(t_dict *dict, char *key)
 {
@@ -138,7 +160,8 @@ void	dict_free(t_dict *dict)
 // 	}
 // 	printf("%s\n", ans);
 // 	dict_del(dict, "abc");
-// 	// ft_lstiter(dict->head, &print_lst);
+// 	dict_put(dict, "USER", "fake_user");
+// 	run_env(dict);
 // 	dict_free(dict);
 // 	return (0);
 // }
