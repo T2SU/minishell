@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 16:15:05 by smun              #+#    #+#             */
-/*   Updated: 2021/06/15 00:36:24 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/20 17:20:15 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <libgen.h>
 
 #define RED "\033[31m"
 #define GREEN "\033[32m"
@@ -34,7 +35,7 @@ static void		apply_result(int print, int status, const char *module_name)
 
 	if (print)
 	{
-		printf(RESET"   "YELLOW"%-24s"RESET"RESULT\n", module_name);
+		printf(RESET"     "YELLOW"%-22s"RESET"RESULT\n", basename((char*)module_name));
 		printf("%-26s[%6d]\n", " - "CYAN"TOTAL:                 ", total);
 		printf("%-26s[%6d]\n", " - "GREEN"SUCCESS:               ", total - failed);
 		printf("%-26s[%6d]\n", " - "RED"FAILED:                ", failed);
@@ -59,10 +60,11 @@ void			print_test_result(int argc, const char *module_name)
 ** Returns its last status code.
 */
 
-int				do_test(void(*testfunc)())
+int				__do_test(void(*testfunc)(), const char *func, const char *file, int line)
 {
 	int			status;
 	pid_t		pid;
+	int			elapsed;
 
 	pid = fork();
 	if (!pid)
@@ -72,7 +74,21 @@ int				do_test(void(*testfunc)())
 		write(STDOUT_FILENO, RESET, 4);
 		exit(EXIT_SUCCESS);
 	}
-	waitpid(pid, &status, 0);
+	elapsed = 0;
+	while (1)
+	{
+		if (waitpid(pid, &status, WNOHANG))
+			break ;
+		if (elapsed >= 150)
+		{
+			kill(pid, SIGKILL);
+			dprintf(STDERR_FILENO, RED"failed: function timeout - %s() - %s:%d"RESET"\n", func, file, line);
+			status = EXIT_FAILURE;
+			break ;
+		}
+		usleep(10000);
+		elapsed++;
+	}
 	apply_result(0, status, NULL);
 	return (status);
 }
@@ -139,7 +155,7 @@ static int		pipe_child(void(*testfunc)(), int *fd, pid_t *ppid)
 	return (0);
 }
 
-int				do_test_stdout_real(void(*testfunc)(), const char *file, int line, const char *compare)
+int				__do_test_stdout_real(void(*testfunc)(), const char *file, int line, const char *compare)
 {
 	int			fd[2];
 	int			status;
@@ -150,7 +166,7 @@ int				do_test_stdout_real(void(*testfunc)(), const char *file, int line, const 
 		waitpid(pid, &status, 0);
 		if (compare_with_fd(compare, fd[0]))
 		{
-			printf(RED"failed: different stdout - %s:%d"RESET"\n", file, line);
+			dprintf(STDERR_FILENO, RED"failed: different stdout - %s:%d"RESET"\n", file, line);
 			status = SIGABRT;
 		}
 		close(fd[0]);
@@ -159,7 +175,7 @@ int				do_test_stdout_real(void(*testfunc)(), const char *file, int line, const 
 	return (status);
 }
 
-int				do_test_count_newline_real(void(*testfunc)(), const char *file, int line, int max_newline_count)
+int				__do_test_count_newline_real(void(*testfunc)(), const char *file, int line, int max_newline_count)
 {
 	int			fd[2];
 	int			status;
@@ -171,7 +187,7 @@ int				do_test_count_newline_real(void(*testfunc)(), const char *file, int line,
 	int count = count_newline(fd[0]);
 	if (count > max_newline_count)
 	{
-		printf(RED"failed: too many instructions (your:%d) (max:%d) - %s:%d"RESET"\n", 
+		dprintf(STDERR_FILENO, RED"failed: too many instructions (your:%d) (max:%d) - %s:%d"RESET"\n",
 			count, max_newline_count, file, line);
 		status = SIGABRT;
 	}

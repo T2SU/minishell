@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:29:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 19:39:56 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/20 16:38:43 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,28 @@ static int	get_token_type(t_tokenizer *t, char *chars)
 	if (*t->str == '|')
 		return (dispatch_type(t, kBarBar, '|', chars));
 	if (*t->str == '&')
-		return (dispatch_type(t, kAndAnd, kWord, chars));
+		return (dispatch_type(t, kAndAnd, '&', chars));
 	if (*t->str == '(')
 		return ('(');
 	if (*t->str == ')')
 		return (')');
 	return (kWord);
+}
+
+static t_list	*convert_token_to_word(t_list *lst)
+{
+	t_token		*token;
+	t_strbuf	strbuf;
+	t_word		word;
+
+	ft_memset(&strbuf, 0, sizeof(t_strbuf));
+	ft_memset(&word, 0, sizeof(t_word));
+	token = lst->content;
+	token->type = kWord;
+	strbuf_appends(&strbuf, token->chars);
+	flush_wordchunk(&word, &strbuf, TRUE);
+	token->word = dup_word(&word);
+	return (lst);
 }
 
 static t_list	*generate_token(t_tokenizer *t, int type, char *chars)
@@ -59,6 +75,8 @@ static t_list	*generate_token(t_tokenizer *t, int type, char *chars)
 	{
 		ft_memcpy(token->chars, chars, sizeof(token->chars));
 		t->str += ft_strlen(chars);
+		if (type == '&')
+			return (convert_token_to_word(lst));
 	}
 	token->type = type;
 	return (lst);

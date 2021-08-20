@@ -6,13 +6,13 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:51:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 21:16:57 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/20 17:12:09 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_bool	flush(t_word *word, t_strbuf *strbuf, t_bool final)
+t_bool	flush_wordchunk(t_word *word, t_strbuf *strbuf, t_bool final)
 {
 	t_wordchunk	*chunk;
 	t_list		*lst;
@@ -35,7 +35,7 @@ static void	parse_variable(t_word *word, t_strbuf *wsb, t_tokenizer *t)
 	t_wordchunk	*chunk;
 	t_list		*lst;
 
-	flush(word, wsb, FALSE);
+	flush_wordchunk(word, wsb, FALSE);
 	chunk = safe_malloc(sizeof(t_wordchunk));
 	lst = ft_lstnew(chunk);
 	if (lst == NULL)
@@ -88,16 +88,16 @@ t_word	*get_word(t_tokenizer *t)
 			&& (t->quote == 0 || t->quote == *(t->str)))
 		{
 			t->quote ^= *(t->str++);
-			flush(&word, &strbuf, FALSE);
+			flush_wordchunk(&word, &strbuf, FALSE);
 			continue ;
 		}
 		if (*t->str == '\\')
 			escape_char(t);
-		if (*t->str == '$')
+		if (*t->str == '$' &&t->quote != '\'')
 			parse_variable(&word, &strbuf, t);
 		else if (*t->str != '\0')
 			strbuf_append(&strbuf, *(t->str++));
 	}
-	flush(&word, &strbuf, TRUE);
+	flush_wordchunk(&word, &strbuf, word.wordlist == NULL);
 	return (dup_word(&word));
 }

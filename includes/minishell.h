@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 21:24:40 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/20 16:35:59 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ enum e_token
 	kSimpleCommand,
 	kConnection,
 	kSubShell,
+	kAmpersand = '&',
 	kGreater = '>',
 	kLess = '<',
 	kBar = '|',
@@ -217,6 +218,8 @@ enum e_parsestatus
 
 int			parse(t_syntax **syntax, char *line);
 
+t_bool		flush_wordchunk(t_word *word, t_strbuf *strbuf, t_bool final);
+t_word		*dup_word(t_word *ref);
 t_word		*get_word(t_tokenizer *tokenizer);
 t_list		*tokenize(t_tokenizer *tokenizer);
 void		print_tokens(t_list *tokens);
