@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 20:54:12 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 15:51:53 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/20 22:40:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	syntax_make_redirection(t_stack *st, int type)
 	redir = safe_malloc(sizeof(t_redir));
 	ft_memset(redir, 0, sizeof(t_redir));
 	if (type == kReadHeredoc)
-		redir->heredoc_eof = word_get(word, FALSE);
+		redir->heredoc_eof = word_get(word, FALSE, TRUE);
 	else
 		redir->filename = word;
 	redir->type = type;

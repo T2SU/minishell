@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:24:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 16:18:10 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/20 18:52:05 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*expand_variable(char *name)
 	return (ret);
 }
 
-char	*word_get(t_word *word, t_bool expand_vars)
+char	*word_get(t_word *word, t_bool expand_vars, t_bool disposeword_after)
 {
 	t_strbuf	strbuf;
 	t_list		*lst;
@@ -42,7 +42,10 @@ char	*word_get(t_word *word, t_bool expand_vars)
 			strbuf_appends(&strbuf, expand_variable(chunk->str));
 		lst = lst->next;
 	}
-	ft_lstclear(&word->wordlist, &dispose_wordchunk);
-	free(word);
+	if (disposeword_after)
+	{
+		ft_lstclear(&word->wordlist, &dispose_wordchunk);
+		free(word);
+	}
 	return (strbuf_get(&strbuf));
 }
