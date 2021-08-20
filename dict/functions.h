@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 01:21:20 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/19 18:41:00 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/20 23:25:24 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_bool		dict_del(t_dict *dict, char *key);
 void		dict_free(t_dict *dict);
 void		print_lst(void *content);
 t_bool		run_env(t_dict *dict);
-t_bool		run_unset(t_dict *dict, t_list *args);
+void		run_unset(t_dict *dict, t_list *args);
 void		print_export(void *content);
 
 #endif
