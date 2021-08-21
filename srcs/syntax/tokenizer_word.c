@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:51:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/20 17:12:09 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/21 20:23:42 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,6 @@ static void	parse_variable(t_word *word, t_strbuf *wsb, t_tokenizer *t)
 	ft_lstadd_back(&word->wordlist, lst);
 }
 
-static void	escape_char(t_tokenizer *t)
-{
-	const char	next = *(t->str + 1);
-
-	if (t->quote != '\"')
-		return ;
-	if (next == '\"')
-		t->str++;
-}
-
 t_word	*dup_word(t_word *ref)
 {
 	t_word	*ret;
@@ -91,8 +81,6 @@ t_word	*get_word(t_tokenizer *t)
 			flush_wordchunk(&word, &strbuf, FALSE);
 			continue ;
 		}
-		if (*t->str == '\\')
-			escape_char(t);
 		if (*t->str == '$' &&t->quote != '\'')
 			parse_variable(&word, &strbuf, t);
 		else if (*t->str != '\0')
