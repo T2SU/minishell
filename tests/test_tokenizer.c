@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 18:03:24 by smun              #+#    #+#             */
-/*   Updated: 2021/08/20 17:49:07 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/21 21:33:29 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -438,7 +438,7 @@ static t_list	*test_tokenize(const char *str)
 	return (tokens);
 }
 
-static t_bool	validator_combined(t_token *token, va_list va)
+static t_bool	validator_combined(t_token *token, va_list *va)
 {
 	t_strbuf		strbuf;
 	t_list			*wordlst;
@@ -449,7 +449,7 @@ static t_bool	validator_combined(t_token *token, va_list va)
 	enum e_wordflag	wordflag;
 	char			*exstr;
 
-	ttype = va_arg(va, enum e_token);
+	ttype = va_arg(*va, enum e_token);
 	if (token->type != ttype)
 	{
 		dprintf(STDERR_FILENO, "expected tokentype:%02d (your:%02d)\n", ttype, token->type);
@@ -457,7 +457,7 @@ static t_bool	validator_combined(t_token *token, va_list va)
 	}
 	if (token->type != kWord)
 	{
-		exstr = va_arg(va, char *);
+		exstr = va_arg(*va, char *);
 		if (!strcmp(token->chars, exstr))
 			return (TRUE);
 		dprintf(STDERR_FILENO, "expected chars:{%s} (your:{%s})\n", exstr, token->chars);
@@ -469,8 +469,8 @@ static t_bool	validator_combined(t_token *token, va_list va)
 	while (wordlst != NULL)
 	{
 		chunk = wordlst->content;
-		wordflag = va_arg(va, enum e_wordflag);
-		exstr = va_arg(va, char *);
+		wordflag = va_arg(*va, enum e_wordflag);
+		exstr = va_arg(*va, char *);
 		if (chunk->flag != wordflag || strcmp(chunk->str, exstr))
 		{
 			dprintf(STDERR_FILENO, "expected wordflag:%02d (your:%02d)\n", wordflag, chunk->flag);
@@ -489,7 +489,7 @@ static t_bool	validator_combined(t_token *token, va_list va)
 	str = strbuf_get(&strbuf);
 	if (ret == TRUE)
 	{
-		exstr = va_arg(va, char *);
+		exstr = va_arg(*va, char *);
 		if (strcmp(str, exstr))
 		{
 			ret = FALSE;
@@ -505,26 +505,29 @@ static t_bool	assert_token(const char *str, int count, ...)
 	va_list	va;
 	int		ret;
 	t_list	*tokens;
+	t_list	*cur;
 
-	tokens = test_tokenize(str);
+	tokens = cur = test_tokenize(str);
 	if (tokens == NULL)
 		return (FALSE);
 	ret = kAssertFailed;
-	if (ft_lstsize(tokens) == count)
+	if (ft_lstsize(cur) == count)
 	{
 		ret = TRUE;
 		va_start(va, count);
 		for (int i = 0; i < count; i++)
 		{
-			if (!validator_combined(tokens->content, va))
+			if (!validator_combined(cur->content, &va))
 			{
 				ret = FALSE;
 				break ;
 			}
-			tokens = tokens->next;
+			cur = cur->next;
 		}
 		va_end(va);
 	}
 	ft_lstclear(&tokens, dispose_token);
+	if (!assert_leaks())
+		ret = FALSE;
 	return (ret);
 }

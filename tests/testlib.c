@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 16:15:05 by smun              #+#    #+#             */
-/*   Updated: 2021/08/20 17:20:15 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/21 21:38:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,30 +64,22 @@ int				__do_test(void(*testfunc)(), const char *func, const char *file, int line
 {
 	int			status;
 	pid_t		pid;
-	int			elapsed;
 
 	pid = fork();
 	if (!pid)
 	{
+		alarm(3);
 		write(STDOUT_FILENO, RED, 5);
 		testfunc();
 		write(STDOUT_FILENO, RESET, 4);
 		exit(EXIT_SUCCESS);
 	}
-	elapsed = 0;
-	while (1)
+	waitpid(pid, &status, 0);
+	if (status != EXIT_SUCCESS)
 	{
-		if (waitpid(pid, &status, WNOHANG))
-			break ;
-		if (elapsed >= 150)
-		{
-			kill(pid, SIGKILL);
-			dprintf(STDERR_FILENO, RED"failed: function timeout - %s() - %s:%d"RESET"\n", func, file, line);
-			status = EXIT_FAILURE;
-			break ;
-		}
-		usleep(10000);
-		elapsed++;
+		kill(pid, SIGKILL);
+		dprintf(STDERR_FILENO, RED"failed: function timeout - %s() - %s:%d"RESET"\n", func, file, line);
+		status = EXIT_FAILURE;
 	}
 	apply_result(0, status, NULL);
 	return (status);
@@ -195,4 +187,20 @@ int				__do_test_count_newline_real(void(*testfunc)(), const char *file, int lin
 	apply_result(0, status, NULL);
 	}
 	return (status);
+}
+
+int	assert_leaks(void)
+{
+#ifdef __APPLE__
+	char	buffer[260];
+
+	buffer[0] = 0;
+	sprintf(buffer, "leaks %d | grep \"ROOT LEAK\"", getpid());
+	if (EXIT_SUCCESS == system(buffer))
+	{
+		dprintf(STDERR_FILENO, "memory leak occured.\n");
+		return (0);
+	}
+#endif
+	return (1);
 }

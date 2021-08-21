@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 18:03:24 by smun              #+#    #+#             */
-/*   Updated: 2021/08/20 23:08:28 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/21 21:33:31 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -477,5 +477,7 @@ static t_bool	assert_syntax(char *str, ...)
 	ret = assert_syntax_va(syntax, &va);
 	va_end(va);
 	dispose_syntax(syntax);
+	if (!assert_leaks())
+		ret = FALSE;
 	return (ret);
 }
