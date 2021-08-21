@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 01:00:53 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/19 18:40:28 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/20 23:26:25 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_dict	*copy_dict(t_dict *dict)
 
 void	compare_and_swap(t_list	*lst)
 {
-	int		key_len;
+	size_t	key_len;
 	t_pair	*tmp;
 
 	key_len = ft_strlen(((t_pair *)lst->content)->key);
@@ -115,6 +115,7 @@ t_bool	run_export(t_dict *dict, t_list *args)
 	}
 	else
 		run_export_with_args(dict, args);
+	return (TRUE);
 }
 
 /*

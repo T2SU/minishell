@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 18:26:01 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/19 20:02:05 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/20 23:25:31 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_bool	run_env(t_dict *dict)
 	return (TRUE);
 }
 
-t_bool	run_unset(t_dict *dict, t_list *args)
+void	run_unset(t_dict *dict, t_list *args)
 {
 	while (args)
 	{
