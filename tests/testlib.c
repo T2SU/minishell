@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 16:15:05 by smun              #+#    #+#             */
-/*   Updated: 2021/06/15 00:36:24 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/21 23:10:23 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,25 +77,51 @@ int				do_test(void(*testfunc)())
 	return (status);
 }
 
+static void		print_stdout_information(const char *compare, char *your, size_t len)
+{
+	char	*copy_compare;
+	char	*copy_your;
+
+	copy_compare = strdup(compare);
+	copy_your = strndup(your, len);
+	printf(GREEN"====expected output====\n");
+	printf("%s\n", copy_compare);
+	printf("\n");
+	printf(RED"====your output====\n");
+	printf("%s\n", copy_your);
+	printf("\n");
+	free(copy_compare);
+	free(copy_your);
+}
+
 static int		compare_with_fd(const char *compare, int fd)
 {
-	char		buffer[1024];
+	char		buffer[4096];
 	size_t		compare_index;
+	ssize_t		size;
 
 	compare_index = 0;
+	size = 0;
 	while(1)
 	{
-		ssize_t size = read(fd, buffer, sizeof(buffer));
+		size = read(fd, buffer, sizeof(buffer));
 		if (size < 0)
 			return (-1);
 		if (size == 0)
 			break ;
 		if (memcmp(&compare[compare_index], buffer, size))
+		{
+			print_stdout_information(&compare[compare_index], buffer, size);
 			return (1);
+		}
 		compare_index += size;
 	}
 	if (strlen(compare) != compare_index)
+	{
+		print_stdout_information(&compare[compare_index], buffer, size);
+		printf(RED"different stdout size. expected:%zu (your:%zu)\n", strlen(compare), compare_index);
 		return (1);
+	}
 	return (0);
 }
 
@@ -171,7 +197,7 @@ int				do_test_count_newline_real(void(*testfunc)(), const char *file, int line,
 	int count = count_newline(fd[0]);
 	if (count > max_newline_count)
 	{
-		printf(RED"failed: too many instructions (your:%d) (max:%d) - %s:%d"RESET"\n", 
+		printf(RED"failed: too many instructions (your:%d) (max:%d) - %s:%d"RESET"\n",
 			count, max_newline_count, file, line);
 		status = SIGABRT;
 	}
