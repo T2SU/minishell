@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:06:30 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/21 00:26:52 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/21 01:27:48 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,30 @@ t_bool	dict_put(t_dict *dict, char *key, char *value)
 	return (TRUE);
 }
 
+t_bool	del_first(t_dict *dict, char *key)
+{
+	t_list	*lst;
+
+	lst = dict->head;
+	if (!ft_strncmp(((t_pair *)lst->content)->key, key, ft_strlen(key)))
+	{
+		dict->head = dict->head->next;
+		free(((t_pair *)lst->content)->key);
+		free(((t_pair *)lst->content)->value);
+		free(((t_pair *)lst->content));
+		free(lst);
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
 t_bool	dict_del(t_dict *dict, char *key)
 {
 	t_list	*lst;
 	t_list	*next;
 
+	if (del_first(dict, key))
+		return (TRUE);
 	lst = dict->head;
 	while (lst)
 	{
@@ -108,7 +127,6 @@ void	dict_update(t_dict *dict, char *key, char *value)
 		lst = lst->next;
 	}
 }
-
 
 char	*dict_get(t_dict *dict, char *key)
 {
