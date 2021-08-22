@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_dict.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 23:14:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/21 22:43:35 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/22 18:27:10 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,18 @@ static void	test_putdict_simple(void)
 
 	dict = malloc(sizeof(t_dict));
 	ft_memset(dict, 0, sizeof(t_dict));
-	dict_put(dict, "USER", "minishell");
-	dict_put(dict, "ZERO", "0");
-	dict_put(dict, "DIGIT", "123456789");
+	dict_put(dict, "USER", "minishell", 1);
+	dict_put(dict, "ZERO", "0", 1);
+	dict_put(dict, "DIGIT", "123456789", 1);
+	dict_put(dict, "NOVALUE", "", 0);
+	dict_put(dict, "NULLVALUE", NULL, 0);
 	assert(assert_dictpair(dict,
-		3,
+		5,
 			"USER", "minishell",
 			"ZERO", "0",
-			"DIGIT", "123456789"
+			"DIGIT", "123456789",
+			"NOVALUE", "",
+			"NULLVALUE", ""
 	));
 	dict_free(dict);
 	assert(assert_leaks());
@@ -92,10 +96,10 @@ static void	test_putdict_specialcases(void)
 
 	dict = malloc(sizeof(t_dict));
 	ft_memset(dict, 0, sizeof(t_dict));
-	dict_put(dict, "", "minishell");
-	dict_put(dict, "USER", "minishell");
-	dict_put(dict, "USER", "42");
-	dict_put(dict, "Hello", "");
+	dict_put(dict, "", "minishell", 1);
+	dict_put(dict, "USER", "minishell", 1);
+	dict_put(dict, "USER", "42", 1);
+	dict_put(dict, "Hello", "", 1);
 	assert(assert_dictpair(dict,
 		3,
 			"", "minishell",
@@ -112,9 +116,9 @@ static void	test_deldict(void)
 
 	dict = malloc(sizeof(t_dict));
 	ft_memset(dict, 0, sizeof(t_dict));
-	dict_put(dict, "1", "minishell");
-	dict_put(dict, "USER", "42");
-	dict_put(dict, "Hello", "");
+	dict_put(dict, "1", "minishell", 1);
+	dict_put(dict, "USER", "42", 1);
+	dict_put(dict, "Hello", "", 1);
 	assert(assert_dictpair(dict,
 		3,
 			"1", "minishell",
@@ -146,11 +150,11 @@ static void	test_deldict2(void)
 
 	dict = malloc(sizeof(t_dict));
 	ft_memset(dict, 0, sizeof(t_dict));
-	dict_put(dict, "1", "minishell");
-	dict_put(dict, "2", "minishell2");
-	dict_put(dict, "3", "minishell3");
-	dict_put(dict, "USER", "42");
-	dict_put(dict, "Hello", "");
+	dict_put(dict, "1", "minishell", 1);
+	dict_put(dict, "2", "minishell2", 1);
+	dict_put(dict, "3", "minishell3", 1);
+	dict_put(dict, "USER", "42", 1);
+	dict_put(dict, "Hello", "", 1);
 	dict_del(dict, "1");
 	dict_del(dict, "2");
 	dict_del(dict, "Hello");
@@ -169,9 +173,9 @@ static void	test_getdict(void)
 
 	dict = malloc(sizeof(t_dict));
 	ft_memset(dict, 0, sizeof(t_dict));
-	dict_put(dict, "1", "minishell");
-	dict_put(dict, "USER", "42");
-	dict_put(dict, "Hello", "");
+	dict_put(dict, "1", "minishell", 1);
+	dict_put(dict, "USER", "42", 1);
+	dict_put(dict, "Hello", "", 1);
 	assert(!strcmp("minishell", dict_get(dict, "1")));
 	assert(!strcmp("42", dict_get(dict, "USER")));
 	assert(!strcmp("", dict_get(dict, "Hello")));

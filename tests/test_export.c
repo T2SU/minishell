@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/21 22:29:08 by smun              #+#    #+#             */
-/*   Updated: 2021/08/21 23:08:54 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/22 19:04:37 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,12 @@ static void	test_runexport_args_and_noargs_special(void)
 			NULL
 		}
 	);
-	lst = simple_list(4,
+	lst = simple_list(5,
 		ft_strdup("USER========123456"),
 		ft_strdup("PATH=\"G\"B$==Z\\X'"),
 		ft_strdup("HOME=/U se    r  s/42 s e ou l"),
-		ft_strdup("Z=\\\"\\$\\\\GGHH\\1\\2\\3")
+		ft_strdup("Z=\\\"\\$\\\\GGHH\\1\\2\\3"),
+		ft_strdup("ONLYKEY")
 	);
 	run_export(dict, lst);
 	run_export(dict, NULL);
@@ -146,6 +147,7 @@ int		main(int argc, char *argv[])
 	do_test_stdout(&test_runexport_args_and_noargs_special,
 		"declare -x AEST1=\"GO\"\n"
 		"declare -x HOME=\"/U se    r  s/42 s e ou l\"\n"
+		"declare -x ONLYKEY\n"
 		"declare -x PATH=\"\\\"G\\\"B\\$==Z\\\\X'\"\n"
 		"declare -x USER=\"=======123456\"\n"
 		"declare -x Z=\"\\\\\\\"\\\\\\$\\\\\\\\GGHH\\\\1\\\\2\\\\3\"\n"
