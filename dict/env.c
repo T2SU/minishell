@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 18:26:01 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/22 12:52:11 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/22 13:32:28 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,21 @@ void	print_export(void *content)
 	char	*str;
 
 	tmp = (t_pair *)content;
-	printf("declare -x %s=\"", tmp->key);
-	str = tmp->value;
-	while (*str)
+	printf("declare -x %s", tmp->key);
+	if (tmp->equal)
 	{
-		if (*str == '\\' || *str == '$' || *str == '"')
-			printf("\\");
-		printf("%c", *str);
-		str++;
+		printf("=\"");
+		str = tmp->value;
+		while (*str)
+		{
+			if (*str == '\\' || *str == '$' || *str == '"')
+				printf("\\");
+			printf("%c", *str);
+			str++;
+		}
+		printf("\"");
 	}
-	printf("\"\n");
+	printf("\n");
 }
 
 void	print_lst(void *content)
@@ -35,7 +40,8 @@ void	print_lst(void *content)
 	t_pair	*tmp;
 
 	tmp = (t_pair *)content;
-	printf("%s=%s\n", tmp->key, tmp->value);
+	if (tmp->equal)
+		printf("%s=%s\n", tmp->key, tmp->value);
 }
 
 t_bool	run_env(t_dict *dict)

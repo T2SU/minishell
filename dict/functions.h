@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 01:21:20 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/21 00:25:07 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/22 13:24:23 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ typedef struct s_pair
 {
 	char	*key;
 	char	*value;
+	int		equal;
 }	t_pair;
 
 t_dict		*make_dict(char **envp);
 char		*dict_get(t_dict *dict, char *key);
 void		dict_update(t_dict *dict, char *key, char *value);
-t_bool		dict_put(t_dict *dict, char *key, char *value);
+t_bool		dict_put(t_dict *dict, char *key, char *value, int equal);
 t_bool		dict_del(t_dict *dict, char *key);
 void		dict_free(t_dict *dict);
 void		print_lst(void *content);

@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:06:30 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/22 12:58:34 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/22 13:52:24 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	save_key_value(char *str, t_pair **pair)
 		{
 			(*pair)->key = ft_substr(str, 0, i);
 			(*pair)->value = ft_substr(str, i + 1, ft_strlen(str) - i);
+			(*pair)->equal = 1;
 			break ;
 		}
 		i++;
@@ -51,7 +52,7 @@ t_dict	*make_dict(char **envp)
 	return (dict);
 }
 
-t_bool	dict_put(t_dict *dict, char *key, char *value)
+t_bool	dict_put(t_dict *dict, char *key, char *value, int equal)
 {
 	t_pair	*pair;
 
@@ -63,7 +64,11 @@ t_bool	dict_put(t_dict *dict, char *key, char *value)
 		if (!pair)
 			return (FALSE);
 		pair->key = ft_strdup(key);
-		pair->value = ft_strdup(value);
+		if (value)
+			pair->value = ft_strdup(value);
+		else
+			pair->value = ft_strdup("");
+		pair->equal = equal;
 		ft_lstadd_back(&dict->head, ft_lstnew(pair));
 	}
 	return (TRUE);
@@ -135,7 +140,8 @@ char	*dict_get(t_dict *dict, char *key)
 	lst = dict->head;
 	while (lst)
 	{
-		if (!ft_strncmp(((t_pair *)lst->content)->key, key, ft_strlen(key)))
+		if (!ft_strncmp(((t_pair *)lst->content)->key, key, ft_strlen(key))
+			&& ((t_pair *)lst->content)->equal)
 			return (((t_pair *)lst->content)->value);
 		lst = lst->next;
 	}
@@ -162,26 +168,30 @@ void	dict_free(t_dict *dict)
 	free(dict);
 }
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_dict	*dict;
-// 	char	*ans;
+/*
+int	main(int argc, char **argv, char **envp)
+{
+	t_dict	*dict;
+	char	*ans;
 
-// 	argc = argc;
-// 	argv = argv;
-// 	dict = make_dict(envp);
-// 	dict_put(dict, "abc", "def");
-// 	ans = dict_get(dict, "abc");
-// 	if (!ans)
-// 	{
-// 		printf("error\n");
-// 		dict_free(dict);
-// 		return (1);
-// 	}
-// 	printf("%s\n", ans);
-// 	dict_del(dict, "abc");
-// 	dict_put(dict, "USER", "fake_user");
-// 	run_env(dict);
-// 	dict_free(dict);
-// 	return (0);
-// }
+	argc = argc;
+	argv = argv;
+	dict = make_dict(envp);
+	dict_put(dict, "abc", "def", 1);
+	ans = dict_get(dict, "abc");
+	if (!ans)
+	{
+		printf("error\n");
+		dict_free(dict);
+		return (1);
+	}
+	printf("%s\n", ans);
+	dict_del(dict, "abc");
+	dict_put(dict, "USER", "fake_user", 1);
+	dict_put(dict, "test", NULL, 0);
+	run_export(dict, NULL);
+	run_env(dict);
+	dict_free(dict);
+	return (0);
+}
+*/

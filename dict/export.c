@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 01:00:53 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/22 13:10:13 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/22 13:47:11 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_dict	*copy_dict(t_dict *dict)
 			exit(1); // TODO : error;
 		new_pair->key = ft_strdup(((t_pair *)lst->content)->key);
 		new_pair->value = ft_strdup(((t_pair *)lst->content)->value);
+		new_pair->equal = ((t_pair *)lst->content)->equal;
 		ft_lstadd_back(&new_dict->head, ft_lstnew(new_pair));
 		lst = lst->next;
 	}
@@ -78,23 +79,42 @@ t_dict	*sort_dict(t_dict *dict)
 	return (new_dict);
 }
 
+int	find_equal(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == '=')
+			return (i);
+	}
+	return (-1);
+}
+
 void	run_export_with_args(t_dict *dict, t_list *args)
 {
 	char	*str;
 	char	*key;
 	char	*value;
-	int		i;
+	int		idx;
 
 	while (args)
 	{
 		str = (char *)args->content;
-		i = -1;
-		while (str[++i])
-			if (str[i] == '=')
-				break ;
-		key = ft_substr(str, 0, i);
-		value = ft_substr(str, i + 1, ft_strlen(str) - i);
-		dict_put(dict, key, value);
+		idx = find_equal(str);
+		if (idx == -1)
+		{
+			key = ft_strdup(str);
+			value = ft_strdup("");
+			dict_put(dict, key, value, 0);
+		}
+		else
+		{
+			key = ft_substr(str, 0, idx);
+			value = ft_substr(str, idx + 1, ft_strlen(str) - idx);
+			dict_put(dict, key, value, 1);
+		}
 		free(key);
 		free(value);
 		args = args->next;
@@ -132,9 +152,9 @@ int	main(int argc, char **argv, char **envp)
 	ft_lstadd_back(&args, ft_lstnew("USER"));
 	run_unset(dict, args);
 	add_list = NULL;
-	ft_lstadd_back(&add_list, ft_lstnew("ttt=abc"));
-	run_export(dict, NULL);
+	ft_lstadd_back(&add_list, ft_lstnew("abc"));
 	run_export(dict, add_list);
+	run_export(dict, NULL);
 	run_env(dict);
 	dict_free(dict);
 	free(args);
@@ -142,18 +162,20 @@ int	main(int argc, char **argv, char **envp)
 }
 */
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_dict	*dict;
-// 	t_list	*add_list;
+/*
+int	main(int argc, char **argv, char **envp)
+{
+	t_dict	*dict;
+	t_list	*add_list;
 
-// 	argc = argc;
-// 	dict = make_dict(envp);
-// 	add_list = NULL;
-// 	ft_lstadd_back(&add_list, ft_lstnew(argv[1]));
-// 	run_export(dict, add_list);
-// 	run_export(dict, NULL);
-// 	run_env(dict);
-// 	dict_free(dict);
-// 	free(add_list);
-// }
+	argc = argc;
+	dict = make_dict(envp);
+	add_list = NULL;
+	ft_lstadd_back(&add_list, ft_lstnew(argv[1]));
+	run_export(dict, add_list);
+	run_export(dict, NULL);
+	run_env(dict);
+	dict_free(dict);
+	free(add_list);
+}
+*/
