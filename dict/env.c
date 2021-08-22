@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 18:26:01 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/20 23:25:31 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/22 12:52:11 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_export(void *content)
 	str = tmp->value;
 	while (*str)
 	{
-		if (*str == '\\' || *str == '$')
+		if (*str == '\\' || *str == '$' || *str == '"')
 			printf("\\");
 		printf("%c", *str);
 		str++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 01:00:53 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/20 23:26:25 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/22 13:10:13 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ int	main(int argc, char **argv, char **envp)
 	t_list	*args;
 	t_list	*add_list;
 
+	argc = argc;
+	argv = argv;
 	dict = make_dict(envp);
 	args = NULL;
 	ft_lstadd_back(&args, ft_lstnew("USER"));
@@ -139,3 +141,19 @@ int	main(int argc, char **argv, char **envp)
 	free(add_list);
 }
 */
+
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_dict	*dict;
+// 	t_list	*add_list;
+
+// 	argc = argc;
+// 	dict = make_dict(envp);
+// 	add_list = NULL;
+// 	ft_lstadd_back(&add_list, ft_lstnew(argv[1]));
+// 	run_export(dict, add_list);
+// 	run_export(dict, NULL);
+// 	run_env(dict);
+// 	dict_free(dict);
+// 	free(add_list);
+// }

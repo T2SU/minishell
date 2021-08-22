@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:06:30 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/21 01:27:48 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/22 12:58:34 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,8 @@ void	dict_free(t_dict *dict)
 // 	t_dict	*dict;
 // 	char	*ans;
 
+// 	argc = argc;
+// 	argv = argv;
 // 	dict = make_dict(envp);
 // 	dict_put(dict, "abc", "def");
 // 	ans = dict_get(dict, "abc");
