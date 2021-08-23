@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 01:21:20 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/22 13:24:23 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/23 20:21:27 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
+# include <linux/limits.h>
+# include <string.h>
+# include <errno.h>
 # define TRUE 1
 # define FALSE 0
 
@@ -44,5 +47,8 @@ t_bool		run_env(t_dict *dict);
 void		run_unset(t_dict *dict, t_list *args);
 void		print_export(void *content);
 t_bool		run_export(t_dict *dict, t_list *args);
+void		run_cd(t_list *args, char *home);
+void		run_pwd(void);
+void		run_exit(t_list *args);
 
 #endif
