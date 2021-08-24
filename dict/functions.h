@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 01:21:20 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/23 20:21:27 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/24 12:23:41 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ t_bool		run_export(t_dict *dict, t_list *args);
 void		run_cd(t_list *args, char *home);
 void		run_pwd(void);
 void		run_exit(t_list *args);
-
+t_bool		is_same_word(char *str1, char *str2);
+void		run_echo(t_list *args);
 #endif
