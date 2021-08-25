@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/15 16:22:38 by smun              #+#    #+#              #
-#    Updated: 2021/08/19 21:30:25 by smun             ###   ########.fr        #
+#    Updated: 2021/08/25 14:50:26 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,17 +15,19 @@ CFLAGS = -Wall -Wextra -Werror -g
 #-fsanitize=address
 
 INC = -I../includes -I. -I../libft
-LIBSRCS = ../srcs/context.c \
+LIBSRCS = \
 			../srcs/variable.c \
 			../srcs/safe_memory.c \
-			../srcs/ft_basename.c \
-			$(wildcard ../srcs/strbuf/*.c) \
 			$(wildcard ../srcs/stack/*.c) \
+			$(wildcard ../srcs/strbuf/*.c) \
+			$(wildcard ../srcs/shell/*.c) \
+			$(wildcard ../srcs/context/*.c) \
+			$(wildcard ../srcs/execution/*.c) \
 			$(wildcard ../srcs/syntax/*.c)
 LIBOBJ = $(LIBSRCS:.c=.o)
 
 LIBFTPATH = ../libft
-LIB = -L$(LIBFTPATH) -lft
+LIB = -L$(LIBFTPATH) -L/usr/lib -lft -lreadline
 
 TESTSRCS = $(wildcard test_*.c)
 TESTOBJ = $(TESTSRCS:.c=.o)

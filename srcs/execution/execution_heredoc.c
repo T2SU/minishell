@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 18:37:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 01:50:45 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 14:40:28 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,75 @@
 #include <readline/readline.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdio.h>
 
-/*
-rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		*/
-
-static t_bool	read_heredoc(int fd)
+static void	signal_handler(int sig)
 {
-	// SIGINT가 들어오면 readline을 취소하는 법
+	if (sig != SIGINT)
+		return ;
+	printf("\n");
+	exit(EXIT_FAILURE);
+}
+
+static t_bool	exit_reading_heredoc(t_strbuf *strbuf)
+{
+	const char	*str = strbuf_get(&strbuf);
+
+	printf("%s\n", str);
+	free(str);
+	return (FALSE);
+}
+
+static t_bool	read_secondary_line(int fd, const char *eof)
+{
+	t_strbuf	strbuf;
+	char		*line;
+	t_bool		success;
+
+	ft_bzero(&strbuf, sizeof(t_strbuf));
+	success = TRUE;
+	while (TRUE)
+	{
+		line = readline("> ");
+		if (line == NULL)
+		{
+			success = exit_reading_heredoc(&strbuf);
+			break ;
+		}
+		if (!ft_strncmp(eof, line, ft_strlen(eof)))
+			break ;
+		strbuf_appends(&strbuf, line);
+		strbuf_append(&strbuf, '\n');
+	}
+	if (!success)
+		return (FALSE);
+	line = strbuf_get(&strbuf);
+	if (write(fd, line, ft_strlen(line)) < 0)
+		exit_error();
+	free(line);
+	return (success);
+}
+
+static t_bool	read_heredoc(int fd, const char *eof)
+{
+	pid_t	pid;
+	int		status;
+
+	context_get()->heredoc = TRUE;
+	pid = fork();
+	if (pid == 0)
+	{
+		signal(SIGINT, &signal_handler);
+		signal(SIGQUIT, &signal_handler);
+		if (read_secondary_line(fd, eof))
+			exit(EXIT_SUCCESS);
+		exit(EXIT_FAILURE);
+	}
+	waitpid(pid, &status, 0);
+	context_get()->heredoc = FALSE;
+	if (status == 0)
+		return (TRUE);
+	return (FALSE);
 }
 
 char	*execution_make_heredoc(t_redir *redir)
@@ -42,7 +101,7 @@ char	*execution_make_heredoc(t_redir *redir)
 	fd = open(filename, O_APPEND | O_WRONLY | O_CREAT);
 	if (fd == -1)
 		ret = raise_system_error(filename);
-	else if (!read_heredoc(fd))
+	else if (!read_heredoc(fd, redir->heredoc_eof))
 		ret = FALSE;
 	close(fd);
 	if (!ret)

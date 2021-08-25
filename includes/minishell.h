@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 01:51:52 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 14:44:58 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define WHITE "\033[37m"
 # define BLUE "\033[34m"
 # define RESET "\033[0m"
+# define PROMPT WHITE"*:+:-"RED"Mini"YELLOW"Shell"WHITE"-:+:*$ "RESET
 # ifndef VERBOSE
 #  define VERBOSE 0
 # endif
@@ -95,6 +96,8 @@ size_t		strbuf_length(t_strbuf *strbuf);
 ** ------------------------------------------------
 */
 
+void	shell_sigint_handler(int sig);
+t_bool	shell_is_interactive(void);
 void	shell_main(void);
 void	shell_clean(void);
 
@@ -355,6 +358,7 @@ typedef struct s_context
 	int		error;
 	t_bool	usererror;
 	int		signal;
+	t_bool	heredoc;
 	t_stack	execution_stack;
 }	t_context;
 

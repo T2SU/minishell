@@ -9,11 +9,18 @@ CFLAGS = -Wall -Wextra -Werror
 # endif
 
 ROOT_PATH = .
-SRCS = context \
+SRCS = \
 		main \
 		variable \
 		safe_memory \
-		ft_basename \
+		context/context \
+		context/ft_basename \
+		context/ft_random \
+		shell/shell \
+		shell/signal \
+		execution/execution_heredoc \
+		execution/execution_redirection \
+		execution/execution \
 		strbuf/strbuf_append \
 		strbuf/strbuf_get \
 		stack/stack \
