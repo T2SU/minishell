@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 01:24:57 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 20:20:38 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 23:41:46 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-t_bool	execution_set_redirection(t_execution *exec, int flags, int fd)
+static t_bool	set_redirection(t_execution *exec, int flags, int fd)
 {
 	// 기존 in 파일 디스크립터가 있다면 모두 닫기
 	if ((flags & kFileIn) && exec->in.fd != 0)
@@ -74,9 +74,9 @@ static t_bool	handle_redirection(t_execution *exec, t_redir *redir)
 	if (fd == -1)
 		ret = raise_system_error(filename);
 	else if (redir->type == kRead || redir->type == kReadHeredoc)
-		ret = execution_set_redirection(exec, kFileIn, fd);
+		ret = set_redirection(exec, kFileIn, fd);
 	else if (redir->type == kWrite || redir->type == kAppend)
-		ret = execution_set_redirection(exec, kFileOut, fd);
+		ret = set_redirection(exec, kFileOut, fd);
 	else
 		ret = raise_error(filename, "unknown redirection type");
 	print_redirection(filename, redir);
@@ -96,7 +96,7 @@ t_bool	execution_handle_redirections(t_execution *exec)
 	{
 		if (!handle_redirection(exec, lst->content))
 			// 실패하면 모두 해제 후 FALSE 리턴
-			return (execution_set_redirection(exec, kFileIn | kFileOut, 0));
+			return (set_redirection(exec, kFileIn | kFileOut, 0));
 		lst = lst->next;
 	}
 	return (TRUE);

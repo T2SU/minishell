@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 21:24:40 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 23:41:34 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,6 @@ enum e_redirflag
 
 t_bool		execution_handle_redirections(t_execution *exec);
 char		*execution_make_heredoc(t_redir *redir);
-t_bool		execution_set_redirection(t_execution *exec, int flags, int fd);
 void		execution_install_redir(t_execution *exec, t_bool enable);
 
 int			execution_start(t_syntax *syntax);
