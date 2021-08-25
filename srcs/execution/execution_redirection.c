@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 01:24:57 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 23:41:46 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 00:20:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,18 @@ static void	print_redirection(const char *filename, t_redir *redir)
 {
 	if (!VERBOSE)
 		return ;
-	printf(BLUE" Redir Type : ");
+	ft_putstr_fd(BLUE" Redir Type : ", STDERR_FILENO);
 	if (redir->type == kAppend)
-		printf(RED"%s\n", "Append");
+		ft_putstr_fd(RED"Append\n", STDERR_FILENO);
 	if (redir->type == kRead)
-		printf(RED"%s\n", "Read");
+		ft_putstr_fd(RED"Read\n", STDERR_FILENO);
 	if (redir->type == kReadHeredoc)
-		printf(RED"%s\n", "ReadHeredoc");
+		ft_putstr_fd(RED"ReadHeredoc\n", STDERR_FILENO);
 	if (redir->type == kWrite)
-		printf(RED"%s\n", "Write");
-	printf(BLUE" FileName: "RED"%s"RESET"\n", filename);
+		ft_putstr_fd(RED"Write\n", STDERR_FILENO);
+	ft_putstr_fd(BLUE" FileName: "RED, STDERR_FILENO);
+	ft_putstr_fd((char *)filename, STDERR_FILENO);
+	ft_putstr_fd(RESET"\n", STDERR_FILENO);
 }
 
 static t_bool	handle_redirection(t_execution *exec, t_redir *redir)
