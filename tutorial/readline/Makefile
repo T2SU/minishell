@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/01 16:47:39 by smun              #+#    #+#              #
-#    Updated: 2021/08/03 03:00:14 by smun             ###   ########.fr        #
+#    Updated: 2021/08/25 13:07:01 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ LIB = -L$(READLINE_ROOT)/lib -lreadline -lhistory -ltermcap
 
 TEST_SRC = readline \
 			add_history \
-			new_prompt
+			new_prompt \
+			heredoc
 TEST_OUT = $(addsuffix .out, $(TEST_SRC))
 
 %.out : %.c
