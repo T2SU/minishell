@@ -6,30 +6,19 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 14:58:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 16:19:07 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 20:52:12 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 #include <signal.h>
-#include <termios.h>
-
-static void	set_term(void)
-{
-	struct termios term;
-
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-}
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	(void)envp;
 	(void)argc;
 	context_init(argv[0]);
-	set_term();
+	shell_set_termattr(FALSE);
 	signal(SIGQUIT, &shell_sigquit_handler);
 	signal(SIGINT, &shell_sigint_handler);
 	shell_main();

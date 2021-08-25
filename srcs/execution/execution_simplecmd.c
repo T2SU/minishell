@@ -6,12 +6,13 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 20:36:19 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 21:11:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <errno.h>
+#include <stdio.h>
 
 // 임시로 echo 함수만
 t_bool	command_is_builtin(const char *cmd)
@@ -115,6 +116,8 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 			exit_error();
 		// 부모는 자식프로세스 종료까지 대기 및 반환코드 얻기
 		waitpid(pid, &status, 0);
+		if (context_is_signaled(status)) // 시그널로 종료되면 개행 한번..
+			printf("\n");
 	}
 	// 정리 후 반환코드 리턴
 	clean_arguments(argv, envp);

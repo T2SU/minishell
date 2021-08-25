@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 20:39:05 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 20:51:54 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ size_t		strbuf_length(t_strbuf *strbuf);
 void		shell_sigint_handler(int sig);
 void		shell_sigquit_handler(int sig);
 void		shell_main(void);
+void		shell_set_termattr(t_bool echoctl);
 
 /*
 ** ------------------------------------------------
