@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 20:51:54 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 21:24:40 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,7 +278,6 @@ typedef struct	s_execution
 	t_filedes	in;
 	t_filedes	out;
 	char		*heredoc;
-	pid_t		pid[2];
 }	t_execution;
 
 enum e_redirflag
