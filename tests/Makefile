@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/15 16:22:38 by smun              #+#    #+#              #
-#    Updated: 2021/08/25 15:34:12 by smun             ###   ########.fr        #
+#    Updated: 2021/08/25 18:24:36 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,13 @@ LIBSRCS = \
 LIBOBJ = $(LIBSRCS:.c=.o)
 
 LIBFTPATH = ../libft
-LIB = -L$(LIBFTPATH) -L/usr/lib -lft -ltermcap -lreadline
+LIB = -L$(LIBFTPATH) -lft -ltermcap -lreadline
+
+# macOS 에서 동봉된 라이브러리로 컴파일
+ifeq ($(shell uname -s), Darwin)
+	INC += -I../readline/include
+	LIB += -L../readline/lib
+endif
 
 TESTSRCS = $(wildcard test_*.c)
 TESTOBJ = $(TESTSRCS:.c=.o)

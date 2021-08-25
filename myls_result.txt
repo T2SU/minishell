@@ -1,0 +1,11 @@
+Makefile
+a.out
+includes
+libft
+minishell
+myls_result.txt
+readline
+srcs
+test.c
+tests
+tutorial

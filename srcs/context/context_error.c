@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 14:28:18 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 01:50:53 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 19:13:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,4 @@ t_bool	raise_error(const char *why, const char *desc)
 	write(STDERR_FILENO, desc, ft_strlen(desc));
 	write(STDERR_FILENO, "\n", 1);
 	return (FALSE);
-}
-
-t_bool	context_is_continuable(void)
-{
-	if (context_get()->signal)
-		return (FALSE);
-	if (context_get()->usererror)
-		return (FALSE);
-	if (context_get()->error)
-		return (FALSE);
-	return (TRUE);
 }

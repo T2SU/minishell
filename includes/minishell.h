@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 15:57:53 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 20:07:23 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define WHITE "\033[37m"
 # define BLUE "\033[34m"
 # define RESET "\033[0m"
-# define PROMPT YELLOW"*:+:-"RED"Mini"BLUE"Shell"YELLOW"-:+:*$ "RESET
+# define PROMPT "42$ "
 # ifndef VERBOSE
 #  define VERBOSE 0
 # endif
@@ -98,7 +98,6 @@ size_t		strbuf_length(t_strbuf *strbuf);
 
 void		shell_sigint_handler(int sig);
 void		shell_sigquit_handler(int sig);
-t_bool		shell_is_interactive(void);
 void		shell_main(void);
 void		shell_clean(void);
 
@@ -267,14 +266,19 @@ void		dispose_syntax(void *ptr);
 ** status:  Exit Code (Status Code)
 */
 
+typedef struct	s_filedes
+{
+	int	fd;
+	int	stdfd;
+}	t_filedes;
+
 typedef struct	s_execution
 {
 	t_syntax	*syntax;
-	int			fd_in;
+	t_filedes	in;
+	t_filedes	out;
 	char		*heredoc;
-	int			fd_out;
-	pid_t		pid;
-	int			status;
+	pid_t		pid[2];
 }	t_execution;
 
 enum e_redirflag
@@ -283,10 +287,15 @@ enum e_redirflag
 	kFileOut = 1 << 1
 };
 
-t_bool		execution_start(t_syntax *syntax);
 t_bool		execution_handle_redirections(t_execution *exec);
 char		*execution_make_heredoc(t_redir *redir);
 t_bool		execution_set_redirection(t_execution *exec, int flags, int fd);
+void		execution_install_redir(t_execution *exec, t_bool enable);
+
+int			execution_start(t_syntax *syntax);
+int			execution_simplecmd_run(t_simplecmd *scmd);
+int			execution_connect_run(t_connect *con);
+int			execution_subshell_run(t_subshell *subshell);
 
 /*
 ** ------------------------------------------------
@@ -357,15 +366,13 @@ typedef struct s_context
 	t_env	env;
 	char	*app_name;
 	int		error;
-	t_bool	usererror;
-	int		signal;
 	t_bool	heredoc;
-	t_stack	execution_stack;
+	t_bool	interactive;
+	int		laststatus;
 }	t_context;
 
 void		context_init(char *argv0);
 t_context	*context_get(void);
-t_bool		context_is_continuable(void);
 void		print_error(const char *str);
 void		exit_error(void);
 t_bool		raise_system_error(const char *why);

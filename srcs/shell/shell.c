@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:20:45 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 15:02:19 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 19:03:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 #include <readline/history.h>
 #include <stdlib.h>
 
-t_bool	shell_is_interactive(void)
+static void	execute(t_syntax *syntax)
 {
-	if (ft_lstsize(context_get()->execution_stack.dat) > 0)
-		return (FALSE);
-	return (TRUE);
+	context_get()->interactive = FALSE;
+	context_get()->laststatus = execution_start(syntax);
+	context_get()->interactive = TRUE;
+	dispose_syntax(syntax);
 }
 
 void	shell_main(void)
@@ -33,7 +34,7 @@ void	shell_main(void)
 	{
 		line = readline(PROMPT);
 		if (line == NULL)
-			break ;
+			break ; // TODO  call exit
 		status = parse(&syntax, line);
 		if (status != kEmptyLine)
 			add_history(line);
@@ -41,7 +42,7 @@ void	shell_main(void)
 		if (status == kFailed)
 			print_error("syntax parse error");
 		if (status == kSuccess)
-			dispose_syntax(syntax);
+			execute(syntax);
 	}
 }
 

@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   execution_install_redir.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/17 14:58:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 16:19:07 by smun             ###   ########.fr       */
+/*   Created: 2021/08/25 19:28:54 by smun              #+#    #+#             */
+/*   Updated: 2021/08/25 19:43:43 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
-#include <signal.h>
-#include <termios.h>
 
-static void	set_term(void)
+static void	commit_redirection(t_filedes *fd, int fileno, t_bool enable)
 {
-	struct termios term;
-
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	if (fd->fd == 0)
+		return ;
+	if (enable)
+	{
+		fd->stdfd = dup(fileno);
+		dup2(fd->fd, fileno);
+	}
+	else
+	{
+		close(fd->fd);
+		dup2(fd->stdfd, fileno);
+	}
 }
 
-int	main(int argc, char *argv[], char *envp[])
+void	execution_install_redir(t_execution *exec, t_bool enable)
 {
-	(void)envp;
-	(void)argc;
-	context_init(argv[0]);
-	set_term();
-	signal(SIGQUIT, &shell_sigquit_handler);
-	signal(SIGINT, &shell_sigint_handler);
-	shell_main();
-	return (EXIT_SUCCESS);
+	commit_redirection(&exec->in, STDIN_FILENO, enable);
+	commit_redirection(&exec->out, STDOUT_FILENO, enable);
 }
