@@ -14,6 +14,7 @@ SRCS = \
 		variable \
 		safe_memory \
 		context/context \
+		context/context_error \
 		context/ft_basename \
 		context/ft_random \
 		shell/shell \
@@ -46,13 +47,13 @@ OBJ = $(SRCS_FULL:.c=.o)
 LIBFT_ROOT = $(ROOT_PATH)/libft
 
 INC = -I$(ROOT_PATH)/includes -I$(LIBFT_ROOT)
-LIB = -L/usr/lib -L$(LIBFT_ROOT) -lreadline -ltermcap -lft
+LIB = -L$(LIBFT_ROOT) -lreadline -ltermcap -lft
 NAME = minishell
 
 all: $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	$(CC) $(CFLAGS) $(INC) -std=c11 -c $< -o $@
 
 $(NAME): $(OBJ)
 	@make -C $(LIBFT_ROOT) bonus
