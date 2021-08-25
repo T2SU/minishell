@@ -48,12 +48,19 @@ LIBFT_ROOT = $(ROOT_PATH)/libft
 
 INC = -I$(ROOT_PATH)/includes -I$(LIBFT_ROOT)
 LIB = -L$(LIBFT_ROOT) -lreadline -ltermcap -lft
+
+# macOS 에서 동봉된 라이브러리로 컴파일
+ifeq ($(shell uname -s), Darwin)
+	INC += -I./readline/include
+	LIB += -L./readline/lib
+endif
+
 NAME = minishell
 
 all: $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAGS) $(INC) -std=c11 -c $< -o $@
+	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 $(NAME): $(OBJ)
 	@make -C $(LIBFT_ROOT) bonus
