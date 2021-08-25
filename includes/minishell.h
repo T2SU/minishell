@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/20 22:40:42 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 01:51:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,42 @@ void		dispose_syntax(void *ptr);
 
 /*
 ** ------------------------------------------------
+**   Module - Execution
+** ------------------------------------------------
+*/
+
+/*
+** syntax:  Command Syntax Structure
+** fd_in:   File Descriptor STDIN
+** heredoc: Temporary heredoc file path (malloc-ed)
+** fd_out:  File Descriptor STDOUT
+** pid:     Child Process Id
+** status:  Exit Code (Status Code)
+*/
+
+typedef struct	s_execution
+{
+	t_syntax	*syntax;
+	int			fd_in;
+	char		*heredoc;
+	int			fd_out;
+	pid_t		pid;
+	int			status;
+}	t_execution;
+
+enum e_redirflag
+{
+	kFileIn = 1 << 0,
+	kFileOut = 1 << 1
+};
+
+t_bool		execution_start(t_syntax *syntax);
+t_bool		execution_handle_redirections(t_execution *exec);
+char		*execution_make_heredoc(t_redir *redir);
+t_bool		execution_set_redirection(t_execution *exec, int flags, int fd);
+
+/*
+** ------------------------------------------------
 **   Module - Run built-in or external commands.
 **     cd, echo, pwd(no opt), export(no opt), unset(no opt), env, exit(no opt)
 ** ------------------------------------------------
@@ -317,14 +353,21 @@ typedef struct s_context
 	t_env	env;
 	char	*app_name;
 	int		error;
+	t_bool	usererror;
+	int		signal;
+	t_stack	execution_stack;
 }	t_context;
 
 void		context_init(char *argv0);
 t_context	*context_get(void);
+t_bool		context_is_continuable(void);
 void		print_error(const char *str);
 void		exit_error(void);
+t_bool		raise_system_error(const char *why);
+t_bool		raise_error(const char *why, const char *desc);
 char		*word_get(t_word *word, t_bool expand_vars, t_bool disposeword_after);
 void		*safe_malloc(size_t size);
 char		*ft_basename(char *path);
+t_bool		ft_randomstr(char *buffer, size_t len);
 
 #endif

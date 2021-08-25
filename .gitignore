@@ -7,3 +7,6 @@ a.out
 *.a
 minishell
 filename.txt
+test.c
+hello
+hello2
