@@ -6,28 +6,21 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 18:37:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 14:40:28 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 15:09:32 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdio.h>
 #include <readline/readline.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <stdio.h>
-
-static void	signal_handler(int sig)
-{
-	if (sig != SIGINT)
-		return ;
-	printf("\n");
-	exit(EXIT_FAILURE);
-}
 
 static t_bool	exit_reading_heredoc(t_strbuf *strbuf)
 {
-	const char	*str = strbuf_get(&strbuf);
+	char	*str;
 
+	str = strbuf_get(strbuf);
 	printf("%s\n", str);
 	free(str);
 	return (FALSE);
@@ -49,7 +42,7 @@ static t_bool	read_secondary_line(int fd, const char *eof)
 			success = exit_reading_heredoc(&strbuf);
 			break ;
 		}
-		if (!ft_strncmp(eof, line, ft_strlen(eof)))
+		if (!ft_strncmp(eof, line, ft_strlen(eof) + 1))
 			break ;
 		strbuf_appends(&strbuf, line);
 		strbuf_append(&strbuf, '\n');
@@ -61,6 +54,14 @@ static t_bool	read_secondary_line(int fd, const char *eof)
 		exit_error();
 	free(line);
 	return (success);
+}
+
+static void	signal_handler(int sig)
+{
+	if (sig != SIGINT)
+		return ;
+	printf("\n");
+	exit(EXIT_FAILURE);
 }
 
 static t_bool	read_heredoc(int fd, const char *eof)
@@ -96,9 +97,9 @@ char	*execution_make_heredoc(t_redir *redir)
 	filename = safe_malloc(prefixlen + 32 + 1);
 	ft_memcpy(filename, prefix, prefixlen);
 	ft_randomstr(&filename[prefixlen], 32);
-	filename[prefixlen] = '\0';
+	filename[prefixlen + 32] = '\0';
 	ret = TRUE;
-	fd = open(filename, O_APPEND | O_WRONLY | O_CREAT);
+	fd = open(filename, O_APPEND | O_WRONLY | O_CREAT, 0644);
 	if (fd == -1)
 		ret = raise_system_error(filename);
 	else if (!read_heredoc(fd, redir->heredoc_eof))

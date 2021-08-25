@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:41:16 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 14:46:16 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 15:03:46 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void test_heredoc(void)
 			printf("filename = %s\n", filename);
 			free(filename);
 		}
+		printf("Typed: {%s}\n", line);
 		free(line);
 	}
 }

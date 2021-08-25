@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/15 16:22:38 by smun              #+#    #+#              #
-#    Updated: 2021/08/25 14:50:26 by smun             ###   ########.fr        #
+#    Updated: 2021/08/25 15:02:57 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = clang
 CFLAGS = -Wall -Wextra -Werror -g
 #-fsanitize=address
 
-INC = -I../includes -I. -I../libft
+INC = -I../includes -I. -I../libft -I/usr/local/opt/readline/include
 LIBSRCS = \
 			../srcs/variable.c \
 			../srcs/safe_memory.c \
@@ -27,7 +27,7 @@ LIBSRCS = \
 LIBOBJ = $(LIBSRCS:.c=.o)
 
 LIBFTPATH = ../libft
-LIB = -L$(LIBFTPATH) -L/usr/lib -lft -lreadline
+LIB = -L$(LIBFTPATH) -L/usr/local/opt/readline/lib -lft -ltermcap -lreadline
 
 TESTSRCS = $(wildcard test_*.c)
 TESTOBJ = $(TESTSRCS:.c=.o)

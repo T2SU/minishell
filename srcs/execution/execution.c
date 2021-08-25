@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 21:22:53 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 01:50:29 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 14:59:47 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,5 @@ t_bool	execution_start(t_syntax *syntax)
 	exec.syntax = syntax;
 	if (!execution_handle_redirections(&exec))
 		return (FALSE);
+	return (TRUE);
 }

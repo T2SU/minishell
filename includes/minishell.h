@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 14:44:58 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 15:04:31 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define WHITE "\033[37m"
 # define BLUE "\033[34m"
 # define RESET "\033[0m"
-# define PROMPT WHITE"*:+:-"RED"Mini"YELLOW"Shell"WHITE"-:+:*$ "RESET
+# define PROMPT YELLOW"*:+:-"RED"Mini"BLUE"Shell"YELLOW"-:+:*$ "RESET
 # ifndef VERBOSE
 #  define VERBOSE 0
 # endif
