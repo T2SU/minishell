@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:19:36 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 20:04:38 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 20:28:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,15 @@ int	run_logical_connection(t_connect *con)
 	if (con->connector == kAnd)
 	{
 		status = execution_start(con->first);
-		if (status == EXIT_SUCCESS)
+		if (status == EXIT_SUCCESS) // first가 성공해야만 second실행
 			status = execution_start(con->second);
 	}
 	if (con->connector == kOr)
 	{
 		status = execution_start(con->first);
-		if (status != EXIT_SUCCESS)
+		if (context_is_signaled(status)) // 시그널로 종료면 그냥 리턴.
+			return (status);
+		if (status != EXIT_SUCCESS) // first가 실패해야만 second실행
 			status = execution_start(con->second);
 	}
 	return (status);
@@ -71,7 +73,7 @@ int	execution_connect_run(t_connect *con)
 	int		status;
 	pid_t	pids[2];
 
-	if (con->connector == kPipe)
+	if (con->connector == kPipe) // 파이프는 항상 양쪽 모두 fork해서 실행해야함.
 	{
 		if (-1 == pipe(pipefd))
 			exit_error();

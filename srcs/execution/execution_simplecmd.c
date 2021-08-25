@@ -6,13 +6,14 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 19:41:32 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 20:36:19 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <errno.h>
 
-// 임시 함수
+// 임시로 echo 함수만
 t_bool	command_is_builtin(const char *cmd)
 {
 	if (!ft_strncmp(cmd, "echo", 5))
@@ -20,27 +21,31 @@ t_bool	command_is_builtin(const char *cmd)
 	return (FALSE);
 }
 
-// 임시 함수
-static int	command_run_builtin(int argc, char *argv[], char *envp[])
+// 임시로 만든 echo 함수
+static int	command_run_echo(int argc, char *argv[], char *envp[])
 {
 	int	i;
 
 	(void)envp;
+	i = 1;
+	while (i < argc)
+	{
+		if (i != 1)
+			write(STDOUT_FILENO, " ", 1);
+		write(STDOUT_FILENO, argv[i], ft_strlen(argv[i]));
+		i++;
+	}
+	write(STDOUT_FILENO, "\n", 1);
+	return (EXIT_SUCCESS);
+}
+
+// 임시로 만든 함수. 실제 빌트인 커맨드 호출 함수로 바꿔야함.
+static int	command_run_builtin(int argc, char *argv[], char *envp[])
+{
 	if (argc <= 0)
 		return (EXIT_FAILURE);
-	if (!ft_strncmp(argv[0], "echo", 5))
-	{
-		i = 1;
-		while (i < argc)
-		{
-			if (i != 1)
-				write(STDOUT_FILENO, " ", 1);
-			write(STDOUT_FILENO, argv[i], ft_strlen(argv[i]));
-			i++;
-		}
-		write(STDOUT_FILENO, "\n", 1);
-		return (EXIT_SUCCESS);
-	}
+	if (!ft_strncmp(argv[0], "echo", 5)) // 임시로 echo만
+		return (command_run_echo(argc, argv, envp));
 	raise_error(argv[0], "command not found");
 	return (EXIT_FAILURE);
 }
@@ -100,6 +105,7 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 		pid = fork();
 		if (pid == 0)
 		{
+			// TODO 디렉토리를 열려고 하면 EISDIR 에러를 줘야함.
 			// 자식 프로세스
 			if (execve(argv[0], argv, envp) == -1)
 				raise_system_error(argv[0]);
@@ -107,11 +113,10 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 		}
 		if (pid < 0)
 			exit_error();
-		// 부모는 자식프로세스 종료까지 대기
+		// 부모는 자식프로세스 종료까지 대기 및 반환코드 얻기
 		waitpid(pid, &status, 0);
 	}
-	// 강제 종료면(=is_continuable이 거짓) FALSE 리턴.
-	// 성공이던 실패던 정상 종료면 TRUE 리턴.
+	// 정리 후 반환코드 리턴
 	clean_arguments(argv, envp);
 	return (status);
 }

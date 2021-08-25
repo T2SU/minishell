@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 20:07:23 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 20:39:05 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ size_t		strbuf_length(t_strbuf *strbuf);
 void		shell_sigint_handler(int sig);
 void		shell_sigquit_handler(int sig);
 void		shell_main(void);
-void		shell_clean(void);
 
 /*
 ** ------------------------------------------------
@@ -373,11 +372,15 @@ typedef struct s_context
 
 void		context_init(char *argv0);
 t_context	*context_get(void);
+t_bool		context_is_signaled(int status);
+
 void		print_error(const char *str);
 void		exit_error(void);
 t_bool		raise_system_error(const char *why);
 t_bool		raise_error(const char *why, const char *desc);
+
 char		*word_get(t_word *word, t_bool expand_vars, t_bool disposeword_after);
+
 void		*safe_malloc(size_t size);
 char		*ft_basename(char *path);
 t_bool		ft_randomstr(char *buffer, size_t len);

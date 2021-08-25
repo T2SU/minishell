@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:17:14 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 14:16:50 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 20:26:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,13 @@ t_context	*context_get(void)
 	static t_context	ctx;
 
 	return (&ctx);
+}
+
+t_bool	context_is_signaled(int status)
+{
+	if (status == 0)
+		return (FALSE);
+	if ((status & 0x7F) == WSTOPPED)
+		return (FALSE);
+	return (TRUE);
 }

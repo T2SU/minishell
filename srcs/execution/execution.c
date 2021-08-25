@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 21:22:53 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 19:32:00 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 20:27:19 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	dispatch(t_execution *exec)
 {
 	int	status;
 
+	// 리다이렉션 설치
 	execution_install_redir(exec, TRUE);
 	status = EXIT_SUCCESS;
 	if (exec->syntax->type == kSimpleCommand)
@@ -24,17 +25,21 @@ static int	dispatch(t_execution *exec)
 		status = execution_connect_run(exec->syntax->connect);
 	else if (exec->syntax->type == kSubShell)
 		status = execution_subshell_run(exec->syntax->subshell);
+	// 리다이렉션 원복
 	execution_install_redir(exec, FALSE);
 	return (status);
 }
 
+// 문법 실행 메인 함수
 int	execution_start(t_syntax *syntax)
 {
 	t_execution	exec;
 
 	ft_bzero(&exec, sizeof(t_execution));
 	exec.syntax = syntax;
+	// t_syntax 구조체에 설정된 리다이렉션 준비
 	if (!execution_handle_redirections(&exec))
 		return (EXIT_FAILURE);
+	// 실제 커맨드 실행 루틴 호출
 	return (dispatch(&exec));
 }
