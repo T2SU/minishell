@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:19:36 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 20:28:06 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 23:55:46 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static pid_t	run_pipe(t_syntax *run, int order, int fd[])
 	return (pid);
 }
 
-int	run_logical_connection(t_connect *con)
+static int	run_logical_connection(t_connect *con)
 {
 	int	status;
 
