@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 01:24:57 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 01:50:36 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 15:31:16 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static t_bool	handle_redirection(t_execution *exec, t_redir *redir)
 	else
 		filename = word_get(redir->filename, TRUE, FALSE);
 	if (filename == NULL)
-		return (raise_system_error("unknown"));
-	fd = open(filename, redir->flags);
+		return (FALSE);
+	fd = open(filename, redir->flags, 0644);
 	if (fd == -1)
 		ret = raise_system_error(filename);
 	else if (redir->type == kRead || redir->type == kReadHeredoc)

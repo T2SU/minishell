@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 18:37:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 15:09:32 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/25 15:30:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,44 +16,26 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-static t_bool	exit_reading_heredoc(t_strbuf *strbuf)
-{
-	char	*str;
-
-	str = strbuf_get(strbuf);
-	printf("%s\n", str);
-	free(str);
-	return (FALSE);
-}
-
 static t_bool	read_secondary_line(int fd, const char *eof)
 {
 	t_strbuf	strbuf;
 	char		*line;
-	t_bool		success;
-
 	ft_bzero(&strbuf, sizeof(t_strbuf));
-	success = TRUE;
 	while (TRUE)
 	{
 		line = readline("> ");
 		if (line == NULL)
-		{
-			success = exit_reading_heredoc(&strbuf);
 			break ;
-		}
 		if (!ft_strncmp(eof, line, ft_strlen(eof) + 1))
 			break ;
 		strbuf_appends(&strbuf, line);
 		strbuf_append(&strbuf, '\n');
 	}
-	if (!success)
-		return (FALSE);
 	line = strbuf_get(&strbuf);
 	if (write(fd, line, ft_strlen(line)) < 0)
 		exit_error();
 	free(line);
-	return (success);
+	return (TRUE);
 }
 
 static void	signal_handler(int sig)
@@ -106,6 +88,10 @@ char	*execution_make_heredoc(t_redir *redir)
 		ret = FALSE;
 	close(fd);
 	if (!ret)
+	{
+		unlink(filename);
+		free(filename);
 		filename = NULL;
+	}
 	return (filename);
 }
