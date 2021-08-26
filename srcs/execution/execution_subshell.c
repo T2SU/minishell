@@ -6,11 +6,14 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:50:47 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 19:12:33 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 13:07:22 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/wait.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 int	execution_subshell_run(t_subshell *subshell)
 {

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 18:37:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 20:23:14 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 13:07:02 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <readline/readline.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <signal.h>
+#include <sys/wait.h>
 
 static t_bool	read_secondary_line(int fd, const char *eof)
 {

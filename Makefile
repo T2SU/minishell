@@ -64,6 +64,11 @@ ifeq ($(shell uname -s), Darwin)
 	INC += -I./readline/include
 	LIB += -L./readline/lib
 endif
+# 리눅스 라이브러리 (readline-devel 패키지 설치 필요)
+ifeq ($(shell uname -s), Linux)
+	INC += -I./usr/include
+	LIB += -L./usr/lib
+endif
 
 NAME = minishell
 

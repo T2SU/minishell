@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:17:51 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 20:32:40 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 13:06:41 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
 
 void	shell_sigint_handler(int sig)
 {

@@ -6,13 +6,14 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 21:11:52 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 13:07:09 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <errno.h>
 #include <stdio.h>
+#include <sys/wait.h>
 
 // 임시로 echo 함수만
 t_bool	command_is_builtin(const char *cmd)

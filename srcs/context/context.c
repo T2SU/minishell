@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:17:14 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 21:11:22 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 13:06:20 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,5 @@ t_context	*context_get(void)
 
 t_bool	context_is_signaled(int status)
 {
-	if ((status & 0177) == 0)
-		return (FALSE);
-	if ((status & 0177) == _WSTOPPED)
-		return (FALSE);
-	return (TRUE);
+	return (WIFSIGNALED(status));
 }

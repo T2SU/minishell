@@ -8,5 +8,5 @@ a.out
 minishell
 filename.txt
 test.c
-hello
-hello2
+hello*
+*.txt

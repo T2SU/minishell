@@ -6,12 +6,13 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:19:36 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 23:55:46 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 13:07:44 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
+#include <sys/wait.h>
 
 static void	connect_pipe(int order, int fd[])
 {
