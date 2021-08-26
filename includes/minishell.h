@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 11:14:41 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/26 21:33:47 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,64 +324,9 @@ void		run_cd(t_list *args, char *home);
 void		run_pwd(void);
 void		run_exit(t_list *args);
 
-/*
-** ------------------------------------------------
-**   Module - Environment
-** ------------------------------------------------
-*/
-
-typedef struct s_env
-{
-	t_dict	env;
-	t_list	*path;
-}	t_env;
-
-enum	e_printenvopt
-{
-	kExportNoOption,
-	kEnvNoOption
-};
-
-/*
-** env_put : Put an Environment data (input e.g) KEY=VALUE )
-*/
-
-void		env_put(char *value);
-
-/*
-** env_get : Get Environment value with a key
-*/
-
-char		*env_get(char *key);
-
-/*
-** env_print : Print Environment values (env, export, ...)
-*/
-
-void		env_print(int option);
-
-/*
-** env_make_envp : make char*envp[] for running the external commands
-*/
-
-char		*env_make_envp(void);
-
-/*
-** env_find_from_path : Verify if the input command can be found in saved path
-**                      and returns the found path+command.
-*/
-
-char		*env_find_from_path(char *command);
-
-/*
-** ------------------------------------------------
-**   Module - Context
-** ------------------------------------------------
-*/
-
 typedef struct s_context
 {
-	t_env	env;
+	t_dict	*env;
 	char	*app_name;
 	int		error;
 	t_bool	heredoc;
@@ -389,7 +334,7 @@ typedef struct s_context
 	int		laststatus;
 }	t_context;
 
-void		context_init(char *argv0);
+void		context_init(char *argv[], char *envp[]);
 t_context	*context_get(void);
 t_bool		context_is_signaled(int status);
 

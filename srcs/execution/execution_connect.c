@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:19:36 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 13:07:44 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 22:02:58 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
+// fd[0] -> READ    fd[1] -> WRITE
 static void	connect_pipe(int order, int fd[])
 {
-	if (order == 0)
+	if (order == 0) // 왼쪽
 	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
+		close(fd[0]); // 왼쪽은 읽을 필요가 없으니.. READ용 fd는 close.
+		dup2(fd[1], STDOUT_FILENO); // 왼쪽 친구가 STDOUT으로 출력하는걸 파이프의 WRITE용 fd로 설정.
 	}
-	if (order == 1)
+	if (order == 1) // 오른쪽
 	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
+		close(fd[1]); // 오른쪽에 있는 친구는 읽기만 하지, 쓰기를 할 일이 없으니.. WRITE용 fd는 close.
+		dup2(fd[0], STDIN_FILENO); // 오른쪽 친구가 STDIN으로 입력받는걸(read) 파이프의 READ용 fd로 설정.
 	}
 }
 
@@ -80,10 +81,10 @@ int	execution_connect_run(t_connect *con)
 			exit_error();
 		pids[0] = run_pipe(con->first, 0, pipefd);
 		pids[1] = run_pipe(con->second, 1, pipefd);
-		waitpid(pids[0], &status, 0);
+		waitpid(pids[0], &status, 0); // 1. 왼쪽이 종료가 되면 (프로세스가)
 		close(pipefd[0]);
 		close(pipefd[1]);
-		waitpid(pids[1], &status, 0);
+		waitpid(pids[1], &status, 0); // 2. 오른쪽이 이제 STDIN으로 읽는걸 멈춰야 하잖아요. `read` 같은걸로 대기중인걸.
 		return (status);
 	}
 	return (run_logical_connection(con));

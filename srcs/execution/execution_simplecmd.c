@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 13:07:09 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 22:02:33 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,36 @@ static void	clean_arguments(char *argv[], char *envp[])
 	free(envp);
 }
 
+static int command_run_external(int argc, char *argv[], char *envp[])
+{
+	int		status;
+	pid_t	pid;
+
+	//fork 후 execve
+	pid = fork();
+	if (pid == 0)
+	{
+		// TODO 디렉토리를 열려고 하면 EISDIR 에러를 줘야함.
+		// 자식 프로세스
+		if (execve(argv[0], argv, envp) == -1)
+			raise_system_error(argv[0]);
+		exit(EXIT_FAILURE);
+	}
+	if (pid < 0)
+		exit_error();
+	// 부모는 자식프로세스 종료까지 대기 및 반환코드 얻기
+	waitpid(pid, &status, 0);
+	if (context_is_signaled(status)) // 시그널로 종료되면 개행 한번..
+		printf("\n");
+	return (status);
+}
+
 int	execution_simplecmd_run(t_simplecmd *scmd)
 {
 	int		argc;
 	char	**argv;
 	char	**envp;
 	int		status;
-	pid_t	pid;
 
 	// argv, envp 파싱
 	argc = ft_lstsize(scmd->args);
@@ -97,29 +120,9 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 	parse_arguments(argc, argv, scmd);
 	// 빌트인 or 외부 커맨드
 	if (command_is_builtin(argv[0]))
-	{
-		// 실행 후 리턴 코드 얻기
-		status = command_run_builtin(argc, argv, envp);
-	}
+		status = command_run_builtin(argc, argv, envp); // 실행 후 리턴 코드 얻기
 	else
-	{
-		//fork 후 execve
-		pid = fork();
-		if (pid == 0)
-		{
-			// TODO 디렉토리를 열려고 하면 EISDIR 에러를 줘야함.
-			// 자식 프로세스
-			if (execve(argv[0], argv, envp) == -1)
-				raise_system_error(argv[0]);
-			exit(EXIT_FAILURE);
-		}
-		if (pid < 0)
-			exit_error();
-		// 부모는 자식프로세스 종료까지 대기 및 반환코드 얻기
-		waitpid(pid, &status, 0);
-		if (context_is_signaled(status)) // 시그널로 종료되면 개행 한번..
-			printf("\n");
-	}
+		status = command_run_external(argc, argv, envp);
 	// 정리 후 반환코드 리턴
 	clean_arguments(argv, envp);
 	return (status);
