@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 22:02:33 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 22:20:31 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	clean_arguments(char *argv[], char *envp[])
 	free(envp);
 }
 
-static int command_run_external(int argc, char *argv[], char *envp[])
+static int command_run_external(char *argv[], char *envp[])
 {
 	int		status;
 	pid_t	pid;
@@ -122,7 +122,7 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 	if (command_is_builtin(argv[0]))
 		status = command_run_builtin(argc, argv, envp); // 실행 후 리턴 코드 얻기
 	else
-		status = command_run_external(argc, argv, envp);
+		status = command_run_external(argv, envp);
 	// 정리 후 반환코드 리턴
 	clean_arguments(argv, envp);
 	return (status);
