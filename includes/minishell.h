@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 00:07:08 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/26 11:14:41 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 # include <libft.h>
 # include <stdlib.h>
 # include <stddef.h>
+# include <stdio.h>
+# include <limits.h>
+# include <string.h>
+# include <errno.h>
 # define TRUE 1
 # define FALSE 0
 # define RED "\033[31m"
