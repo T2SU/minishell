@@ -26,6 +26,12 @@ SRCS = \
 		execution/execution_connect \
 		execution/execution_install_redir \
 		execution/execution \
+		module/dict \
+		module/echo \
+		module/env \
+		module/export \
+		module/dict_make_free \
+		module/run \
 		strbuf/strbuf_append \
 		strbuf/strbuf_get \
 		stack/stack \

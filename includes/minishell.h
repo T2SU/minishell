@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 23:41:34 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 00:07:08 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,17 @@ typedef struct s_pair
 {
 	char	*key;
 	char	*value;
+	int		equal;
 }	t_pair;
 
-t_bool		dict_put(t_dict *dict, char *key, char *value);
-char		*dict_get(t_dict *dict, char *key);
+t_dict		*make_dict(char **envp);
 void		dict_free(t_dict *dict);
+t_dict		*copy_dict(t_dict *dict);
+t_dict		*sort_dict(t_dict *dict);
+t_bool		dict_put(t_dict *dict, char *key, char *value, int equal);
+t_bool		dict_del(t_dict *dict, char *key);
+void		dict_update(t_dict *dict, char *key, char *value);
+char		*dict_get(t_dict *dict, char *key);
 
 /*
 ** ------------------------------------------------
@@ -303,6 +309,16 @@ int			execution_subshell_run(t_subshell *subshell);
 */
 
 // void		command_run(t_command *cmd, int argc, char *argv[]);
+void		print_export(void *content);
+void		print_lst(void *content);
+t_bool		run_env(t_dict *dict);
+void		run_unset(t_dict *dict, t_list *args);
+t_bool		run_export(t_dict *dict, t_list *args);
+void		run_echo(t_list *args);
+t_bool		is_same_word(char *str1, char *str2);
+void		run_cd(t_list *args, char *home);
+void		run_pwd(void);
+void		run_exit(t_list *args);
 
 /*
 ** ------------------------------------------------
