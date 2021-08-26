@@ -57,17 +57,12 @@ OBJ = $(SRCS_FULL:.c=.o)
 LIBFT_ROOT = $(ROOT_PATH)/libft
 
 INC = -I$(ROOT_PATH)/includes -I$(LIBFT_ROOT)
-LIB = -L$(LIBFT_ROOT) -lreadline -ltermcap -lft
+LIB = -L$(LIBFT_ROOT) -lft -lreadline -ltermcap
 
 # macOS 에서 동봉된 라이브러리로 컴파일
 ifeq ($(shell uname -s), Darwin)
 	INC += -I./readline/include
 	LIB += -L./readline/lib
-endif
-# 리눅스 라이브러리 (readline-devel 패키지 설치 필요)
-ifeq ($(shell uname -s), Linux)
-	INC += -I./usr/include
-	LIB += -L./usr/lib
 endif
 
 NAME = minishell
@@ -79,7 +74,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C $(LIBFT_ROOT) bonus
-	$(CC) $(CFLAGS) $(INC) $(LIB) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
 
 clean:
 	@make -C $(LIBFT_ROOT) clean

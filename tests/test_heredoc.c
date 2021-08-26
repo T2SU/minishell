@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:41:16 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 15:03:46 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 13:23:44 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <readline/readline.h>
+#include <signal.h>
+#include <sys/wait.h>
 
 static void test_heredoc(void)
 {

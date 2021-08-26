@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/15 16:22:38 by smun              #+#    #+#              #
-#    Updated: 2021/08/26 13:01:37 by smun             ###   ########.fr        #
+#    Updated: 2021/08/26 13:30:33 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,11 +33,6 @@ LIB = -L$(LIBFTPATH) -lft -ltermcap -lreadline
 ifeq ($(shell uname -s), Darwin)
 	INC += -I../readline/include
 	LIB += -L../readline/lib
-endif
-# 리눅스 라이브러리 (readline-devel 패키지 설치 필요)
-ifeq ($(shell uname -s), Linux)
-	INC += -I./usr/include
-	LIB += -L./usr/lib
 endif
 
 TESTSRCS = $(wildcard test_*.c)

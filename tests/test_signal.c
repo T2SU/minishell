@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:16:33 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 18:26:40 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/26 13:23:36 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include <stdarg.h>
 #include <readline/readline.h>
 #include <unistd.h>
+#include <signal.h>
+#include <sys/wait.h>
 
 void sighandler(int sig)
 {
