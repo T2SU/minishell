@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 21:33:47 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/27 23:44:15 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,16 +313,20 @@ int			execution_subshell_run(t_subshell *subshell);
 */
 
 // void		command_run(t_command *cmd, int argc, char *argv[]);
+t_bool		command_is_builtin(const char *cmd);
+int			command_run_builtin(int argc, char *argv[], t_dict *dict);
+int			command_run_echo(int argc, char *argv[], t_dict *dict);
+int			command_run_cd(int argc, char *argv[], t_dict *dict);
+int			command_run_pwd(int argc, char *argv[], t_dict *dict);
+int			command_run_export(int argc, char *argv[], t_dict *dict);
+int			command_run_env(int argc, char *argv[], t_dict *dict);
+int			command_run_unset(int argc, char *argv[], t_dict *dict);
+int			command_run_exit(int argc, char *argv[], t_dict *dict);
+
+void		compare_and_swap(t_list	*lst);
+t_dict		*sort_dict(t_dict *dict);
+int			find_equal(char *str);
 void		print_export(void *content);
-void		print_lst(void *content);
-t_bool		run_env(t_dict *dict);
-void		run_unset(t_dict *dict, t_list *args);
-t_bool		run_export(t_dict *dict, t_list *args);
-void		run_echo(t_list *args);
-t_bool		is_same_word(char *str1, char *str2);
-void		run_cd(t_list *args, char *home);
-void		run_pwd(void);
-void		run_exit(t_list *args);
 
 typedef struct s_context
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_simplecmd.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 22:20:31 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/27 22:14:26 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,6 @@
 #include <errno.h>
 #include <stdio.h>
 #include <sys/wait.h>
-
-// 임시로 echo 함수만
-t_bool	command_is_builtin(const char *cmd)
-{
-	if (!ft_strncmp(cmd, "echo", 5))
-		return (TRUE);
-	return (FALSE);
-}
-
-// 임시로 만든 echo 함수
-static int	command_run_echo(int argc, char *argv[], char *envp[])
-{
-	int	i;
-
-	(void)envp;
-	i = 1;
-	while (i < argc)
-	{
-		if (i != 1)
-			write(STDOUT_FILENO, " ", 1);
-		write(STDOUT_FILENO, argv[i], ft_strlen(argv[i]));
-		i++;
-	}
-	write(STDOUT_FILENO, "\n", 1);
-	return (EXIT_SUCCESS);
-}
-
-// 임시로 만든 함수. 실제 빌트인 커맨드 호출 함수로 바꿔야함.
-static int	command_run_builtin(int argc, char *argv[], char *envp[])
-{
-	if (argc <= 0)
-		return (EXIT_FAILURE);
-	if (!ft_strncmp(argv[0], "echo", 5)) // 임시로 echo만
-		return (command_run_echo(argc, argv, envp));
-	raise_error(argv[0], "command not found");
-	return (EXIT_FAILURE);
-}
 
 static void	parse_arguments(int argc, char *argv[], t_simplecmd *scmd)
 {
@@ -110,6 +73,7 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 	int		argc;
 	char	**argv;
 	char	**envp;
+	t_dict	*dict;
 	int		status;
 
 	// argv, envp 파싱
@@ -117,10 +81,11 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 	envp = safe_malloc(sizeof(char *) * 1);
 	argv = safe_malloc(sizeof(char *) * (1 + argc));
 	envp[0] = NULL;
+	dict = context_get()->env;
 	parse_arguments(argc, argv, scmd);
 	// 빌트인 or 외부 커맨드
 	if (command_is_builtin(argv[0]))
-		status = command_run_builtin(argc, argv, envp); // 실행 후 리턴 코드 얻기
+		status = command_run_builtin(argc, argv, dict); // 실행 후 리턴 코드 얻기
 	else
 		status = command_run_external(argv, envp);
 	// 정리 후 반환코드 리턴
