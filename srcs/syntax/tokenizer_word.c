@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_word.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:51:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/21 20:23:42 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/28 15:49:33 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_word	*get_word(t_tokenizer *t)
 			flush_wordchunk(&word, &strbuf, FALSE);
 			continue ;
 		}
-		if (*t->str == '$' &&t->quote != '\'')
+		if (*t->str == '$' && t->quote != '\'')
 			parse_variable(&word, &strbuf, t);
 		else if (*t->str != '\0')
 			strbuf_append(&strbuf, *(t->str++));

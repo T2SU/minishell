@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/27 23:44:15 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/28 15:48:54 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ typedef struct s_stack
 	t_list	*dat;
 }	t_stack;
 
-void	*stack_peek(t_stack *stack, int index);
-void	stack_push(t_stack *stack, void *data);
-void	*stack_pop(t_stack *stack);
-int		stack_size(t_stack *stack);
+void		*stack_peek(t_stack *stack, int index);
+void		stack_push(t_stack *stack, void *data);
+void		*stack_pop(t_stack *stack);
+int			stack_size(t_stack *stack);
 
 /*
 ** ------------------------------------------------
@@ -139,7 +139,7 @@ enum e_token
 	kCommand
 };
 
-typedef struct	s_tokenizer
+typedef struct s_tokenizer
 {
 	const char	*str;
 	int			quote;
@@ -152,18 +152,18 @@ enum e_wordflag
 	WordFlag_LastExitCode = 1 << 1
 };
 
-typedef struct	s_wordchunk
+typedef struct s_wordchunk
 {
 	enum e_wordflag	flag;
 	char			*str;
 }	t_wordchunk;
 
-typedef struct	s_word
+typedef struct s_word
 {
 	t_list	*wordlist;
 }	t_word;
 
-typedef struct	s_token
+typedef struct s_token
 {
 	enum e_token	type;
 	struct s_word	*word;
@@ -178,7 +178,7 @@ enum e_redirtype
 	kReadHeredoc,
 };
 
-typedef struct	s_redir
+typedef struct s_redir
 {
 	enum e_redirtype	type;
 	int					fd;
@@ -187,7 +187,7 @@ typedef struct	s_redir
 	char				*heredoc_eof;
 }	t_redir;
 
-typedef struct	s_simplecmd
+typedef struct s_simplecmd
 {
 	t_list	*args;
 }	t_simplecmd;
@@ -199,19 +199,19 @@ enum e_connector
 	kOr
 };
 
-typedef struct	s_connect
+typedef struct s_connect
 {
 	enum e_connector	connector;
 	struct s_syntax		*first;
 	struct s_syntax		*second;
 }	t_connect;
 
-typedef struct	s_subshell
+typedef struct s_subshell
 {
 	struct s_syntax		*command;
 }	t_subshell;
 
-typedef struct	s_syntax
+typedef struct s_syntax
 {
 	enum e_token		type;
 	struct s_simplecmd	*simplecmd;
@@ -276,13 +276,13 @@ void		dispose_syntax(void *ptr);
 ** status:  Exit Code (Status Code)
 */
 
-typedef struct	s_filedes
+typedef struct s_filedes
 {
 	int	fd;
 	int	stdfd;
 }	t_filedes;
 
-typedef struct	s_execution
+typedef struct s_execution
 {
 	t_syntax	*syntax;
 	t_filedes	in;
@@ -347,7 +347,8 @@ void		exit_error(void);
 t_bool		raise_system_error(const char *why);
 t_bool		raise_error(const char *why, const char *desc);
 
-char		*word_get(t_word *word, t_bool expand_vars, t_bool disposeword_after);
+char		*word_get(t_word *word, t_bool expand_vars,
+				t_bool disposeword_after);
 
 void		*safe_malloc(size_t size);
 char		*ft_basename(char *path);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_random.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 01:26:48 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 01:37:03 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/28 15:50:03 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_bool	make_readable(char *buffer, size_t len)
 {
 	size_t	i;
 
-	i  = 0;
+	i = 0;
 	while (i < len)
 	{
 		if (buffer[i] == -128)
