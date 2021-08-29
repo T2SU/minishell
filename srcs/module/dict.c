@@ -39,7 +39,7 @@ t_bool	del_first(t_dict *dict, char *key)
 	t_list	*lst;
 
 	lst = dict->head;
-	if (!ft_strncmp(((t_pair *)lst->content)->key, key, ft_strlen(key)))
+	if (!ft_strncmp(((t_pair *)lst->content)->key, key, ft_strlen(key) + 1))
 	{
 		dict->head = dict->head->next;
 		free(((t_pair *)lst->content)->key);
@@ -63,7 +63,7 @@ t_bool	dict_del(t_dict *dict, char *key)
 	{
 		next = lst->next;
 		if (next != NULL
-			&& !ft_strncmp(((t_pair *)next->content)->key, key, ft_strlen(key)))
+			&& !ft_strncmp(((t_pair *)next->content)->key, key, ft_strlen(key) + 1))
 		{
 			lst->next = lst->next->next;
 			free(((t_pair *)next->content)->key);
@@ -84,7 +84,7 @@ void	dict_update(t_dict *dict, char *key, char *value)
 	lst = dict->head;
 	while (lst)
 	{
-		if (!ft_strncmp(((t_pair *)lst->content)->key, key, ft_strlen(key)))
+		if (!ft_strncmp(((t_pair *)lst->content)->key, key, ft_strlen(key) + 1))
 		{
 			free(((t_pair *)lst->content)->value);
 			((t_pair *)lst->content)->value = ft_strdup(value);
@@ -100,7 +100,7 @@ char	*dict_get(t_dict *dict, char *key)
 	lst = dict->head;
 	while (lst)
 	{
-		if (!ft_strncmp(((t_pair *)lst->content)->key, key, ft_strlen(key))
+		if (!ft_strncmp(((t_pair *)lst->content)->key, key, ft_strlen(key) + 1)
 			&& ((t_pair *)lst->content)->equal)
 			return (((t_pair *)lst->content)->value);
 		lst = lst->next;

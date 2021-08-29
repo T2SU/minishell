@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_word.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:51:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/28 15:49:33 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/29 15:23:32 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	flush_wordchunk(t_word *word, t_strbuf *strbuf, t_bool final)
+t_bool	flush_wordchunk(t_word *word, t_strbuf *strbuf, t_bool force)
 {
 	t_wordchunk	*chunk;
 	t_list		*lst;
 
-	if (strbuf_length(strbuf) == 0 && !final)
+	if (strbuf_length(strbuf) == 0 && !force)
 		return (FALSE);
 	chunk = safe_malloc(sizeof(t_wordchunk));
 	lst = ft_lstnew(chunk);
@@ -77,8 +77,8 @@ t_word	*get_word(t_tokenizer *t)
 		if (ft_strchr("\'\"", *t->str)
 			&& (t->quote == 0 || t->quote == *(t->str)))
 		{
+			flush_wordchunk(&word, &strbuf, t->quote != 0);
 			t->quote ^= *(t->str++);
-			flush_wordchunk(&word, &strbuf, FALSE);
 			continue ;
 		}
 		if (*t->str == '$' && t->quote != '\'')

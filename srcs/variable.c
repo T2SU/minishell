@@ -6,42 +6,77 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:24:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/20 18:52:05 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/29 15:19:12 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-char	*expand_variable(char *name)
+static char	*expand_variable(t_wordchunk *chunk)
 {
 	char	*ret;
 
-	ret = ft_strdup(name);
+	ret = NULL;
+	if (chunk->flag == WordFlag_LastExitCode)
+		return ft_itoa(context_get()->laststatus);
+	if (chunk->str != NULL && ft_strlen(chunk->str) > 0)
+		ret = dict_get(context_get()->env, chunk->str);
+	if (ret == NULL)
+		ret = ft_strdup("");
+	else
+		ret = ft_strdup(ret);
 	if (ret == NULL)
 		exit_error();
 	return (ret);
 }
 
-char	*word_get(t_word *word, t_bool expand_vars, t_bool disposeword_after)
+static t_bool	is_single_dollar_sign(t_word *word)
 {
-	t_strbuf	strbuf;
 	t_list		*lst;
 	t_wordchunk	*chunk;
 
-	ft_memset(&strbuf, 0, sizeof(t_strbuf));
+	lst = word->wordlist;
+	if (lst == NULL)
+		return (FALSE);
+	chunk = lst->content;
+	if (chunk->flag != WordFlag_DollarSign)
+		return (FALSE);
+	if (chunk->str == NULL || ft_strlen(chunk->str) > 0)
+		return (FALSE);
+	if (lst->next != NULL)
+		return (FALSE);
+	return (TRUE);
+}
+
+static void	concatenate_wordchunks(t_strbuf *strbuf, t_word *word, t_bool expand_vars)
+{
+	t_list		*lst;
+	t_wordchunk	*chunk;
+
 	lst = word->wordlist;
 	while (lst != NULL)
 	{
 		chunk = lst->content;
 		if (!expand_vars && chunk->flag != WordFlag_None)
-			strbuf_append(&strbuf, '$');
+			strbuf_append(strbuf, '$');
 		if (!expand_vars || chunk->flag == WordFlag_None)
-			strbuf_appends(&strbuf, chunk->str);
+			strbuf_appends(strbuf, chunk->str);
 		else
-			strbuf_appends(&strbuf, expand_variable(chunk->str));
+			strbuf_appends(strbuf, expand_variable(chunk));
 		lst = lst->next;
 	}
+}
+
+char	*word_get(t_word *word, t_bool expand_vars, t_bool disposeword_after)
+{
+	t_strbuf	strbuf;
+
+	ft_memset(&strbuf, 0, sizeof(t_strbuf));
+	if (is_single_dollar_sign(word))
+		strbuf_append(&strbuf, '$');
+	else
+		concatenate_wordchunks(&strbuf, word, expand_vars);
 	if (disposeword_after)
 	{
 		ft_lstclear(&word->wordlist, &dispose_wordchunk);

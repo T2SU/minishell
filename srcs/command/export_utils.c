@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:42:45 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/27 23:44:03 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/29 16:00:37 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	compare_and_swap(t_list	*lst)
 	if (key_len < ft_strlen(((t_pair *)lst->next->content)->key))
 		key_len = ft_strlen(((t_pair *)lst->next->content)->key);
 	if (ft_strncmp(((t_pair *)lst->content)->key,
-			((t_pair *)lst->next->content)->key, key_len) > 0)
+			((t_pair *)lst->next->content)->key, key_len + 1) > 0)
 	{
 		tmp = (t_pair *)lst->content;
 		lst->content = lst->next->content;

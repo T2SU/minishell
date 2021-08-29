@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:50:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/27 23:07:34 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/29 16:09:11 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,33 @@ static t_bool	is_n_option(char *str)
 	return (TRUE);
 }
 
+static int	print(int i, int start, char *arg)
+{
+	int	printed_len;
+
+	printed_len = 0;
+	if (i != start)
+	{
+		write(STDOUT_FILENO, " ", 1);
+		printed_len += 1;
+	}
+	write(STDOUT_FILENO, arg, ft_strlen(arg));
+	printed_len += ft_strlen(arg);
+	return (printed_len);
+}
+
 int	command_run_echo(int argc, char *argv[], t_dict *dict)
 {
 	int	n_flag;
 	int	start;
 	int	i;
+	int	printed_len;
 
 	(void)dict;
 	n_flag = 0;
 	start = 1;
-	if (is_n_option(argv[1]))
+	printed_len = 0;
+	if (argc > 1 && is_n_option(argv[1]))
 	{
 		n_flag = 1;
 		start = 2;
@@ -43,12 +60,10 @@ int	command_run_echo(int argc, char *argv[], t_dict *dict)
 	i = start;
 	while (i < argc)
 	{
-		if (i != start)
-			write(STDOUT_FILENO, " ", 1);
-		write(STDOUT_FILENO, argv[i], ft_strlen(argv[i]));
+		printed_len += print(i, start, argv[i]);
 		i++;
 	}
-	if (!n_flag)
+	if (!n_flag || printed_len == 0)
 		write(STDOUT_FILENO, "\n", 1);
 	return (EXIT_SUCCESS);
 }
