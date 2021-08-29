@@ -47,6 +47,9 @@ NAME = libft.a
 GCC = gcc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
+ifeq ($(shell uname -m), arm64)
+	CFLAGS += -target x86_64-darwin-macho
+endif
 
 all : $(NAME)
 $(NAME) :

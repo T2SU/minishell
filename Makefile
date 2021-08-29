@@ -19,6 +19,7 @@ SRCS = \
 		context/ft_random \
 		shell/shell \
 		shell/signal \
+		shell/stat \
 		execution/execution_heredoc \
 		execution/execution_redirection \
 		execution/execution_simplecmd \
@@ -62,10 +63,15 @@ LIBFT_ROOT = $(ROOT_PATH)/libft
 INC = -I$(ROOT_PATH)/includes -I$(LIBFT_ROOT)
 LIB = -L$(LIBFT_ROOT) -lft -lreadline -ltermcap
 
-# macOS 에서 동봉된 라이브러리로 컴파일
+# macOS 에서는, 프로젝트에 동봉된 라이브러리로 컴파일
 ifeq ($(shell uname -s), Darwin)
 	INC += -I./readline/include
 	LIB += -L./readline/lib
+
+#	Apple silicon 칩셋에서는 Rosetta 2로 구동될 수 있게끔 x86_64로 크로스 컴파일
+	ifeq ($(shell uname -m), arm64)
+		CFLAGS += -target x86_64-darwin-macho
+	endif
 endif
 
 NAME = minishell

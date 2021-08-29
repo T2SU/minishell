@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/28 15:48:54 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/29 13:52:57 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void		shell_sigint_handler(int sig);
 void		shell_sigquit_handler(int sig);
 void		shell_main(void);
 void		shell_set_termattr(t_bool echoctl);
+
+t_bool		is_dir(const char *path);
 
 /*
 ** ------------------------------------------------
