@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:20:45 by smun              #+#    #+#             */
-/*   Updated: 2021/08/29 14:29:13 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/29 14:40:49 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ void	shell_main(void)
 	{
 		line = readline(PROMPT);
 		if (line == NULL)
-			break ; // TODO  call exit
+		{
+			command_run_exit(1, NULL, NULL);
+			break ;
+		}
 		status = parse(&syntax, line);
 		if (status != kEmptyLine)
 			add_history(line);
