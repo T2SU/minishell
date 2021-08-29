@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:26:25 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/27 23:38:42 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/29 18:22:40 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ static int	is_str_num(char *str)
 int	command_run_exit(int argc, char *argv[], t_dict *dict)
 {
 	(void)dict;
-	printf("exit\n");
+	write(STDERR_FILENO, "exit\n", 5);
 	if (argc == 1)
 		exit(0);
 	else if (!is_str_num(argv[1]))
 	{
-		printf("exit: %s: numeric argument required\n", argv[1]);
+		raise_arg_error(argv[0], argv[1], "numeric argument required");
 		exit(1);
 	}
 	else if (argc > 2)
-		printf("exit: too many arguments\n");
+		raise_error(argv[0], "too many arguments");
 	else
 		exit(ft_atoi(argv[1]));
 	return (EXIT_SUCCESS);

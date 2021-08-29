@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/29 14:37:56 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/29 18:18:07 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,6 +349,10 @@ t_bool		print_error(const char *app, const char *why, const char *desc);
 void		exit_error(void);
 t_bool		raise_system_error(const char *why);
 t_bool		raise_error(const char *why, const char *desc);
+t_bool		raise_arg_error(const char *why, const char *arg, const char *desc);
+t_bool		print_arg_error(const char *app, const char *why, const char *arg,
+				const char *desc);
+t_bool		raise_system_arg_error(const char *why, const char *arg);
 
 char		*word_get(t_word *word, t_bool expand_vars,
 				t_bool disposeword_after);

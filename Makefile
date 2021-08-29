@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
+#    Updated: 2021/08/29 18:16:27 by hkim             ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
@@ -15,6 +27,7 @@ SRCS = \
 		safe_memory \
 		context/context \
 		context/context_error \
+		context/context_error2 \
 		context/ft_basename \
 		context/ft_random \
 		shell/shell \
@@ -34,8 +47,8 @@ SRCS = \
 		command/export_utils \
 		command/env_unset \
 		command/exit \
-		module/dict \
-		module/dict_make_free \
+		dictionary/dict \
+		dictionary/dict_make_free \
 		strbuf/strbuf_append \
 		strbuf/strbuf_get \
 		stack/stack \

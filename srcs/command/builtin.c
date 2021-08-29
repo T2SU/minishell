@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:49:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/29 16:00:15 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/29 17:58:52 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ static t_bool	is_same_word(const char *str1, const char *str2)
 		return (FALSE);
 	s1 = malloc(sizeof(char) * ft_strlen(str1));
 	if (!s1)
-		exit(1); // error
+		exit_error();
 	s2 = malloc(sizeof(char) * ft_strlen(str2));
 	if (!s2)
-		exit(1); // error
+		exit_error();
 	ft_strlcpy(s1, str1, ft_strlen(str1));
 	ft_strlcpy(s2, str2, ft_strlen(str2));
 	ret = lower_and_cmp(s1, s2);

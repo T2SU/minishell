@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:05:48 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/27 23:38:31 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/29 18:18:44 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	command_run_cd(int argc, char *argv[], t_dict *dict)
 	else if (argc == 2)
 	{
 		if (chdir(argv[1]) == -1)
-			printf("cd: %s: %s\n", argv[1], strerror(errno));
+			raise_system_arg_error(argv[0], argv[1]);
 	}
 	else if (argc == 1)
 	{
 		home = dict_get(dict, "HOME");
 		if (chdir(home) == -1)
-			printf("cd: %s\n", strerror(errno));
+			raise_system_error(argv[0]);
 	}
 	return (EXIT_SUCCESS);
 }
