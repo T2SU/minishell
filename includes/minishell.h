@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/29 13:52:57 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/29 14:37:56 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void		shell_sigquit_handler(int sig);
 void		shell_main(void);
 void		shell_set_termattr(t_bool echoctl);
 
+t_bool		is_exist(const char *path);
 t_bool		is_dir(const char *path);
 
 /*
@@ -344,7 +345,7 @@ void		context_init(char *argv[], char *envp[]);
 t_context	*context_get(void);
 t_bool		context_is_signaled(int status);
 
-void		print_error(const char *str);
+t_bool		print_error(const char *app, const char *why, const char *desc);
 void		exit_error(void);
 t_bool		raise_system_error(const char *why);
 t_bool		raise_error(const char *why, const char *desc);

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/08/29 14:20:48 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/29 14:38:34 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,11 @@ static int command_run_external(char *argv[], char *envp[])
 	pid = fork();
 	if (pid == 0)
 	{
+		// 파일이 없거나 하면 에러..
+		if (!is_exist(argv[0]))
+			raise_system_error(argv[0]);
 		// 디렉토리를 열려고 하면 EISDIR 에러를 줘야함.
-		if (is_dir(argv[0]))
+		else if (is_dir(argv[0]))
 			raise_error(argv[0], "is a directory");
 		// 자식 프로세스
 		else if (execve(argv[0], argv, envp) == -1)

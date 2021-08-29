@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:20:45 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 21:55:50 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/29 14:29:13 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	shell_main(void)
 			add_history(line);
 		free(line);
 		if (status == kFailed)
-			print_error("syntax parse error");
+			print_error(NULL, NULL, "syntax parse error");
 		if (status == kSuccess)
 			execute(syntax);
 	}
