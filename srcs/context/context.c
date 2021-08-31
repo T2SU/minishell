@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:17:14 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 21:34:27 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/31 12:03:49 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,15 @@ t_context	*context_get(void)
 	return (&ctx);
 }
 
+/*
+** WIFSIGNALED(status).
+**
+** Attention to different MACRO definiton in Linux(GNU) system beside macOS.
+** While 'Norm' restricts the use of this macro,
+** We have to expose the contents of the bitwise operation.
+*/
+
 t_bool	context_is_signaled(int status)
 {
-	return (WIFSIGNALED(status));
+	return (status != 0177 && (status & 0177) != 0);
 }
