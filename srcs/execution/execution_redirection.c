@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 01:24:57 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 00:20:14 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/31 17:53:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ static t_bool	handle_redirection(t_execution *exec, t_redir *redir)
 
 	if (redir->type == kReadHeredoc)
 		filename = execution_make_heredoc(redir);
+	else if (is_wildcard(redir->filename))
+		filename = get_single_filename();
 	else
 		filename = word_get(redir->filename, TRUE, FALSE);
 	if (filename == NULL)

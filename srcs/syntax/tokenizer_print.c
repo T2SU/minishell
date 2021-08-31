@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 14:54:36 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 15:50:32 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/31 16:04:45 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ static void	print_word(t_list *lst)
 
 	wc = lst->content;
 	if (wc->flag != WordFlag_None)
-		printf(" {$%s}\n", wc->str);
+		printf(" {$%s}", wc->str);
 	else
-		printf(" {%s}\n", wc->str);
+		printf(" {%s}", wc->str);
+	if (wc->dquote)
+		printf(" [DQ]");
+	printf("\n");
 	lst = lst->next;
 }
 
