@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:49:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/29 17:58:52 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/31 12:30:26 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,27 +59,15 @@ static t_bool	is_same_word(const char *str1, const char *str2)
 
 t_bool	command_is_builtin(const char *cmd)
 {
-	if (is_same_word(cmd, "echo"))
-		return (TRUE);
-	if (!ft_strncmp(cmd, "cd", 3))
-		return (TRUE);
-	if (is_same_word(cmd, "pwd"))
-		return (TRUE);
-	if (!ft_strncmp(cmd, "export", 7))
-		return (TRUE);
-	if (is_same_word(cmd, "env"))
-		return (TRUE);
-	if (!ft_strncmp(cmd, "unset", 6))
-		return (TRUE);
-	if (!ft_strncmp(cmd, "exit", 5))
-		return (TRUE);
-	return (FALSE);
+	if (ft_strchr(cmd, '/'))
+		return (FALSE);
+	return (TRUE);
 }
 
 int	command_run_builtin(int argc, char *argv[], t_dict *dict)
 {
 	if (argc <= 0)
-		return (EXIT_FAILURE);
+		return (0177);
 	if (is_same_word(argv[0], "echo"))
 		return (command_run_echo(argc, argv, dict));
 	if (!ft_strncmp(argv[0], "cd", 3))
@@ -95,5 +83,5 @@ int	command_run_builtin(int argc, char *argv[], t_dict *dict)
 	if (!ft_strncmp(argv[0], "exit", 5))
 		return (command_run_exit(argc, argv, dict));
 	raise_error(argv[0], "command not found");
-	return (EXIT_FAILURE);
+	return (0177);
 }

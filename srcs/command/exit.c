@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:26:25 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/29 18:22:40 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/31 12:35:23 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ int	command_run_exit(int argc, char *argv[], t_dict *dict)
 		raise_arg_error(argv[0], argv[1], "numeric argument required");
 		exit(1);
 	}
-	else if (argc > 2)
-		raise_error(argv[0], "too many arguments");
-	else
+	else if (argc <= 2)
 		exit(ft_atoi(argv[1]));
-	return (EXIT_SUCCESS);
+	raise_error(argv[0], "too many arguments");
+	return (EXIT_FAILURE);
 }
