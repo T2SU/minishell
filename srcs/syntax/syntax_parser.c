@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:03:18 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 21:11:51 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/31 18:13:36 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,24 @@ static t_bool	is_emptyline(char *line)
 	return (TRUE);
 }
 
+static void	print_as_verbose(t_syntax *syntax, t_list *tokens)
+{
+	if (!VERBOSE)
+		return ;
+	if (syntax == NULL && tokens == NULL)
+		return ;
+	if (syntax != NULL)
+	{
+		printf(BLUE"* PARSED SHELL SYNTAX"RESET"\n");
+		syntax_print(syntax);
+	}
+	if (tokens != NULL)
+	{
+		printf(RED"\n* PARSED TOKENS\n"YELLOW"TYPE   "GREEN"DATA"RESET"\n");
+		print_tokens(tokens);
+	}
+}
+
 int	parse(t_syntax **syntax, char *line)
 {
 	t_tokenizer	tokenizer;
@@ -80,16 +98,13 @@ int	parse(t_syntax **syntax, char *line)
 	tokens = tokenize(&tokenizer);
 	if (tokens == NULL)
 		return (kEmptyLine);
-	if (VERBOSE)
-		print_tokens(tokens);
+	print_as_verbose(NULL, tokens);
 	*syntax = syntax_parse(tokens);
 	ft_lstclear(&tokens, dispose_token);
-	if (*syntax != NULL && VERBOSE)
-	{
-		syntax_print(*syntax);
-		printf(RESET"\n");
-	}
+	print_as_verbose(*syntax, NULL);
 	if (*syntax == NULL)
 		return (kFailed);
+	if (VERBOSE)
+		printf(GREEN"\n\n* EXECUTION RESULT"RESET"\n");
 	return (kSuccess);
 }
