@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 21:22:53 by smun              #+#    #+#             */
-/*   Updated: 2021/08/25 20:27:19 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/31 12:47:22 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static int	dispatch(t_execution *exec)
 		status = execution_connect_run(exec->syntax->connect);
 	else if (exec->syntax->type == kSubShell)
 		status = execution_subshell_run(exec->syntax->subshell);
+	if (status >> 8) // exit 시그널이 있을 경우
+		status >>= 8;
 	// 리다이렉션 원복
 	execution_install_redir(exec, FALSE);
 	return (status);
