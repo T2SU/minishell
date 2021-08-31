@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/08/31 12:46:42 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/31 13:02:13 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 	dict = context_get()->env;
 	parse_arguments(argc, argv, scmd);
 	// 빌트인 or 외부 커맨드
-	if (command_is_builtin(argv[0]))
+	if (is_command(argv[0]))
 		status = command_run_builtin(argc, argv, dict); // 실행 후 리턴 코드 얻기
 	else
 		status = command_run_external(argv, envp);

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:49:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/31 12:30:26 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/31 13:02:13 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static t_bool	is_same_word(const char *str1, const char *str2)
 	return (ret);
 }
 
-t_bool	command_is_builtin(const char *cmd)
+t_bool	is_command(const char *cmd)
 {
 	if (ft_strchr(cmd, '/'))
 		return (FALSE);

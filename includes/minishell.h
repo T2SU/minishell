@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/29 18:18:07 by hkim             ###   ########.fr       */
+/*   Updated: 2021/08/31 13:02:13 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,7 +316,7 @@ int			execution_subshell_run(t_subshell *subshell);
 */
 
 // void		command_run(t_command *cmd, int argc, char *argv[]);
-t_bool		command_is_builtin(const char *cmd);
+t_bool		is_command(const char *cmd);
 int			command_run_builtin(int argc, char *argv[], t_dict *dict);
 int			command_run_echo(int argc, char *argv[], t_dict *dict);
 int			command_run_cd(int argc, char *argv[], t_dict *dict);
