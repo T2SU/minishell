@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:19:36 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 22:02:58 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/31 15:34:53 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ int	execution_connect_run(t_connect *con)
 			exit_error();
 		pids[0] = run_pipe(con->first, 0, pipefd);
 		pids[1] = run_pipe(con->second, 1, pipefd);
-		waitpid(pids[0], &status, 0); // 1. 왼쪽이 종료가 되면 (프로세스가)
 		close(pipefd[0]);
 		close(pipefd[1]);
-		waitpid(pids[1], &status, 0); // 2. 오른쪽이 이제 STDIN으로 읽는걸 멈춰야 하잖아요. `read` 같은걸로 대기중인걸.
+		waitpid(pids[0], &status, 0);
+		waitpid(pids[1], &status, 0);
 		return (status);
 	}
 	return (run_logical_connection(con));
