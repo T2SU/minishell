@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 14:54:36 by smun              #+#    #+#             */
-/*   Updated: 2021/08/31 16:04:45 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 15:25:46 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static void	print_word(t_list *lst)
 		printf(" {$%s}", wc->str);
 	else
 		printf(" {%s}", wc->str);
-	if (wc->dquote)
-		printf(" [DQ]");
+	if (wc->quote)
+		printf(" [Q:%c]", wc->quote);
 	printf("\n");
 	lst = lst->next;
 }

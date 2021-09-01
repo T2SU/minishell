@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:51:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/31 16:57:06 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 15:25:24 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ t_bool	flush_chunk(t_word *word, t_strbuf *sb, t_tokenizer *t, t_bool force)
 		exit_error();
 	chunk->str = strbuf_get(sb);
 	chunk->flag = WordFlag_None;
-	chunk->dquote = (t != NULL && t->quote == '\"');
+	chunk->quote = 0;
+	if (t != NULL)
+		chunk->quote = t->quote;
 	ft_lstadd_back(&word->wordlist, lst);
 	return (TRUE);
 }
@@ -51,8 +53,7 @@ static void	parse_variable(t_word *word, t_strbuf *wsb, t_tokenizer *t)
 	else if (chunk->flag == WordFlag_DollarSign)
 		while (*(t->str) && (ft_isalnum(*t->str) || *t->str == '_'))
 			strbuf_append(&strbuf, *(t->str++));
-	if (t->quote == '\"')
-		chunk->dquote = TRUE;
+	chunk->quote = t->quote;
 	chunk->str = strbuf_get(&strbuf);
 	ft_lstadd_back(&word->wordlist, lst);
 }

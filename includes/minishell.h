@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/01 15:06:37 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 15:24:45 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ typedef struct s_wordchunk
 {
 	enum e_wordflag	flag;
 	char			*str;
-	t_bool			dquote;
+	int				quote;
 }	t_wordchunk;
 
 typedef struct s_word

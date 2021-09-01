@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:52:36 by smun              #+#    #+#             */
-/*   Updated: 2021/08/31 17:52:48 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 15:26:11 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_bool	is_wildcard(t_word *word)
 	while (lst != NULL)
 	{
 		chunk = lst->content;
-		if (chunk->dquote)
+		if (chunk->quote == '\'' || chunk->quote == '\"')
 		{
 			ft_lstclear(&strbuf.head, &free);
 			return (FALSE);
