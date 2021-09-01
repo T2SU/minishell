@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 21:32:40 by smun              #+#    #+#             */
-/*   Updated: 2021/08/18 21:33:12 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 13:31:43 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@ void	*safe_malloc(size_t size)
 	void	*ret;
 
 	ret = malloc(size);
+	if (ret == NULL)
+		exit_error();
+	return (ret);
+}
+
+char	*safe_strdup(char *str)
+{
+	char	*ret;
+
+	ret = ft_strdup(str);
 	if (ret == NULL)
 		exit_error();
 	return (ret);

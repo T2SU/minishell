@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/08/31 13:02:13 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 13:59:19 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,7 @@ enum e_redirflag
 t_bool		execution_handle_redirections(t_execution *exec);
 char		*execution_make_heredoc(t_redir *redir);
 void		execution_install_redir(t_execution *exec, t_bool enable);
+t_bool		execution_set_redir(t_execution *exec, int flags, int fd, char *d);
 
 int			execution_start(t_syntax *syntax);
 int			execution_simplecmd_run(t_simplecmd *scmd);
@@ -344,6 +345,8 @@ typedef struct s_context
 void		context_init(char *argv[], char *envp[]);
 t_context	*context_get(void);
 t_bool		context_is_signaled(int status);
+t_bool		context_is_exited(int status);
+t_bool		context_get_exit_status(int status);
 
 t_bool		print_error(const char *app, const char *why, const char *desc);
 void		exit_error(void);
@@ -357,6 +360,7 @@ t_bool		raise_system_arg_error(const char *why, const char *arg);
 char		*word_get(t_word *word, t_bool expand_vars,
 				t_bool disposeword_after);
 
+char		*safe_strdup(char *str);
 void		*safe_malloc(size_t size);
 char		*ft_basename(char *path);
 t_bool		ft_randomstr(char *buffer, size_t len);

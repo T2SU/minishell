@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 01:24:57 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 00:20:14 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 14:01:13 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static t_bool	set_redirection(t_execution *exec, int flags, int fd)
+t_bool	execution_set_redir(t_execution *exec, int flags, int fd, char *d)
 {
 	// 기존 in 파일 디스크립터가 있다면 모두 닫기
 	if ((flags & kFileIn) && exec->in.fd != 0)
@@ -32,11 +32,12 @@ static t_bool	set_redirection(t_execution *exec, int flags, int fd)
 	}
 	// 기존 out 파일 디스크립터가 있다면 모두 닫기
 	if ((flags & kFileOut) && exec->out.fd != 0)
-	{
 		close(exec->out.fd);
-	}
 	if ((flags & kFileIn))
+	{
 		exec->in.fd = fd;
+		exec->heredoc = d;
+	}
 	if ((flags & kFileOut))
 		exec->out.fd = fd;
 	return (fd != 0);
@@ -75,10 +76,12 @@ static t_bool	handle_redirection(t_execution *exec, t_redir *redir)
 	fd = open(filename, redir->flags, 0644);
 	if (fd == -1)
 		ret = raise_system_error(filename);
-	else if (redir->type == kRead || redir->type == kReadHeredoc)
-		ret = set_redirection(exec, kFileIn, fd);
+	else if (redir->type == kRead)
+		ret = execution_set_redir(exec, kFileIn, fd, NULL);
+	else if (redir->type == kReadHeredoc)
+		ret = execution_set_redir(exec, kFileIn, fd, safe_strdup(filename));
 	else if (redir->type == kWrite || redir->type == kAppend)
-		ret = set_redirection(exec, kFileOut, fd);
+		ret = execution_set_redir(exec, kFileOut, fd, NULL);
 	else
 		ret = raise_error(filename, "unknown redirection type");
 	print_redirection(filename, redir);
@@ -98,7 +101,7 @@ t_bool	execution_handle_redirections(t_execution *exec)
 	{
 		if (!handle_redirection(exec, lst->content))
 			// 실패하면 모두 해제 후 FALSE 리턴
-			return (set_redirection(exec, kFileIn | kFileOut, 0));
+			return (execution_set_redir(exec, kFileIn | kFileOut, 0, NULL));
 		lst = lst->next;
 	}
 	return (TRUE);

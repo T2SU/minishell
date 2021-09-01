@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 18:37:20 by smun              #+#    #+#             */
-/*   Updated: 2021/08/29 16:03:11 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 14:13:56 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static t_bool	read_secondary_line(int fd, const char *eof)
 	if (write(fd, line, ft_strlen(line)) < 0)
 		exit_error();
 	free(line);
+	close(fd);
 	return (TRUE);
 }
 
@@ -67,9 +68,10 @@ static t_bool	read_heredoc(int fd, const char *eof)
 	}
 	if (pid < 0)
 		exit_error();
+	status = 0;
 	waitpid(pid, &status, 0);
 	context_get()->heredoc = FALSE;
-	if (status == 0)
+	if (context_is_exited(status) && context_get_exit_status(status) == 0)
 		return (TRUE);
 	return (FALSE);
 }
