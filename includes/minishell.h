@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/01 14:55:53 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 15:06:37 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ typedef struct s_wordchunk
 {
 	enum e_wordflag	flag;
 	char			*str;
+	t_bool			dquote;
 }	t_wordchunk;
 
 typedef struct s_word
@@ -234,7 +235,7 @@ enum e_parsestatus
 
 int			parse(t_syntax **syntax, char *line);
 
-t_bool		flush_wordchunk(t_word *word, t_strbuf *strbuf, t_bool final);
+t_bool		flush_chunk(t_word *word, t_strbuf *strbuf, t_tokenizer *t, t_bool final);
 t_word		*dup_word(t_word *ref);
 t_word		*get_word(t_tokenizer *tokenizer);
 t_list		*tokenize(t_tokenizer *tokenizer);
@@ -360,6 +361,19 @@ t_bool		raise_system_arg_error(const char *why, const char *arg);
 
 char		*word_get(t_word *word, t_bool expand_vars,
 				t_bool disposeword_after);
+t_bool		is_wildcard(t_word *word);
+void		expand_wildcard(t_list **input);
+char		*get_single_filename(void);
+
+char		**convert_to_array(t_list *input);
+
+enum e_order
+{
+	kAscending,
+	kDescending
+};
+
+void		ft_lstsort(t_list *input, enum e_order order);
 
 char		*safe_strdup(char *str);
 void		*safe_malloc(size_t size);

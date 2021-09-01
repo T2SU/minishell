@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:29:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/20 16:38:43 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/31 16:56:45 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_list	*convert_token_to_word(t_list *lst)
 	token = lst->content;
 	token->type = kWord;
 	strbuf_appends(&strbuf, token->chars);
-	flush_wordchunk(&word, &strbuf, TRUE);
+	flush_chunk(&word, &strbuf, NULL, TRUE);
 	token->word = dup_word(&word);
 	return (lst);
 }

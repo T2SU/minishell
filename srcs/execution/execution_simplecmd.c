@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/08/31 13:02:13 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/31 16:51:30 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,36 @@
 #include <stdio.h>
 #include <sys/wait.h>
 
-static void	parse_arguments(int argc, char *argv[], t_simplecmd *scmd)
+static void	add_argument(t_word *word, t_list **lst)
 {
-	t_list	*lst;
-	int		i;
+	t_list	*newlst;
 
-	i = 0;
-	lst = scmd->args;
-	while (i < argc)
+	newlst = ft_lstnew(word_get(word, TRUE, FALSE));
+	if (newlst == NULL || newlst->content == NULL)
+		exit_error();
+	ft_lstadd_back(lst, newlst);
+}
+
+static char	**parse_arguments(t_simplecmd *scmd, int *argc)
+{
+	t_list	*wordlst;
+	t_list	*newlst;
+	char	**ret;
+
+	wordlst = scmd->args;
+	newlst = NULL;
+	while (wordlst != NULL)
 	{
-		argv[i++] = word_get(lst->content, TRUE, FALSE);
-		lst = lst->next;
+		if (is_wildcard(wordlst->content))
+			expand_wildcard(&newlst);
+		else
+			add_argument(wordlst->content, &newlst);
+		wordlst = wordlst->next;
 	}
-	argv[argc] = NULL;
+	ret = convert_to_array(newlst);
+	*argc = ft_lstsize(newlst);
+	ft_lstclear(&newlst, &free);
+	return (ret);
 }
 
 static void	clean_arguments(char *argv[], char *envp[])
@@ -82,12 +99,9 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 	int		status;
 
 	// argv, envp 파싱
-	argc = ft_lstsize(scmd->args);
-	envp = safe_malloc(sizeof(char *) * 1);
-	argv = safe_malloc(sizeof(char *) * (1 + argc));
-	envp[0] = NULL;
 	dict = context_get()->env;
-	parse_arguments(argc, argv, scmd);
+	envp = convert_to_array(dict->head);
+	argv = parse_arguments(scmd, &argc);
 	// 빌트인 or 외부 커맨드
 	if (is_command(argv[0]))
 		status = command_run_builtin(argc, argv, dict); // 실행 후 리턴 코드 얻기

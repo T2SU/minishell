@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/15 16:22:38 by smun              #+#    #+#              #
-#    Updated: 2021/08/29 15:44:23 by smun             ###   ########.fr        #
+#    Updated: 2021/08/31 17:23:59 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,9 @@ INC = -I../includes -I. -I../libft
 LIBSRCS = \
 			../srcs/variable.c \
 			../srcs/safe_memory.c \
+			../srcs/array.c \
+			../srcs/sort.c \
+			../srcs/wildcard.c \
 			$(wildcard ../srcs/command/*.c) \
 			$(wildcard ../srcs/context/*.c) \
 			$(wildcard ../srcs/execution/*.c) \
@@ -25,6 +28,7 @@ LIBSRCS = \
 			$(wildcard ../srcs/shell/*.c) \
 			$(wildcard ../srcs/stack/*.c) \
 			$(wildcard ../srcs/strbuf/*.c) \
+			$(wildcard ../srcs/dictionary/*.c) \
 			$(wildcard ../srcs/syntax/*.c)
 LIBOBJ = $(LIBSRCS:.c=.o)
 

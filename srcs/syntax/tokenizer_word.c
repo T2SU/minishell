@@ -6,25 +6,26 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:51:30 by smun              #+#    #+#             */
-/*   Updated: 2021/08/29 15:23:32 by smun             ###   ########.fr       */
+/*   Updated: 2021/08/31 16:57:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool	flush_wordchunk(t_word *word, t_strbuf *strbuf, t_bool force)
+t_bool	flush_chunk(t_word *word, t_strbuf *sb, t_tokenizer *t, t_bool force)
 {
 	t_wordchunk	*chunk;
 	t_list		*lst;
 
-	if (strbuf_length(strbuf) == 0 && !force)
+	if (strbuf_length(sb) == 0 && !force)
 		return (FALSE);
 	chunk = safe_malloc(sizeof(t_wordchunk));
 	lst = ft_lstnew(chunk);
 	if (lst == NULL)
 		exit_error();
-	chunk->str = strbuf_get(strbuf);
+	chunk->str = strbuf_get(sb);
 	chunk->flag = WordFlag_None;
+	chunk->dquote = (t != NULL && t->quote == '\"');
 	ft_lstadd_back(&word->wordlist, lst);
 	return (TRUE);
 }
@@ -35,7 +36,7 @@ static void	parse_variable(t_word *word, t_strbuf *wsb, t_tokenizer *t)
 	t_wordchunk	*chunk;
 	t_list		*lst;
 
-	flush_wordchunk(word, wsb, FALSE);
+	flush_chunk(word, wsb, t, FALSE);
 	chunk = safe_malloc(sizeof(t_wordchunk));
 	lst = ft_lstnew(chunk);
 	if (lst == NULL)
@@ -50,6 +51,8 @@ static void	parse_variable(t_word *word, t_strbuf *wsb, t_tokenizer *t)
 	else if (chunk->flag == WordFlag_DollarSign)
 		while (*(t->str) && (ft_isalnum(*t->str) || *t->str == '_'))
 			strbuf_append(&strbuf, *(t->str++));
+	if (t->quote == '\"')
+		chunk->dquote = TRUE;
 	chunk->str = strbuf_get(&strbuf);
 	ft_lstadd_back(&word->wordlist, lst);
 }
@@ -77,7 +80,7 @@ t_word	*get_word(t_tokenizer *t)
 		if (ft_strchr("\'\"", *t->str)
 			&& (t->quote == 0 || t->quote == *(t->str)))
 		{
-			flush_wordchunk(&word, &strbuf, t->quote != 0);
+			flush_chunk(&word, &strbuf, t, t->quote != 0);
 			t->quote ^= *(t->str++);
 			continue ;
 		}
@@ -86,6 +89,6 @@ t_word	*get_word(t_tokenizer *t)
 		else if (*t->str != '\0')
 			strbuf_append(&strbuf, *(t->str++));
 	}
-	flush_wordchunk(&word, &strbuf, word.wordlist == NULL);
+	flush_chunk(&word, &strbuf, t, word.wordlist == NULL);
 	return (dup_word(&word));
 }
