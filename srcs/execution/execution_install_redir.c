@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 19:28:54 by smun              #+#    #+#             */
-/*   Updated: 2021/09/01 14:00:56 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 14:52:34 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ void	execution_install_redir(t_execution *exec, t_bool enable)
 	commit_redirection(&exec->in, STDIN_FILENO, enable);
 	commit_redirection(&exec->out, STDOUT_FILENO, enable);
 	if (!enable)
-		execution_set_redir(exec, kFileIn | kFileOut, 0, NULL);
+		execution_set_redir(exec, kFileIn | kFileOut, 0);
 }

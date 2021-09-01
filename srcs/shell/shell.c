@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:20:45 by smun              #+#    #+#             */
-/*   Updated: 2021/08/29 14:40:49 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 14:57:13 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static void	execute(t_syntax *syntax)
 {
 	context_get()->interactive = FALSE; // 시그널때문에...
 	shell_set_termattr(TRUE);
-	context_get()->laststatus = execution_start(syntax); // echo $?
+	if (execution_prepare_heredoc(syntax))
+		context_get()->laststatus = execution_start(syntax); // echo $?
+	else
+		context_get()->laststatus = EXIT_FAILURE;
 	shell_set_termattr(FALSE);
 	context_get()->interactive = TRUE;
 	dispose_syntax(syntax);

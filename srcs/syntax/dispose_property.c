@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 13:46:05 by smun              #+#    #+#             */
-/*   Updated: 2021/08/19 19:00:06 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 14:51:01 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ static void	dispose_redirection(void *ptr)
 		return ;
 	redir = ptr;
 	free(redir->heredoc_eof);
+	if (redir->heredoc_file)
+		unlink(redir->heredoc_file);
+	free(redir->heredoc_file);
 	dispose_word(redir->filename);
 	free(redir);
 }

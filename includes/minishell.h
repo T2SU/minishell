@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/01 13:59:19 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/01 14:55:53 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,10 +184,10 @@ enum e_redirtype
 typedef struct s_redir
 {
 	enum e_redirtype	type;
-	int					fd;
 	int					flags;
 	t_word				*filename;
 	char				*heredoc_eof;
+	char				*heredoc_file;
 }	t_redir;
 
 typedef struct s_simplecmd
@@ -301,8 +301,9 @@ enum e_redirflag
 
 t_bool		execution_handle_redirections(t_execution *exec);
 char		*execution_make_heredoc(t_redir *redir);
+t_bool		execution_prepare_heredoc(t_syntax *syntax);
 void		execution_install_redir(t_execution *exec, t_bool enable);
-t_bool		execution_set_redir(t_execution *exec, int flags, int fd, char *d);
+t_bool		execution_set_redir(t_execution *exec, int flags, int fd);
 
 int			execution_start(t_syntax *syntax);
 int			execution_simplecmd_run(t_simplecmd *scmd);

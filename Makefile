@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
-#    Updated: 2021/09/01 14:18:11 by smun             ###   ########.fr        #
+#    Updated: 2021/09/01 14:53:08 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS = \
 		shell/signal \
 		shell/stat \
 		execution/execution_heredoc \
+		execution/execution_heredoc_prepare \
 		execution/execution_redirection \
 		execution/execution_simplecmd \
 		execution/execution_subshell \
