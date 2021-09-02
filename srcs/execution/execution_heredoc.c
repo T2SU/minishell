@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 18:37:20 by smun              #+#    #+#             */
-/*   Updated: 2021/09/01 14:46:41 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/02 16:58:57 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ static t_bool	read_secondary_line(int fd, const char *eof)
 			break ;
 		strbuf_appends(&strbuf, line);
 		strbuf_append(&strbuf, '\n');
+		free(line);
 	}
+	free(line);
 	line = strbuf_get(&strbuf);
 	// 다 읽은 다음 해당 heredoc 임시파일에 내용 작성하기
 	if (write(fd, line, ft_strlen(line)) < 0)

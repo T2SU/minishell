@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:24:41 by smun              #+#    #+#             */
-/*   Updated: 2021/08/29 15:19:12 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/02 17:01:51 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	concatenate_wordchunks(t_strbuf *strbuf, t_word *word, t_bool expand
 {
 	t_list		*lst;
 	t_wordchunk	*chunk;
+	char		*var;
 
 	lst = word->wordlist;
 	while (lst != NULL)
@@ -63,7 +64,11 @@ static void	concatenate_wordchunks(t_strbuf *strbuf, t_word *word, t_bool expand
 		if (!expand_vars || chunk->flag == WordFlag_None)
 			strbuf_appends(strbuf, chunk->str);
 		else
-			strbuf_appends(strbuf, expand_variable(chunk));
+		{
+			var = expand_variable(chunk);
+			strbuf_appends(strbuf, var);
+			free(var);
+		}
 		lst = lst->next;
 	}
 }
