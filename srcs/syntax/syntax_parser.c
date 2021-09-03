@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:03:18 by smun              #+#    #+#             */
-/*   Updated: 2021/08/31 18:13:36 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/03 18:02:51 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ static t_syntax	*validate(t_stack *st)
 {
 	t_syntax	*syn;
 	t_list		*lst;
+	t_bool		error;
 
-	if (ft_lstsize(st->dat) != 1)
+	error = ft_lstsize(st->dat) != 1;
+	if (!error && st->dat && !syntax_is_command(st->dat->content))
+		error = TRUE;
+	if (error)
 	{
 		if (VERBOSE)
 		{
