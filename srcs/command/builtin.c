@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:49:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/31 13:02:13 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/05 00:33:11 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,25 @@ t_bool	is_command(const char *cmd)
 	if (ft_strchr(cmd, '/'))
 		return (FALSE);
 	return (TRUE);
+}
+
+t_bool	is_builtin(const char *cmd)
+{
+	if (is_same_word(cmd, "echo"))
+		return (TRUE);
+	if (!ft_strncmp(cmd, "cd", 3))
+		return (TRUE);
+	if (is_same_word(cmd, "pwd"))
+		return (TRUE);
+	if (!ft_strncmp(cmd, "export", 7))
+		return (TRUE);
+	if (is_same_word(cmd, "env"))
+		return (TRUE);
+	if (!ft_strncmp(cmd, "unset", 6))
+		return (TRUE);
+	if (!ft_strncmp(cmd, "exit", 5))
+		return (TRUE);
+	return (FALSE);
 }
 
 int	command_run_builtin(int argc, char *argv[], t_dict *dict)

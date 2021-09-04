@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/01 15:24:45 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/05 03:23:58 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,8 @@ enum e_parsestatus
 
 int			parse(t_syntax **syntax, char *line);
 
-t_bool		flush_chunk(t_word *word, t_strbuf *strbuf, t_tokenizer *t, t_bool final);
+t_bool		flush_chunk(t_word *word, t_strbuf *strbuf,
+				t_tokenizer *t, t_bool final);
 t_word		*dup_word(t_word *ref);
 t_word		*get_word(t_tokenizer *tokenizer);
 t_list		*tokenize(t_tokenizer *tokenizer);
@@ -294,6 +295,13 @@ typedef struct s_execution
 	char		*heredoc;
 }	t_execution;
 
+typedef struct s_input
+{
+	int		argc;
+	char	**argv;
+	char	**envp;
+}	t_input;
+
 enum e_redirflag
 {
 	kFileIn = 1 << 0,
@@ -306,6 +314,7 @@ t_bool		execution_prepare_heredoc(t_syntax *syntax);
 void		execution_install_redir(t_execution *exec, t_bool enable);
 t_bool		execution_set_redir(t_execution *exec, int flags, int fd);
 
+void		clean_arguments(char *argv[], char *envp[]);
 int			execution_start(t_syntax *syntax);
 int			execution_simplecmd_run(t_simplecmd *scmd);
 int			execution_connect_run(t_connect *con);
@@ -320,6 +329,9 @@ int			execution_subshell_run(t_subshell *subshell);
 
 // void		command_run(t_command *cmd, int argc, char *argv[]);
 t_bool		is_command(const char *cmd);
+t_bool		is_builtin(const char *cmd);
+char		*is_path_command(const char *cmd, t_dict *dict);
+char		**replace_first(int	argc, char **argv, const char *new_cmd);
 int			command_run_builtin(int argc, char *argv[], t_dict *dict);
 int			command_run_echo(int argc, char *argv[], t_dict *dict);
 int			command_run_cd(int argc, char *argv[], t_dict *dict);

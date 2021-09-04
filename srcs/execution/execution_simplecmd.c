@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_simplecmd.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/08/31 16:51:30 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/05 03:27:05 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,28 @@ static char	**parse_arguments(t_simplecmd *scmd, int *argc)
 	return (ret);
 }
 
-static void	clean_arguments(char *argv[], char *envp[])
+void	clean_arguments(char *argv[], char *envp[])
 {
 	int		i;
 
 	i = 0;
-	while (argv[i])
-		free(argv[i++]);
-	free(argv);
+	if (argv)
+	{
+		while (argv[i])
+			free(argv[i++]);
+		if (argv)
+			free(argv);
+	}
 	i = 0;
-	while (envp[i])
-		free(envp[i++]);
-	free(envp);
+	if (envp)
+	{
+		while (envp[i])
+			free(envp[i++]);
+		free(envp);
+	}
 }
 
-static int command_run_external(char *argv[], char *envp[])
+static int	command_run_external(char *argv[], char *envp[])
 {
 	int		status;
 	pid_t	pid;
@@ -92,22 +99,29 @@ static int command_run_external(char *argv[], char *envp[])
 
 int	execution_simplecmd_run(t_simplecmd *scmd)
 {
-	int		argc;
-	char	**argv;
-	char	**envp;
+	t_input	input;
 	t_dict	*dict;
 	int		status;
+	char	*new_cmd;
+	char	**new_argv;
 
-	// argv, envp 파싱
 	dict = context_get()->env;
-	envp = convert_to_array(dict->head);
-	argv = parse_arguments(scmd, &argc);
+	input.envp = convert_to_array(dict->head);
+	input.argv = parse_arguments(scmd, &input.argc);
 	// 빌트인 or 외부 커맨드
-	if (is_command(argv[0]))
-		status = command_run_builtin(argc, argv, dict); // 실행 후 리턴 코드 얻기
+	new_cmd = is_path_command(input.argv[0], dict);
+	if (!is_command(input.argv[0]))
+		status = command_run_external(input.argv, input.envp);
+	else if (new_cmd)
+	{
+		new_argv = replace_first(input.argc, input.argv, new_cmd);
+		status = command_run_external(new_argv, input.envp);
+		clean_arguments(new_argv, NULL);
+		free(new_cmd);
+	}
 	else
-		status = command_run_external(argv, envp);
+		status = command_run_builtin(input.argc, input.argv, dict); // 실행 후 리턴 코드 얻기
 	// 정리 후 반환코드 리턴
-	clean_arguments(argv, envp);
+	clean_arguments(input.argv, input.envp);
 	return (status);
 }
