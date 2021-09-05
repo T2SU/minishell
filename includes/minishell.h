@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 00:34:47 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 01:29:28 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,6 @@ int			execution_subshell_run(t_subshell *subshell);
 t_bool		is_command(const char *cmd);
 t_bool		is_builtin(const char *cmd);
 char		*is_path_command(const char *cmd, t_dict *dict);
-char		**replace_first(int	argc, char **argv, const char *new_cmd);
 int			command_run_builtin(int argc, char *argv[], t_dict *dict);
 int			command_run_echo(int argc, char *argv[], t_dict *dict);
 int			command_run_cd(int argc, char *argv[], t_dict *dict);

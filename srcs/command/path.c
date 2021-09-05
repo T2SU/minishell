@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:51:17 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/05 20:01:15 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/06 01:29:10 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,21 +79,4 @@ char	*is_path_command(const char *cmd, t_dict *dict)
 		ret = ft_strdup(new_cmd);
 	free_char_arrays(path_arr);
 	return (ret);
-}
-
-char	**replace_first(int	argc, char **argv, const char *new_cmd)
-{
-	char	**new_argv;
-	int		i;
-
-	new_argv = safe_malloc((argc + 1) * sizeof(char *));
-	new_argv[argc] = NULL;
-	new_argv[0] = ft_strdup(new_cmd);
-	i = 1;
-	while (argv[i])
-	{
-		new_argv[i] = ft_strdup(argv[i]);
-		i++;
-	}
-	return (new_argv);
 }
