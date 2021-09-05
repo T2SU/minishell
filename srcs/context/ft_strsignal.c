@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 23:42:07 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 01:04:03 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 01:32:18 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,42 @@
 
 static void	init_signalstr_darwin2(char *messages[])
 {
-	messages[SIGXCPU] = "Cputime limit exceeded";
-	messages[SIGXFSZ] = "Filesize limit exceeded";
-	messages[SIGVTALRM] = "Virtual timer expired";
-	messages[SIGPROF] = "Profiling timer expired";
-	messages[SIGWINCH] = "Window size changes";
-	messages[SIGINFO] = "Information request";
-	messages[SIGUSR1] = "User defined signal 1";
-	messages[SIGUSR2] = "User defined signal 2";
+	messages[24] = "Cputime limit exceeded";
+	messages[25] = "Filesize limit exceeded";
+	messages[26] = "Virtual timer expired";
+	messages[27] = "Profiling timer expired";
+	messages[28] = "Window size changes";
+	messages[29] = "Information request";
+	messages[30] = "User defined signal 1";
+	messages[31] = "User defined signal 2";
 }
 
 static void	init_signalstr_darwin(char *messages[])
 {
 	messages[0] = "Unknown signal";
-	messages[SIGHUP] = "Hangup";
-	messages[SIGINT] = "Interrupt";
-	messages[SIGQUIT] = "Quit";
-	messages[SIGILL] = "Illegal instruction";
-	messages[SIGTRAP] = "Trace/BPT trap";
-	messages[SIGABRT] = "Abort trap";
-	messages[SIGEMT] = "EMT trap";
-	messages[SIGFPE] = "Floating point exception";
-	messages[SIGKILL] = "Killed";
-	messages[SIGBUS] = "Bus error";
-	messages[SIGSEGV] = "Segmentation fault";
-	messages[SIGSYS] = "Bad system call";
-	messages[SIGPIPE] = "Broken pipe";
-	messages[SIGALRM] = "Alarm clock";
-	messages[SIGTERM] = "Terminated";
-	messages[SIGURG] = "Urgent I/O condition";
-	messages[SIGSTOP] = "Suspended (signal)";
-	messages[SIGTSTP] = "Suspended";
-	messages[SIGCONT] = "Continued";
-	messages[SIGCHLD] = "Child exited";
-	messages[SIGTTIN] = "Stopped (tty input)";
-	messages[SIGTTOU] = "Stopped (tty output)";
-	messages[SIGIO] = "I/O possible";
+	messages[1] = "Hangup";
+	messages[2] = "Interrupt";
+	messages[3] = "Quit";
+	messages[4] = "Illegal instruction";
+	messages[5] = "Trace/BPT trap";
+	messages[6] = "Abort trap";
+	messages[7] = "EMT trap";
+	messages[8] = "Floating point exception";
+	messages[9] = "Killed";
+	messages[10] = "Bus error";
+	messages[11] = "Segmentation fault";
+	messages[12] = "Bad system call";
+	messages[13] = "Broken pipe";
+	messages[14] = "Alarm clock";
+	messages[15] = "Terminated";
+	messages[16] = "Urgent I/O condition";
+	messages[17] = "Suspended (signal)";
+	messages[18] = "Suspended";
+	messages[19] = "Continued";
+	messages[20] = "Child exited";
+	messages[21] = "Stopped (tty input)";
+	messages[22] = "Stopped (tty output)";
+	messages[23] = "I/O possible";
 	init_signalstr_darwin2(messages);
 }
 
