@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
-#    Updated: 2021/09/05 17:09:47 by smun             ###   ########.fr        #
+#    Updated: 2021/09/05 17:23:33 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,8 +82,9 @@ LIB = -L$(LIBFT_ROOT) -lft -lreadline -ltermcap
 
 # macOS 에서는, 프로젝트에 동봉된 라이브러리로 컴파일
 ifeq ($(shell uname -s), Darwin)
-	INC += -I./readline/include
-	LIB += -L./readline/lib
+	READLINE_ROOT = $(shell brew --prefix readline)
+	INC += -I$(READLINE_ROOT)/include
+	LIB += -L$(READLINE_ROOT)/lib
 
 #	Apple silicon 칩셋에서는 Rosetta 2로 구동될 수 있게끔 x86_64로 크로스 컴파일
 	ifeq ($(shell uname -m), arm64)
