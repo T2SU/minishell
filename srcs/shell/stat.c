@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/29 13:45:34 by smun              #+#    #+#             */
-/*   Updated: 2021/08/31 11:58:00 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/05 17:16:18 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ t_bool	is_dir(const char *path)
 	if (-1 == stat(path, &s))
 		return (TRUE);
 	if ((s.st_mode & S_IFMT) == S_IFDIR)
-	{
-		errno = EISDIR;
 		return (TRUE);
-	}
 	return (FALSE);
 }
