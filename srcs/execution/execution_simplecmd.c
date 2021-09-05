@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 01:10:55 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 01:20:50 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	free_char_arrays(char *arrays[])
 	}
 }
 
-static int	command_run_external(char *argv[], char *envp[])
+static int	command_run_external(char *path, char *argv[], char *envp[])
 {
 	int		status;
 	pid_t	pid;
@@ -71,14 +71,14 @@ static int	command_run_external(char *argv[], char *envp[])
 	if (pid == 0)
 	{
 		// 파일이 없거나 하면 에러..
-		if (!is_exist(argv[0]))
-			raise_system_error(argv[0]);
+		if (!is_exist(path))
+			raise_system_error(path);
 		// 디렉토리를 열려고 하면 EISDIR 에러를 줘야함.
-		else if (is_dir(argv[0]))
-			raise_error(argv[0], "is a directory");
+		else if (is_dir(path))
+			raise_error(path, "is a directory");
 		// 자식 프로세스
-		else if (execve(argv[0], argv, envp) == -1)
-			raise_system_error(argv[0]);
+		else if (execve(path, argv, envp) == -1)
+			raise_system_error(path);
 		exit(EXIT_FAILURE);
 	}
 	if (pid < 0)
@@ -100,7 +100,6 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 	t_dict	*dict;
 	int		status;
 	char	*new_cmd;
-	char	**new_argv;
 
 	dict = context_get()->env;
 	input.envp = convert_to_array(dict->head);
@@ -108,12 +107,10 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 	// 빌트인 or 외부 커맨드
 	new_cmd = is_path_command(input.argv[0], dict);
 	if (!is_command(input.argv[0]))
-		status = command_run_external(input.argv, input.envp);
+		status = command_run_external(input.argv[0], input.argv, input.envp);
 	else if (new_cmd)
 	{
-		new_argv = replace_first(input.argc, input.argv, new_cmd);
-		status = command_run_external(new_argv, input.envp);
-		free_char_arrays(new_argv);
+		status = command_run_external(new_cmd, input.argv, input.envp);
 		free(new_cmd);
 	}
 	else
