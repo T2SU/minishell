@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/05 16:56:14 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 00:34:47 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <limits.h>
 # include <string.h>
 # include <errno.h>
+# include <sys/signal.h>
 # define TRUE 1
 # define FALSE 0
 # define RED "\033[31m"
@@ -32,6 +33,10 @@
 # ifndef VERBOSE
 #  define VERBOSE 0
 # endif
+# ifndef __APPLE__
+#  define __APPLE__ 0
+# endif
+
 
 typedef int	t_bool;
 
@@ -350,6 +355,7 @@ typedef struct s_context
 {
 	t_dict	*env;
 	char	*app_name;
+	t_bool	childproc;
 	int		error;
 	t_bool	heredoc;
 	t_bool	interactive;
@@ -361,6 +367,7 @@ t_context	*context_get(void);
 t_bool		context_is_signaled(int status);
 t_bool		context_is_exited(int status);
 t_bool		context_get_exit_status(int status);
+int			context_get_signal_num(int status);
 
 t_bool		print_error(const char *app, const char *why, const char *desc);
 void		exit_error(void);
@@ -391,5 +398,6 @@ char		*safe_strdup(char *str);
 void		*safe_malloc(size_t size);
 char		*ft_basename(char *path);
 t_bool		ft_randomstr(char *buffer, size_t len);
+char		*ft_strsignal(int signal);
 
 #endif

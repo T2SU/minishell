@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:19:36 by smun              #+#    #+#             */
-/*   Updated: 2021/08/31 15:34:53 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/05 23:11:19 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static pid_t	run_pipe(t_syntax *run, int order, int fd[])
 	pid = fork();
 	if (pid == 0)
 	{
+		context_get()->childproc = TRUE;
 		connect_pipe(order, fd);
 		status = execution_start(run);
 		close(fd[!order]);

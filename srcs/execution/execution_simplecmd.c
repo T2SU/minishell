@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/09/05 16:56:14 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 01:10:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,12 @@ static int	command_run_external(char *argv[], char *envp[])
 		exit_error();
 	// 부모는 자식프로세스 종료까지 대기 및 반환코드 얻기
 	waitpid(pid, &status, 0);
-	if (context_is_signaled(status)) // 시그널로 종료되면 개행 한번..
-		printf("\n");
+	if (!context_get()->childproc && context_is_signaled(status))
+	{
+		if (context_get_signal_num(status) != SIGINT)
+			ft_putstr_fd(ft_strsignal(context_get_signal_num(status)), 2);
+		printf("\n"); // 시그널로 종료되면 개행 한번..
+	}
 	return (status);
 }
 

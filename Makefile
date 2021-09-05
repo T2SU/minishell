@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
-#    Updated: 2021/09/05 17:47:41 by smun             ###   ########.fr        #
+#    Updated: 2021/09/06 00:33:24 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,10 +28,12 @@ SRCS = \
 		wildcard \
 		sort \
 		context/context \
+		context/context_wait \
 		context/context_error \
 		context/context_error2 \
 		context/ft_basename \
 		context/ft_random \
+		context/ft_strsignal \
 		shell/shell \
 		shell/signal \
 		shell/stat \
