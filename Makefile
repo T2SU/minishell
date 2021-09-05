@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
-#    Updated: 2021/09/05 17:23:33 by smun             ###   ########.fr        #
+#    Updated: 2021/09/05 17:47:41 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,7 @@ LIBFT_ROOT = $(ROOT_PATH)/libft
 INC = -I$(ROOT_PATH)/includes -I$(LIBFT_ROOT)
 LIB = -L$(LIBFT_ROOT) -lft -lreadline -ltermcap
 
-# macOS 에서는, 프로젝트에 동봉된 라이브러리로 컴파일
+# macOS 에서는 brew로 설치된 readline 경로를 찾아와서 라이브러리를 로드하도록 변경.
 ifeq ($(shell uname -s), Darwin)
 	READLINE_ROOT = $(shell brew --prefix readline)
 	INC += -I$(READLINE_ROOT)/include
