@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:51:17 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/05 17:10:14 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/05 20:01:15 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char	*is_path_command(const char *cmd, t_dict *dict)
 	char	*path;
 	char	**path_arr;
 	char	*new_cmd;
+	char	*ret;
 
 	if (!is_command(cmd) || is_builtin(cmd))
 		return (NULL);
@@ -72,9 +73,12 @@ char	*is_path_command(const char *cmd, t_dict *dict)
 	if (!path)
 		return (NULL);
 	path_arr = ft_split(path, ':');
-	new_cmd = ft_strdup(search_dir(path_arr, cmd));
+	new_cmd = search_dir(path_arr, cmd);
+	ret = NULL;
+	if (new_cmd)
+		ret = ft_strdup(new_cmd);
 	free_char_arrays(path_arr);
-	return (new_cmd);
+	return (ret);
 }
 
 char	**replace_first(int	argc, char **argv, const char *new_cmd)
