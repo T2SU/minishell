@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
-#    Updated: 2021/09/03 17:58:57 by hkim             ###   ########.fr        #
+#    Updated: 2021/09/05 17:09:47 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,6 +89,11 @@ ifeq ($(shell uname -s), Darwin)
 	ifeq ($(shell uname -m), arm64)
 		CFLAGS += -target x86_64-darwin-macho
 	endif
+endif
+
+# Linux 에서, _GNU_SOURCE 매크로 활성화
+ifeq ($(shell uname -s), Linux)
+	CFLAGS += -D_GNU_SOURCE
 endif
 
 NAME = minishell

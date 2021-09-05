@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/05 03:23:58 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/05 16:56:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,7 +314,7 @@ t_bool		execution_prepare_heredoc(t_syntax *syntax);
 void		execution_install_redir(t_execution *exec, t_bool enable);
 t_bool		execution_set_redir(t_execution *exec, int flags, int fd);
 
-void		clean_arguments(char *argv[], char *envp[]);
+void		free_char_arrays(char *argv[]);
 int			execution_start(t_syntax *syntax);
 int			execution_simplecmd_run(t_simplecmd *scmd);
 int			execution_connect_run(t_connect *con);

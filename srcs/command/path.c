@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:51:17 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/05 03:22:26 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/05 17:10:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "dirent.h"
-#define _GNU_SOURCE
+// #define _GNU_SOURCE // Makefile에 정의 시키는 것으로 이동.
 
 static t_bool	find_file(struct dirent *info, const char *cmd, char **path)
 {
@@ -51,11 +51,11 @@ static char	*search_dir(char **path_arr, const char *cmd)
 				break ;
 			if (find_file(dir_info, cmd, &path_arr[i]))
 			{
-				free(dir);
+				closedir(dir);
 				return (path_arr[i]);
 			}
 		}
-		free(dir);
+		closedir(dir);
 	}
 	return (NULL);
 }
@@ -73,7 +73,7 @@ char	*is_path_command(const char *cmd, t_dict *dict)
 		return (NULL);
 	path_arr = ft_split(path, ':');
 	new_cmd = ft_strdup(search_dir(path_arr, cmd));
-	clean_arguments(path_arr, NULL);
+	free_char_arrays(path_arr);
 	return (new_cmd);
 }
 
