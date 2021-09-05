@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 23:42:07 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 01:32:18 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 01:34:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,15 @@ char	*ft_strsignal(int signal)
 	static char	*messages[32];
 	static char	ret[1024];
 	char		*temp;
+	int			strindex;
 
 	if (!messages[0])
 		init_strsignal(messages);
 	ft_bzero(ret, sizeof(ret));
+	strindex = signal;
 	if (signal < 1 || signal >= 32 || messages[signal] == NULL)
-		signal = 0;
-	ft_strlcpy(ret, messages[signal], sizeof(ret));
+		strindex = 0;
+	ft_strlcpy(ret, messages[strindex], sizeof(ret));
 	temp = ft_itoa(signal);
 	if (temp == NULL)
 		exit_error();
