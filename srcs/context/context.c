@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:17:14 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 00:32:59 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 18:38:50 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,20 @@ t_context	*context_get(void)
 	static t_context	ctx;
 
 	return (&ctx);
+}
+
+t_bool	context_has_flag(int flag)
+{
+	return ((context_get()->flag & flag) != 0);
+}
+
+void	context_print_strsignal(int status)
+{
+	const int	sig = context_get_signal_num(status);
+
+	if (!context_is_signaled(status))
+		return ;
+	if (sig != SIGINT)
+		ft_putstr_fd(ft_strsignal(sig), STDERR_FILENO);
+	printf("\n"); // 시그널로 종료되면 개행 한번..
 }

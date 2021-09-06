@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:20:45 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 17:41:40 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 18:13:49 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	retrive_status(int status)
 
 static void	execute(t_syntax *syntax)
 {
-	context_get()->throw = FALSE;
+	context_get()->flag = 0;
 	context_get()->interactive = FALSE; // 시그널때문에...
 	shell_set_termattr(TRUE);
 	if (execution_prepare_heredoc(syntax))

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:26:25 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/05 23:11:52 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 18:28:47 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	is_str_num(char *str)
 int	command_run_exit(int argc, char *argv[], t_dict *dict)
 {
 	(void)dict;
-	if (!context_get()->childproc)
+	if (!context_has_flag(kInChildProc))
 		write(STDERR_FILENO, "exit\n", 5);
 	if (argc == 1)
 		exit(0);

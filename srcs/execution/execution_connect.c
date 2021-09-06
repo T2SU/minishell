@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:19:36 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 17:42:35 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 18:38:56 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static pid_t	run_pipe(t_syntax *run, int order, int fd[])
 	pid = fork();
 	if (pid == 0)
 	{
-		context_get()->childproc = TRUE;
+		context_get()->flag |= kInChildProc;
 		connect_pipe(order, fd);
 		status = execution_start(run);
 		close(fd[!order]);
@@ -62,7 +62,7 @@ static int	run_logical_connection(t_connect *con)
 	if (con->connector == kOr)
 	{
 		status = execution_start(con->first);
-		if (context_get()->throw) // 서브쉘에서 시그널을 받아 throw 된 상태면 바로 return
+		if (context_has_flag(kThrowed)) // 서브쉘에서 시그널을 받아 throw 된 상태면 바로 return
 			return (status);
 		if (!context_is_exited(status) || context_get_exit_status(status) != 0) // first가 실패해야만 second실행
 			status = execution_start(con->second);
@@ -86,6 +86,10 @@ int	execution_connect_run(t_connect *con)
 		close(pipefd[1]);
 		waitpid(pids[0], &status, 0);
 		waitpid(pids[1], &status, 0);
+		if (context_is_exited(status))
+			status = context_get_exit_status(status);
+		if (!context_has_flag(kInChildProc))
+			context_print_strsignal(status);
 		return (status);
 	}
 	return (run_logical_connection(con));

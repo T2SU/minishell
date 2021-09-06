@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 17:36:01 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 18:39:11 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,12 +350,18 @@ t_dict		*sort_dict(t_dict *dict);
 int			find_equal(char *str);
 void		print_export(void *content);
 
+enum e_proc
+{
+	kInChildProc = 1 << 0,
+	kInSubShell = 1 << 1,
+	kThrowed = 1 << 2
+};
+
 typedef struct s_context
 {
 	t_dict	*env;
 	char	*app_name;
-	t_bool	childproc;
-	t_bool	throw;
+	int		flag;
 	int		error;
 	t_bool	heredoc;
 	t_bool	interactive;
@@ -364,6 +370,8 @@ typedef struct s_context
 
 void		context_init(char *argv[], char *envp[]);
 t_context	*context_get(void);
+t_bool		context_has_flag(int flag);
+void		context_print_strsignal(int status);
 t_bool		context_is_signaled(int status);
 t_bool		context_is_exited(int status);
 t_bool		context_get_exit_status(int status);
