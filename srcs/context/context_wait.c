@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:17:14 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 00:34:46 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 17:35:39 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,13 @@ t_bool	context_get_exit_status(int status)
 int	context_get_signal_num(int status)
 {
 	return ((status & 0177));
+}
+
+/*
+** W_EXITCODE(code, sig)
+*/
+
+int	context_exitcode(int code, int sig)
+{
+	return ((code << 8) | sig);
 }

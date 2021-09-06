@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 16:59:12 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 17:36:01 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,6 +368,7 @@ t_bool		context_is_signaled(int status);
 t_bool		context_is_exited(int status);
 t_bool		context_get_exit_status(int status);
 int			context_get_signal_num(int status);
+int			context_exitcode(int code, int sig);
 
 t_bool		print_error(const char *app, const char *why, const char *desc);
 void		exit_error(void);

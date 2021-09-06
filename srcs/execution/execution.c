@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 21:22:53 by smun              #+#    #+#             */
-/*   Updated: 2021/09/01 14:45:29 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 17:37:57 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@ static int	dispatch(t_execution *exec)
 
 	// 리다이렉션 설치
 	execution_install_redir(exec, TRUE);
-	status = EXIT_SUCCESS;
+	status = context_exitcode(EXIT_SUCCESS, 0);
 	if (exec->syntax->type == kSimpleCommand)
 		status = execution_simplecmd_run(exec->syntax->simplecmd);
 	else if (exec->syntax->type == kConnection)
 		status = execution_connect_run(exec->syntax->connect);
 	else if (exec->syntax->type == kSubShell)
 		status = execution_subshell_run(exec->syntax->subshell);
-	if (context_is_exited(status)) // exit 시그널이 있을 경우
-		status = context_get_exit_status(status);
 	// 리다이렉션 원복
 	execution_install_redir(exec, FALSE);
 	return (status);

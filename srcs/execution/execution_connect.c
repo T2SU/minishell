@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:19:36 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 16:59:30 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 17:42:35 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ static int	run_logical_connection(t_connect *con)
 {
 	int	status;
 
-	status = EXIT_FAILURE;
+	status = context_exitcode(EXIT_FAILURE, 0);
 	if (con->connector == kAnd)
 	{
 		status = execution_start(con->first);
-		if (status == EXIT_SUCCESS) // first가 성공해야만 second실행
+		if (context_is_exited(status) && context_get_exit_status(status) == 0) // first가 성공해야만 second실행
 			status = execution_start(con->second);
 	}
 	if (con->connector == kOr)
@@ -64,7 +64,7 @@ static int	run_logical_connection(t_connect *con)
 		status = execution_start(con->first);
 		if (context_get()->throw) // 서브쉘에서 시그널을 받아 throw 된 상태면 바로 return
 			return (status);
-		if (status != EXIT_SUCCESS) // first가 실패해야만 second실행
+		if (!context_is_exited(status) || context_get_exit_status(status) != 0) // first가 실패해야만 second실행
 			status = execution_start(con->second);
 	}
 	return (status);
