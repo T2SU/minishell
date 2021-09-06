@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:49:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/05 00:33:11 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/06 23:10:28 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,22 +85,28 @@ t_bool	is_builtin(const char *cmd)
 
 int	command_run_builtin(int argc, char *argv[], t_dict *dict)
 {
+	int	status;
+
+	status = 0177;
 	if (argc <= 0)
-		return (0177);
+		return (status);
 	if (is_same_word(argv[0], "echo"))
-		return (command_run_echo(argc, argv, dict));
-	if (!ft_strncmp(argv[0], "cd", 3))
-		return (command_run_cd(argc, argv, dict));
-	if (is_same_word(argv[0], "pwd"))
-		return (command_run_pwd(argc, argv, dict));
-	if (!ft_strncmp(argv[0], "export", 7))
-		return (command_run_export(argc, argv, dict));
-	if (is_same_word(argv[0], "env"))
-		return (command_run_env(argc, argv, dict));
-	if (!ft_strncmp(argv[0], "unset", 6))
-		return (command_run_unset(argc, argv, dict));
-	if (!ft_strncmp(argv[0], "exit", 5))
-		return (command_run_exit(argc, argv, dict));
-	raise_error(argv[0], "command not found");
-	return (0177);
+		status = command_run_echo(argc, argv, dict);
+	else if (!ft_strncmp(argv[0], "cd", 3))
+		status = command_run_cd(argc, argv, dict);
+	else if (is_same_word(argv[0], "pwd"))
+		status = command_run_pwd(argc, argv, dict);
+	else if (!ft_strncmp(argv[0], "export", 7))
+		status = command_run_export(argc, argv, dict);
+	else if (is_same_word(argv[0], "env"))
+		status = command_run_env(argc, argv, dict);
+	else if (!ft_strncmp(argv[0], "unset", 6))
+		status = command_run_unset(argc, argv, dict);
+	else if (!ft_strncmp(argv[0], "exit", 5))
+		status = command_run_exit(argc, argv, dict);
+	else
+		raise_error(argv[0], "command not found");
+	if (status != 0177)
+		status = context_exitcode(status, 0);
+	return (status);
 }
