@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:20:45 by smun              #+#    #+#             */
-/*   Updated: 2021/09/05 17:27:23 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 17:19:57 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 static void	execute(t_syntax *syntax)
 {
+	context_get()->throw = FALSE;
 	context_get()->interactive = FALSE; // 시그널때문에...
 	shell_set_termattr(TRUE);
 	if (execution_prepare_heredoc(syntax))

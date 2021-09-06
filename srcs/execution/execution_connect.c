@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:19:36 by smun              #+#    #+#             */
-/*   Updated: 2021/09/05 23:11:19 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 16:59:30 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	run_logical_connection(t_connect *con)
 	if (con->connector == kOr)
 	{
 		status = execution_start(con->first);
-		if (context_is_signaled(status)) // 시그널로 종료면 그냥 리턴.
+		if (context_get()->throw) // 서브쉘에서 시그널을 받아 throw 된 상태면 바로 return
 			return (status);
 		if (status != EXIT_SUCCESS) // first가 실패해야만 second실행
 			status = execution_start(con->second);
