@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:20:45 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 18:13:49 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/06 23:16:41 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ void	shell_main(void)
 			add_history(line);
 		free(line);
 		if (status == kFailed)
+		{
+			context_get()->laststatus = context_exitcode(EXIT_FAILURE, SIGINT);
 			print_error(NULL, NULL, "syntax parse error");
+		}
 		if (status == kSuccess)
 			execute(syntax);
 	}
