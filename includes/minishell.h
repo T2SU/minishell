@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 18:39:11 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/07 19:15:50 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,6 +265,7 @@ void		syntax_make_connection(t_stack *st, int type);
 void		syntax_make_subshell(t_stack *st);
 void		syntax_append_argument_to_simplecmd(t_stack *st);
 void		syntax_append_argument_to_connect(t_stack *st);
+void		syntax_separate_bond_connect(t_stack *st);
 
 void		dispose_wordchunk(void *ptr);
 void		dispose_token(void *ptr);
