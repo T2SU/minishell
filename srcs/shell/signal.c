@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:17:51 by smun              #+#    #+#             */
-/*   Updated: 2021/08/26 13:06:41 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/08 00:57:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	shell_sigint_handler(int sig)
 		return ;
 	if (!context_get()->interactive) // 명령을 처리중일땐 부모 프로세스에서 시그널을 받아선 안됨
 		return ;
-	printf("\n");
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

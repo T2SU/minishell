@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 18:37:20 by smun              #+#    #+#             */
-/*   Updated: 2021/09/02 16:58:57 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/08 00:58:34 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	signal_handler(int sig)
 {
 	if (sig != SIGINT)
 		return ;
-	printf("\n");
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	exit(EXIT_FAILURE);
 }
 
