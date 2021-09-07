@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 20:54:12 by smun              #+#    #+#             */
-/*   Updated: 2021/08/20 22:40:06 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/07 20:16:22 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ void	syntax_connect_redirection(t_stack *st, t_syntax *redir)
 
 	command = stack_pop(st);
 	redirs = syntax_strip(redir, kRedir);
-	ft_lstadd_back(&command->redirs, redirs);
+	if (command->type == kConnection)
+		ft_lstadd_back(&command->connect->second->redirs, redirs);
+	else
+		ft_lstadd_back(&command->redirs, redirs);
 	stack_push(st, command);
 }
