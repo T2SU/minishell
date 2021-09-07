@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:20:45 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 23:16:41 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/07 18:21:44 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <termios.h>
 
-static int	retrive_status(int status)
+static int	retrieve_status(int status)
 {
 	if (context_is_exited(status)) // exit 시그널이 있을 경우
 		status = context_get_exit_status(status);
@@ -30,7 +30,7 @@ static void	execute(t_syntax *syntax)
 	context_get()->interactive = FALSE; // 시그널때문에...
 	shell_set_termattr(TRUE);
 	if (execution_prepare_heredoc(syntax))
-		context_get()->laststatus = retrive_status(execution_start(syntax)); // echo $?
+		context_get()->laststatus = retrieve_status(execution_start(syntax)); // echo $?
 	else
 		context_get()->laststatus = EXIT_FAILURE;
 	shell_set_termattr(FALSE);
