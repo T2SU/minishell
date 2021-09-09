@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:20:45 by smun              #+#    #+#             */
-/*   Updated: 2021/09/07 18:21:44 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/09 21:02:39 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <termios.h>
 
-static int	retrieve_status(int status)
+int	retrieve_status(int status)
 {
 	if (context_is_exited(status)) // exit 시그널이 있을 경우
 		status = context_get_exit_status(status);

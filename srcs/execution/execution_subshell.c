@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:50:47 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 18:39:04 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/09 21:32:25 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,19 @@ int	execution_subshell_run(t_subshell *subshell)
 		exit_error();
 	if (pid == 0)
 	{
-		context_get()->flag |= (kInChildProc | kInSubShell);
-		exit(execution_start(subshell->command));
+		context_get()->flag |= kInSubShell;
+		context_set_child();
+		status = execution_start(subshell->command);
+		if (context_is_exited(status))
+			status = context_get_exit_status(status);
+		else
+			status |= 0200;
+		exit(status);
 	}
 	waitpid(pid, &status, 0);
-	if (context_is_exited(status))
-		status = context_get_exit_status(status);
-	if (!context_has_flag(kInChildProc))
-		context_print_strsignal(status);
+	execution_try_print_strsignal(status);
+	status = retrieve_status(status);
+	status &= ~(0200);
+	context_get()->laststatus = status;
 	return (status);
 }

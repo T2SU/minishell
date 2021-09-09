@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/07 19:15:50 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/09 21:31:44 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ size_t		strbuf_length(t_strbuf *strbuf);
 ** ------------------------------------------------
 */
 
+int			retrieve_status(int status);
 void		shell_sigint_handler(int sig);
 void		shell_sigquit_handler(int sig);
 void		shell_main(void);
@@ -326,6 +327,8 @@ int			execution_simplecmd_run(t_simplecmd *scmd);
 int			execution_connect_run(t_connect *con);
 int			execution_subshell_run(t_subshell *subshell);
 
+void		execution_try_print_strsignal(int status);
+
 /*
 ** ------------------------------------------------
 **   Module - Run built-in or external commands.
@@ -372,6 +375,7 @@ typedef struct s_context
 void		context_init(char *argv[], char *envp[]);
 t_context	*context_get(void);
 t_bool		context_has_flag(int flag);
+void		context_set_child(void);
 void		context_print_strsignal(int status);
 t_bool		context_is_signaled(int status);
 t_bool		context_is_exited(int status);

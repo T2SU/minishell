@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:17:14 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 18:38:50 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/09 21:14:43 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ t_context	*context_get(void)
 t_bool	context_has_flag(int flag)
 {
 	return ((context_get()->flag & flag) != 0);
+}
+
+void	context_set_child(void)
+{
+	context_get()->flag |= kInChildProc;
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 void	context_print_strsignal(int status)
