@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/09 21:31:44 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/09 22:03:30 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,8 +327,6 @@ int			execution_simplecmd_run(t_simplecmd *scmd);
 int			execution_connect_run(t_connect *con);
 int			execution_subshell_run(t_subshell *subshell);
 
-void		execution_try_print_strsignal(int status);
-
 /*
 ** ------------------------------------------------
 **   Module - Run built-in or external commands.
@@ -382,6 +380,9 @@ t_bool		context_is_exited(int status);
 t_bool		context_get_exit_status(int status);
 int			context_get_signal_num(int status);
 int			context_exitcode(int code, int sig);
+
+int			context_delisig_execution(t_syntax *syntax);
+int			context_delisig_process(int *pstatus);
 
 t_bool		print_error(const char *app, const char *why, const char *desc);
 void		exit_error(void);

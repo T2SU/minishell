@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
-#    Updated: 2021/09/09 19:41:15 by smun             ###   ########.fr        #
+#    Updated: 2021/09/09 22:04:18 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS = \
 		context/context_wait \
 		context/context_error \
 		context/context_error2 \
+		context/context_delivery_signal \
 		context/ft_basename \
 		context/ft_random \
 		context/ft_strsignal \

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 18:50:47 by smun              #+#    #+#             */
-/*   Updated: 2021/09/09 21:32:25 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/09 22:03:20 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,11 @@ int	execution_subshell_run(t_subshell *subshell)
 	{
 		context_get()->flag |= kInSubShell;
 		context_set_child();
-		status = execution_start(subshell->command);
-		if (context_is_exited(status))
-			status = context_get_exit_status(status);
-		else
-			status |= 0200;
+		status = context_delisig_execution(subshell->command);
 		exit(status);
 	}
 	waitpid(pid, &status, 0);
-	execution_try_print_strsignal(status);
-	status = retrieve_status(status);
-	status &= ~(0200);
+	context_delisig_process(&status);
 	context_get()->laststatus = status;
 	return (status);
 }
