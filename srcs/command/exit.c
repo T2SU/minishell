@@ -6,22 +6,28 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:26:25 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/10 19:44:36 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/11 00:09:22 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_str_num(char *str)
+static int	is_str_num(const char *str)
 {
 	int	i;
+	int	len;
 	int	res;
 
 	i = 0;
+	len = ft_strlen(str);
 	res = 1;
-	if (str[0] == '-' || str[0] == '+')
+	while ((ft_strchr(" \t\r\n", str[len])))
+		len--;
+	while (ft_strchr(" \t\r\n", str[i]))
 		i++;
-	while (str[i])
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (i < len)
 	{
 		if (!ft_isdigit(str[i]))
 		{
@@ -43,7 +49,7 @@ int	command_run_exit(int argc, char *argv[], t_dict *dict)
 	else if (!is_str_num(argv[1]))
 	{
 		raise_arg_error(argv[0], argv[1], "numeric argument required");
-		exit(2);
+		exit(255);
 	}
 	else if (argc <= 2)
 		exit(ft_atoi(argv[1]));
