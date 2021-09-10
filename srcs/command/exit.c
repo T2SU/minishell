@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:26:25 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/10 18:48:37 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/10 19:31:03 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	command_run_exit(int argc, char *argv[], t_dict *dict)
 	else if (!is_str_num(argv[1]))
 	{
 		raise_arg_error(argv[0], argv[1], "numeric argument required");
-		exit(1);
+		exit(2);
 	}
 	else if (argc <= 2)
 		exit(ft_atoi(argv[1]));
