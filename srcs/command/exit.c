@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:26:25 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/06 18:28:47 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/10 18:48:37 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	is_str_num(char *str)
 
 	i = 0;
 	res = 1;
+	if (str[0] == '-')
+		i++;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
