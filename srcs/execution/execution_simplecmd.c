@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 18:06:40 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 18:49:44 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 	new_cmd = is_path_command(input.argv[0], dict);
 	if (!is_command(input.argv[0]) || new_cmd)
 	{
-		dict_put(dict, "_", input.argv[0], 1);
 		input.envp = convert_to_array(dict->head, kEnvironment);
 		cmd = new_cmd;
 		if (!is_command(input.argv[0]))
