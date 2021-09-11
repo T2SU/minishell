@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/09/06 18:39:00 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 17:19:17 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	**parse_arguments(t_simplecmd *scmd, int *argc)
 			add_argument(wordlst->content, &newlst);
 		wordlst = wordlst->next;
 	}
-	ret = convert_to_array(newlst);
+	ret = convert_to_array(newlst, kArgument);
 	*argc = ft_lstsize(newlst);
 	ft_lstclear(&newlst, &free);
 	return (ret);
@@ -100,21 +100,20 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 	char	*new_cmd;
 
 	dict = context_get()->env;
-	input.envp = convert_to_array(dict->head);
 	input.argv = parse_arguments(scmd, &input.argc);
 	// 빌트인 or 외부 커맨드
 	new_cmd = is_path_command(input.argv[0], dict);
-	if (!is_command(input.argv[0]))
-		status = command_run_external(input.argv[0], input.argv, input.envp);
-	else if (new_cmd)
+	if (!is_command(input.argv[0]) || new_cmd)
 	{
-		status = command_run_external(new_cmd, input.argv, input.envp);
-		free(new_cmd);
+		dict_put(dict, "_", input.argv[0], 1);
+		input.envp = convert_to_array(dict->head, kEnvironment);
+		status = command_run_external(input.argv[0], input.argv, input.envp);
+		free_char_arrays(input.envp);
 	}
 	else
 		status = command_run_builtin(input.argc, input.argv, dict); // 실행 후 리턴 코드 얻기
 	// 정리 후 반환코드 리턴
+	free(new_cmd);
 	free_char_arrays(input.argv);
-	free_char_arrays(input.envp);
 	return (status);
 }

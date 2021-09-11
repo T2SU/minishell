@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:42:45 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/29 16:00:37 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 17:06:34 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	print_export(void *content)
 	char	*str;
 
 	tmp = (t_pair *)content;
+	//if (!ft_strncmp(tmp->key, "_", 2))
+	//	return ;
 	printf("declare -x %s", tmp->key);
 	if (tmp->equal)
 	{

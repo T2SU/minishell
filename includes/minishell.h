@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 15:14:36 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 17:14:42 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -400,7 +400,13 @@ t_bool		is_wildcard(t_word *word);
 void		expand_wildcard(t_list **input);
 char		*get_single_filename(void);
 
-char		**convert_to_array(t_list *input);
+enum		e_convert_type
+{
+	kArgument,
+	kEnvironment
+};
+
+char		**convert_to_array(t_list *input, enum e_convert_type type);
 
 enum e_order
 {
