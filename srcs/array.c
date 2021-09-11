@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 16:13:00 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 17:19:00 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 17:21:28 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,15 @@ static char	*get_content(void *content, enum e_convert_type type)
 	{
 		pair = content;
 		temp = ft_strjoin(pair->key, "=");
+		if (temp == NULL)
+			exit_error();
 		ret = ft_strjoin(temp, pair->value);
 		free(temp);
 	}
 	else
 		ret = ft_strdup(content);
+	if (ret == NULL)
+		exit_error();
 	return (ret);
 }
 
