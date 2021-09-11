@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:49:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/06 23:10:28 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 22:24:08 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ static t_bool	is_same_word(const char *str1, const char *str2)
 
 	if (ft_strlen(str1) != ft_strlen(str2))
 		return (FALSE);
-	s1 = malloc(sizeof(char) * ft_strlen(str1));
+	s1 = malloc(sizeof(char) * (ft_strlen(str1) + 1));
 	if (!s1)
 		exit_error();
-	s2 = malloc(sizeof(char) * ft_strlen(str2));
+	s2 = malloc(sizeof(char) * (ft_strlen(str2) + 1));
 	if (!s2)
 		exit_error();
-	ft_strlcpy(s1, str1, ft_strlen(str1));
-	ft_strlcpy(s2, str2, ft_strlen(str2));
+	ft_strlcpy(s1, str1, ft_strlen(str1) + 1);
+	ft_strlcpy(s2, str2, ft_strlen(str2) + 1);
 	ret = lower_and_cmp(s1, s2);
 	return (ret);
 }
@@ -68,7 +68,7 @@ t_bool	is_builtin(const char *cmd)
 {
 	if (is_same_word(cmd, "echo"))
 		return (TRUE);
-	if (!ft_strncmp(cmd, "cd", 3))
+	if (!is_same_word(cmd, "cd"))
 		return (TRUE);
 	if (is_same_word(cmd, "pwd"))
 		return (TRUE);
