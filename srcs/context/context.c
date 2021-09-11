@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   context.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:17:14 by smun              #+#    #+#             */
-/*   Updated: 2021/09/12 02:53:30 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/12 03:28:45 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ void	context_init(char *argv[], char *envp[])
 	getcwd(path, PATH_MAX);
 	dict_put(ctx->env, "PWD", path, 1);
 	dict_del(ctx->env, "OLDPWD");
+	if (dict_get(ctx->env, "PATH") == NULL)
+		dict_put(ctx->env, "PATH",
+			"/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.", 1);
 	ctx->interactive = TRUE;
 }
 

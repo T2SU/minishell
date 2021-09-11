@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/12 02:48:14 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 03:08:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,6 +341,7 @@ t_bool		is_same_word(const char *str1, const char *str2);
 t_bool		is_command(const char *cmd);
 t_bool		is_builtin(const char *cmd);
 char		*is_path_command(const char *cmd, t_dict *dict);
+t_bool		has_path_variable(t_dict *dict);
 int			command_run_builtin(int argc, char *argv[], t_dict *dict);
 int			command_run_echo(int argc, char *argv[], t_dict *dict);
 int			command_run_cd(int argc, char *argv[], t_dict *dict);
