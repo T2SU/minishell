@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 17:14:42 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 18:20:41 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,7 @@ void		syntax_make_redirection(t_stack *st, int type);
 void		syntax_make_redirections(t_stack *st, t_syntax *next);
 void		syntax_make_simplecmd(t_stack *st);
 void		syntax_connect_redirection(t_stack *st, t_syntax *redir);
+void		syntax_connect_redirection_reverse(t_stack *st, t_syntax *command);
 void		syntax_make_connection(t_stack *st, int type);
 void		syntax_make_subshell(t_stack *st);
 void		syntax_append_argument_to_simplecmd(t_stack *st);

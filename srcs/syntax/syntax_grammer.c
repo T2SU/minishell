@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 00:09:04 by smun              #+#    #+#             */
-/*   Updated: 2021/09/07 19:19:22 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 18:20:48 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_bool	syntax_reassemble(t_stack *st)
 		syntax_append_argument_to_connect(st);
 	else if (match(st, kCommand, kRedir, 0))
 		syntax_connect_redirection(st, stack_pop(st));
+	else if (match(st, kRedir, kSimpleCommand, 0))
+		syntax_connect_redirection_reverse(st, stack_pop(st));
 	else if (match(st, kConnection, '|', kCommand))
 		syntax_separate_bond_connect(st);
 	else if (match(st, kCommand, '|', kCommand))
