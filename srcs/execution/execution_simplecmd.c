@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 18:49:44 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 19:49:41 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,19 @@
 
 static void	add_argument(t_word *word, t_list **lst)
 {
+	char	*str;
 	t_list	*newlst;
 
-	newlst = ft_lstnew(word_get(word, TRUE, FALSE));
-	if (newlst == NULL || newlst->content == NULL)
+	str = word_get(word, TRUE, FALSE);
+	if (str == NULL)
+		exit_error();
+	if (ft_strlen(str) == 0 && is_consisted_only_variables(word))
+	{
+		free(str);
+		return ;
+	}
+	newlst = ft_lstnew(str);
+	if (newlst == NULL)
 		exit_error();
 	ft_lstadd_back(lst, newlst);
 }
@@ -107,7 +116,9 @@ int	execution_simplecmd_run(t_simplecmd *scmd)
 	input.argv = parse_arguments(scmd, &input.argc);
 	// 빌트인 or 외부 커맨드
 	new_cmd = is_path_command(input.argv[0], dict);
-	if (!is_command(input.argv[0]) || new_cmd)
+	if (input.argc == 0)
+		status = EXIT_SUCCESS;
+	else if (!is_command(input.argv[0]) || new_cmd)
 	{
 		input.envp = convert_to_array(dict->head, kEnvironment);
 		cmd = new_cmd;

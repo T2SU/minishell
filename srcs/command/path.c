@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:51:17 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/06 01:29:10 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 19:48:10 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*is_path_command(const char *cmd, t_dict *dict)
 	char	*new_cmd;
 	char	*ret;
 
-	if (!is_command(cmd) || is_builtin(cmd))
+	if (cmd == NULL || !is_command(cmd) || is_builtin(cmd))
 		return (NULL);
 	path = dict_get(dict, "PATH");
 	if (!path)
