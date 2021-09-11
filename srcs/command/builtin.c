@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:49:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 02:47:57 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 03:24:38 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ t_bool	is_command(const char *cmd)
 {
 	if (ft_strchr(cmd, '/'))
 		return (FALSE);
+	if (!has_path_variable(context_get()->env))
+		if (!is_builtin(cmd))
+			return (FALSE);
 	return (TRUE);
 }
 
