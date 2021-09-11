@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 18:03:58 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 18:06:40 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ static int	command_run_external(char *path, char *argv[], char *envp[])
 	{
 		// 파일이 없거나 하면 에러..
 		if (!is_exist(path))
+		{
 			raise_system_error(path);
+			exit(127);
+		}
 		// 디렉토리를 열려고 하면 EISDIR 에러를 줘야함.
 		else if (is_dir(path))
 			raise_error(path, "is a directory");
