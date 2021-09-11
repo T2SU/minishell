@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
-#    Updated: 2021/09/09 22:04:18 by smun             ###   ########.fr        #
+#    Updated: 2021/09/11 17:48:08 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,5 +124,8 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: clean all
+
+rmobj:
+	find . -name "*.o" | xargs -I{} rm {}
 
 .PHONY: all clean re fclean
