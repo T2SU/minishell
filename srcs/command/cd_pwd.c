@@ -3,32 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   cd_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:05:48 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/31 12:34:19 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 23:14:50 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	change_pwd(t_dict *dict, char *path)
+{
+	dict_put(dict, "OLDPWD", path, 1);
+	getcwd(path, PATH_MAX);
+	dict_put(dict, "PWD", path, 1);
+	return (EXIT_SUCCESS);
+}
+
 int	command_run_cd(int argc, char *argv[], t_dict *dict)
 {
 	char	*home;
+	char	path[PATH_MAX];
 
+	getcwd(path, PATH_MAX);
 	if (argc > 2)
 		printf("cd: too many arguments\n");
 	else if (argc == 2)
 	{
 		if (chdir(argv[1]) != -1)
-			return (EXIT_SUCCESS);
+			return (change_pwd(dict, path));
 		raise_system_arg_error(argv[0], argv[1]);
 	}
 	else if (argc == 1)
 	{
 		home = dict_get(dict, "HOME");
 		if (chdir(home) != -1)
-			return (EXIT_SUCCESS);
+			return (change_pwd(dict, path));
 		raise_system_error(argv[0]);
 	}
 	return (EXIT_FAILURE);
