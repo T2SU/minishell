@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 14:58:20 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 15:35:28 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 15:57:07 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,26 @@
 
 static t_bool	process_c_option(int argc, char *argv[])
 {
+	char	**splitted;
+	char	*elem;
+	int		i;
+
 	if (argc < 3)
 		return (FALSE);
 	if (ft_strncmp(argv[1], "-c", 3))
 		return (FALSE);
-	shell_process(ft_strdup(argv[2]));
+	splitted = ft_split(argv[2], ';');
+	if (splitted == NULL)
+		exit_error();
+	i = 0;
+	while (TRUE)
+	{
+		elem = splitted[i++];
+		if (elem == NULL)
+			break ;
+		shell_process(ft_strdup(elem));
+	}
+	free_char_arrays(splitted);
 	exit(context_get()->laststatus);
 	return (TRUE);
 }
