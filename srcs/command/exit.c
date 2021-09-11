@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:26:25 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/11 00:09:22 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/11 00:55:05 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ static int	is_str_num(const char *str)
 	int	res;
 
 	i = 0;
-	len = ft_strlen(str);
+	len = ft_strlen(str) - 1;
 	res = 1;
-	while ((ft_strchr(" \t\r\n", str[len])))
+	while (len >= 0 && (ft_strchr(" \t\r\n", str[len])))
 		len--;
-	while (ft_strchr(" \t\r\n", str[i]))
+	while (str[i] && ft_strchr(" \t\r\n", str[i]))
 		i++;
+	if (len < 1)
+		res = 0;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
 	while (i < len)
