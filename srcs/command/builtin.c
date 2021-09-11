@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:49:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/11 22:24:08 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/11 23:34:57 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_bool	is_builtin(const char *cmd)
 {
 	if (is_same_word(cmd, "echo"))
 		return (TRUE);
-	if (!is_same_word(cmd, "cd"))
+	if (is_same_word(cmd, "cd"))
 		return (TRUE);
 	if (is_same_word(cmd, "pwd"))
 		return (TRUE);
@@ -92,7 +92,7 @@ int	command_run_builtin(int argc, char *argv[], t_dict *dict)
 		return (status);
 	if (is_same_word(argv[0], "echo"))
 		status = command_run_echo(argc, argv, dict);
-	else if (!ft_strncmp(argv[0], "cd", 3))
+	else if (is_same_word(argv[0], "cd"))
 		status = command_run_cd(argc, argv, dict);
 	else if (is_same_word(argv[0], "pwd"))
 		status = command_run_pwd(argc, argv, dict);
