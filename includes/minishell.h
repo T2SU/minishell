@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 18:20:41 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 19:33:06 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,11 +395,13 @@ t_bool		print_arg_error(const char *app, const char *why, const char *arg,
 				const char *desc);
 t_bool		raise_system_arg_error(const char *why, const char *arg);
 
+char		*expand_variable(t_wordchunk *chunk);
 char		*word_get(t_word *word, t_bool expand_vars,
 				t_bool disposeword_after);
 t_bool		is_wildcard(t_word *word);
 void		expand_wildcard(t_list **input);
-char		*get_single_filename(void);
+char		*get_single_filename(t_word *word);
+t_bool		is_consisted_only_variables(t_word *word);
 
 enum		e_convert_type
 {

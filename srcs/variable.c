@@ -6,14 +6,14 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:24:41 by smun              #+#    #+#             */
-/*   Updated: 2021/09/02 17:01:51 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 19:12:58 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-static char	*expand_variable(t_wordchunk *chunk)
+char	*expand_variable(t_wordchunk *chunk)
 {
 	char	*ret;
 

@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
-#    Updated: 2021/09/11 17:48:08 by smun             ###   ########.fr        #
+#    Updated: 2021/09/11 19:22:39 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,9 @@ SRCS = \
 		safe_memory \
 		array \
 		wildcard \
+		wildcard2 \
 		sort \
+		word \
 		context/context \
 		context/context_wait \
 		context/context_error \

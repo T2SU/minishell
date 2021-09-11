@@ -6,41 +6,12 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:52:36 by smun              #+#    #+#             */
-/*   Updated: 2021/09/01 15:26:11 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 19:35:02 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <dirent.h>
-
-t_bool	is_wildcard(t_word *word)
-{
-	t_strbuf	strbuf;
-	t_list		*lst;
-	t_wordchunk	*chunk;
-	char		*ch;
-	t_bool		ret;
-
-	if (word == NULL)
-		return (FALSE);
-	ft_bzero(&strbuf, sizeof(t_strbuf));
-	lst = word->wordlist;
-	while (lst != NULL)
-	{
-		chunk = lst->content;
-		if (chunk->quote == '\'' || chunk->quote == '\"')
-		{
-			ft_lstclear(&strbuf.head, &free);
-			return (FALSE);
-		}
-		strbuf_appends(&strbuf, chunk->str);
-		lst = lst->next;
-	}
-	ch = strbuf_get(&strbuf);
-	ret = ft_strncmp(ch, "*", 2) == 0;
-	free(ch);
-	return (ret);
-}
 
 static void	new_argument_entry(t_list **input, char *name)
 {
@@ -92,9 +63,10 @@ void	expand_wildcard(t_list **input)
 	closedir(dir);
 }
 
-char	*get_single_filename(void)
+char	*get_single_filename(t_word *word)
 {
 	t_list	*lst;
+	char	*arg;
 	char	*ret;
 
 	lst = NULL;
@@ -107,8 +79,10 @@ char	*get_single_filename(void)
 	}
 	else
 	{
-		raise_error("*", "ambiguous redirect");
+		arg = word_get(word, FALSE, FALSE);
+		raise_error(arg, "ambiguous redirect");
 		ret = NULL;
+		free(arg);
 	}
 	ft_lstclear(&lst, &free);
 	return (ret);

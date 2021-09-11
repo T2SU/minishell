@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 01:24:57 by smun              #+#    #+#             */
-/*   Updated: 2021/09/01 15:07:08 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 19:33:00 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,27 @@ static void	print_redirection(const char *filename, t_redir *redir)
 	ft_putstr_fd(RESET"\n", STDERR_FILENO);
 }
 
+static char	*get_file_name(t_word *word)
+{
+	char	*filename;
+
+	if (is_wildcard(word))
+		filename = get_single_filename(word);
+	else
+		filename = word_get(word, TRUE, FALSE);
+	if (filename == NULL)
+		return (NULL);
+	if (ft_strlen(filename) == 0 && is_consisted_only_variables(word))
+	{
+		free(filename);
+		filename = word_get(word, FALSE, FALSE);
+		raise_error(filename, "ambiguous redirect");
+		free(filename);
+		return (NULL);
+	}
+	return (filename);
+}
+
 static t_bool	handle_redirection(t_execution *exec, t_redir *redir)
 {
 	int		fd;
@@ -58,10 +79,8 @@ static t_bool	handle_redirection(t_execution *exec, t_redir *redir)
 
 	if (redir->type == kReadHeredoc)
 		filename = safe_strdup(redir->heredoc_file);
-	else if (is_wildcard(redir->filename))
-		filename = get_single_filename();
 	else
-		filename = word_get(redir->filename, TRUE, FALSE);
+		filename = get_file_name(redir->filename);
 	if (filename == NULL)
 		return (FALSE);
 	fd = open(filename, redir->flags, 0644);
