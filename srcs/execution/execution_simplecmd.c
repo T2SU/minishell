@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 16:21:06 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 19:49:41 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 22:27:52 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,6 @@
 #include <errno.h>
 #include <stdio.h>
 #include <sys/wait.h>
-
-static void	add_argument(t_word *word, t_list **lst)
-{
-	char	*str;
-	t_list	*newlst;
-
-	str = word_get(word, TRUE, FALSE);
-	if (str == NULL)
-		exit_error();
-	if (ft_strlen(str) == 0 && is_consisted_only_variables(word))
-	{
-		free(str);
-		return ;
-	}
-	newlst = ft_lstnew(str);
-	if (newlst == NULL)
-		exit_error();
-	ft_lstadd_back(lst, newlst);
-}
-
-static char	**parse_arguments(t_simplecmd *scmd, int *argc)
-{
-	t_list	*wordlst;
-	t_list	*newlst;
-	char	**ret;
-
-	wordlst = scmd->args;
-	newlst = NULL;
-	while (wordlst != NULL)
-	{
-		if (is_wildcard(wordlst->content))
-			expand_wildcard(&newlst);
-		else
-			add_argument(wordlst->content, &newlst);
-		wordlst = wordlst->next;
-	}
-	ret = convert_to_array(newlst, kArgument);
-	*argc = ft_lstsize(newlst);
-	ft_lstclear(&newlst, &free);
-	return (ret);
-}
 
 void	free_char_arrays(char *arrays[])
 {

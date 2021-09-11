@@ -6,7 +6,7 @@
 #    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
-#    Updated: 2021/09/11 19:22:39 by smun             ###   ########.fr        #
+#    Updated: 2021/09/11 22:28:10 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS = \
 		wildcard2 \
 		sort \
 		word \
+		argument \
 		context/context \
 		context/context_wait \
 		context/context_error \

@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 19:33:06 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 22:27:59 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -402,6 +402,7 @@ t_bool		is_wildcard(t_word *word);
 void		expand_wildcard(t_list **input);
 char		*get_single_filename(t_word *word);
 t_bool		is_consisted_only_variables(t_word *word);
+char		**parse_arguments(t_simplecmd *scmd, int *argc);
 
 enum		e_convert_type
 {
