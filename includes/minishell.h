@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/09 22:03:30 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 15:14:36 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void		shell_sigint_handler(int sig);
 void		shell_sigquit_handler(int sig);
 void		shell_main(void);
 void		shell_set_termattr(t_bool echoctl);
+void		shell_process(char *line);
 
 t_bool		is_exist(const char *path);
 t_bool		is_dir(const char *path);

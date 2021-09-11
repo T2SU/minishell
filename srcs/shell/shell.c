@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 14:20:45 by smun              #+#    #+#             */
-/*   Updated: 2021/09/09 21:02:39 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 15:14:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,27 @@ static void	execute(t_syntax *syntax)
 
 // minishell, bash, cat, hexdump, ps    ->> 전부다 SIGINT를 받아요..
 
+void	shell_process(char *line)
+{
+	enum e_parsestatus	status;
+	t_syntax			*syntax;
 
+	status = parse(&syntax, line);
+	if (status != kEmptyLine)
+		add_history(line);
+	free(line);
+	if (status == kFailed)
+	{
+		context_get()->laststatus = context_exitcode(EXIT_FAILURE, SIGINT);
+		print_error(NULL, NULL, "syntax parse error");
+	}
+	if (status == kSuccess)
+		execute(syntax);
+}
 
 void	shell_main(void)
 {
-	enum e_parsestatus	status;
-	char				*line;
-	t_syntax			*syntax;
+	char	*line;
 
 	while (TRUE)
 	{
@@ -74,17 +88,7 @@ void	shell_main(void)
 			command_run_exit(1, NULL, NULL);
 			break ;
 		}
-		status = parse(&syntax, line);
-		if (status != kEmptyLine)
-			add_history(line);
-		free(line);
-		if (status == kFailed)
-		{
-			context_get()->laststatus = context_exitcode(EXIT_FAILURE, SIGINT);
-			print_error(NULL, NULL, "syntax parse error");
-		}
-		if (status == kSuccess)
-			execute(syntax);
+		shell_process(line);
 	}
 }
 
