@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 14:58:20 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 15:57:07 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/11 18:33:41 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 #include <stdio.h>
 #include <signal.h>
 #include <stdlib.h>
+
+static t_bool	is_empty_elem(char *str)
+{
+	int	len;
+
+	len = 0;
+	while (*str)
+	{
+		if (!ft_strchr("\r\n\t\v\f ", *str))
+			len++;
+		str++;
+	}
+	return (len == 0);
+}
 
 static t_bool	process_c_option(int argc, char *argv[])
 {
@@ -32,6 +46,8 @@ static t_bool	process_c_option(int argc, char *argv[])
 	while (TRUE)
 	{
 		elem = splitted[i++];
+		if ((elem == NULL && i == 1) || (elem != NULL && is_empty_elem(elem)))
+			exit(2);
 		if (elem == NULL)
 			break ;
 		shell_process(ft_strdup(elem));
