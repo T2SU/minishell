@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:51:17 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/11 19:48:10 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 02:53:42 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ static t_bool	find_file(struct dirent *info, const char *cmd, char **path)
 {
 	char	*tmp;
 
-	if (!ft_strncmp(info->d_name, cmd, ft_strlen(cmd) + 1)
-		&& info->d_type != DT_DIR)
+	if (is_same_word(info->d_name, cmd) && info->d_type != DT_DIR)
 	{
 		tmp = *path;
 		*path = ft_strjoin(*path, "/");

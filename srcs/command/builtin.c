@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:49:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/11 23:34:57 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/12 02:47:57 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_bool	lower_and_cmp(char *s1, char *s2)
 	return (ret);
 }
 
-static t_bool	is_same_word(const char *str1, const char *str2)
+t_bool	is_same_word(const char *str1, const char *str2)
 {
 	t_bool	ret;
 	char	*s1;
