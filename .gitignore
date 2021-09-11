@@ -11,3 +11,4 @@ test.c
 hello*
 *.txt
 *.icloud
+*.log

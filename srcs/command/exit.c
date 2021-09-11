@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:26:25 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/11 00:55:05 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/11 17:30:30 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static int	is_str_num(const char *str)
 	i = 0;
 	len = ft_strlen(str) - 1;
 	res = 1;
-	while (len >= 0 && (ft_strchr(" \t\r\n", str[len])))
+	while (len >= 0 && (ft_strchr(" \t\r\f", str[len])))
 		len--;
-	while (str[i] && ft_strchr(" \t\r\n", str[i]))
+	while (str[i] && ft_strchr(" \t\r\f", str[i]))
 		i++;
-	if (len < 1)
+	if (len < 0)
 		res = 0;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
