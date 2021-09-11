@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:50:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/08/29 16:09:11 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 03:29:32 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,27 @@ static t_bool	is_n_option(char *str)
 		i++;
 	}
 	return (TRUE);
+}
+
+static t_bool	check_option(char **str, int *start)
+{
+	int		i;
+	t_bool	ret;
+
+	i = 1;
+	ret = FALSE;
+	while (str[i])
+	{
+		if (is_n_option(str[i]))
+		{
+			ret = TRUE;
+			*start += 1;
+		}
+		else
+			break ;
+		i++;
+	}
+	return (ret);
 }
 
 static int	print(int i, int start, char *arg)
@@ -52,11 +73,8 @@ int	command_run_echo(int argc, char *argv[], t_dict *dict)
 	n_flag = 0;
 	start = 1;
 	printed_len = 0;
-	if (argc > 1 && is_n_option(argv[1]))
-	{
+	if (argc > 1 && check_option(argv, &start))
 		n_flag = 1;
-		start = 2;
-	}
 	i = start;
 	while (i < argc)
 	{
