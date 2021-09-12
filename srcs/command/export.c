@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:32:31 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 16:57:33 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/12 20:34:32 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	put_key_value(int idx, char **argv, int i, t_dict *dict)
 	{
 		key = ft_substr(argv[i], 0, idx);
 		value = ft_substr(argv[i], idx + 1, ft_strlen(argv[i]) - idx);
-		if (!is_valid_name(key) || !is_valid_name(value))
+		if (!is_valid_name(key))
 			ret = invalid_exit(argv[0], argv[i]);
 	}
 	if (ret == EXIT_SUCCESS)

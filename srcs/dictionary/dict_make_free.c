@@ -37,15 +37,11 @@ t_dict	*make_dict(char **envp)
 	int		i;
 
 	i = -1;
-	dict = malloc(sizeof(t_dict));
-	if (!dict)
-		exit(1); // TODO : print proper error message
+	dict = safe_malloc(sizeof(t_dict));
 	dict->head = NULL;
 	while (envp[++i])
 	{
-		pair = malloc(sizeof(t_pair));
-		if (!pair)
-			exit(1); // TODO : print proper error message
+		pair = safe_malloc(sizeof(t_pair));
 		save_key_value(envp[i], &pair);
 		ft_lstadd_back(&dict->head, ft_lstnew(pair));
 	}
@@ -78,16 +74,12 @@ t_dict	*copy_dict(t_dict *dict)
 	t_pair	*new_pair;
 	t_list	*lst;
 
-	new_dict = malloc(sizeof(t_dict));
-	if (!new_dict)
-		exit(1); // TODO : error;
+	new_dict = safe_malloc(sizeof(t_dict));
 	new_dict->head = NULL;
 	lst = dict->head;
 	while (lst)
 	{
-		new_pair = malloc(sizeof(t_pair));
-		if (!new_pair)
-			exit(1); // TODO : error;
+		new_pair = safe_malloc(sizeof(t_pair));
 		new_pair->key = ft_strdup(((t_pair *)lst->content)->key);
 		new_pair->value = ft_strdup(((t_pair *)lst->content)->value);
 		new_pair->equal = ((t_pair *)lst->content)->equal;

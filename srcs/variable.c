@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:24:41 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 19:12:58 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 18:56:09 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*expand_variable(t_wordchunk *chunk)
 
 	ret = NULL;
 	if (chunk->flag == WordFlag_LastExitCode)
-		return ft_itoa(context_get()->laststatus);
+		return (ft_itoa(context_get()->laststatus));
 	if (chunk->str != NULL && ft_strlen(chunk->str) > 0)
 		ret = dict_get(context_get()->env, chunk->str);
 	if (ret == NULL)
@@ -49,7 +49,8 @@ static t_bool	is_single_dollar_sign(t_word *word)
 	return (TRUE);
 }
 
-static void	concatenate_wordchunks(t_strbuf *strbuf, t_word *word, t_bool expand_vars)
+static void	concatenate_wordchunks(t_strbuf *strbuf, t_word *word,
+									t_bool expand_vars)
 {
 	t_list		*lst;
 	t_wordchunk	*chunk;

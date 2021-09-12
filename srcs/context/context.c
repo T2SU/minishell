@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:17:14 by smun              #+#    #+#             */
-/*   Updated: 2021/09/12 03:34:11 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 17:25:47 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ void	context_print_strsignal(int status)
 		return ;
 	if (sig != SIGINT)
 		ft_putstr_fd(ft_strsignal(sig), STDERR_FILENO);
-	printf("\n"); // 시그널로 종료되면 개행 한번..
+	printf("\n");
 }

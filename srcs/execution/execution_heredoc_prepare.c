@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 14:46:55 by smun              #+#    #+#             */
-/*   Updated: 2021/09/01 14:57:29 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 17:21:02 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ t_bool	execution_prepare_heredoc(t_syntax *syntax)
 	if (syntax->type == kSubShell)
 		return (execution_prepare_heredoc(syntax->subshell->command));
 	if (syntax->type == kConnection)
-		return (execution_prepare_heredoc(syntax->connect->first) &&
-				execution_prepare_heredoc(syntax->connect->second));
+		return (execution_prepare_heredoc(syntax->connect->first)
+			&& execution_prepare_heredoc(syntax->connect->second));
 	lst = syntax->redirs;
 	while (lst != NULL)
 	{

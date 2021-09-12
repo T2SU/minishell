@@ -55,6 +55,7 @@ t_bool	dict_del(t_dict *dict, char *key)
 {
 	t_list	*lst;
 	t_list	*next;
+	t_pair	*pair;
 
 	if (del_first(dict, key))
 		return (TRUE);
@@ -62,13 +63,15 @@ t_bool	dict_del(t_dict *dict, char *key)
 	while (lst)
 	{
 		next = lst->next;
-		if (next != NULL
-			&& !ft_strncmp(((t_pair *)next->content)->key, key, ft_strlen(key) + 1))
+		pair = NULL;
+		if (next != NULL)
+			pair = (t_pair *)next->content;
+		if (pair && !ft_strncmp(pair->key, key, ft_strlen(key) + 1))
 		{
 			lst->next = lst->next->next;
-			free(((t_pair *)next->content)->key);
-			free(((t_pair *)next->content)->value);
-			free(((t_pair *)next->content));
+			free(pair->key);
+			free(pair->value);
+			free(pair);
 			free(next);
 			break ;
 		}

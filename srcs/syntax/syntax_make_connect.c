@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:58:24 by smun              #+#    #+#             */
-/*   Updated: 2021/09/07 19:26:58 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 17:28:24 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	syntax_separate_bond_connect(t_stack *st)
 	t_syntax	*newconsyn;
 
 	cmdsyntax = stack_pop(st);
-	free(stack_pop(st)); // '|'
+	free(stack_pop(st));
 	oldcon = syntax_strip(stack_pop(st), kConnection);
 	secondsyn = bond(oldcon->second, cmdsyntax, kPipe);
 	newconsyn = bond(oldcon->first, secondsyn, oldcon->connector);

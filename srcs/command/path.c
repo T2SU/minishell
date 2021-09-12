@@ -6,13 +6,12 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:51:17 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 03:23:25 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 17:28:24 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "dirent.h"
-// #define _GNU_SOURCE // Makefile에 정의 시키는 것으로 이동.
 
 static t_bool	find_file(struct dirent *info, const char *cmd, char **path)
 {

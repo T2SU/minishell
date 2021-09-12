@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 15:52:36 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 19:35:02 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 17:22:20 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	new_argument_entry(t_list **input, char *name)
 
 static int	add_entries(DIR *dir, t_list **input)
 {
-	struct dirent*	dire;
+	struct dirent	*dire;
 	int				cnt;
 	t_list			*templst;
 

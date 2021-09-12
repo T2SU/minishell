@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 01:24:57 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 19:33:00 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 17:28:24 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@
 
 t_bool	execution_set_redir(t_execution *exec, int flags, int fd)
 {
-	// 기존 in 파일 디스크립터가 있다면 모두 닫기
 	if ((flags & kFileIn) && exec->in.fd != 0)
 		close(exec->in.fd);
-	// 기존 out 파일 디스크립터가 있다면 모두 닫기
 	if ((flags & kFileOut) && exec->out.fd != 0)
 		close(exec->out.fd);
 	if ((flags & kFileIn))
@@ -97,7 +95,6 @@ static t_bool	handle_redirection(t_execution *exec, t_redir *redir)
 	return (ret);
 }
 
-// 문법 내의 모든 리다이렉션을 처리
 t_bool	execution_handle_redirections(t_execution *exec)
 {
 	t_list		*lst;
@@ -108,7 +105,6 @@ t_bool	execution_handle_redirections(t_execution *exec)
 	while (lst != NULL)
 	{
 		if (!handle_redirection(exec, lst->content))
-			// 실패하면 모두 해제 후 FALSE 리턴
 			return (execution_set_redir(exec, kFileIn | kFileOut, 0));
 		lst = lst->next;
 	}

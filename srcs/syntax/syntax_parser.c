@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:03:18 by smun              #+#    #+#             */
-/*   Updated: 2021/09/03 18:02:51 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 17:19:19 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,23 @@ static t_syntax	*validate(t_stack *st)
 	error = ft_lstsize(st->dat) != 1;
 	if (!error && st->dat && !syntax_is_command(st->dat->content))
 		error = TRUE;
-	if (error)
+	if (!error)
+		return (stack_pop(st));
+	if (VERBOSE)
 	{
-		if (VERBOSE)
+		printf(YELLOW"[[Remaining tokens in stack]]\n"RESET);
+		lst = st->dat;
+		while (lst != NULL)
 		{
-			printf(YELLOW"[[Remaining tokens in stack]]\n"RESET);
-			lst = st->dat;
-			while (lst != NULL)
-			{
-				syn = lst->content;
-				printf("Type=[%d]\n", syn->type);
-				syntax_print(syn);
-				printf(RESET"\n------\n");
-				lst = lst->next;
-			}
+			syn = lst->content;
+			printf("Type=[%d]\n", syn->type);
+			syntax_print(syn);
+			printf(RESET"\n------\n");
+			lst = lst->next;
 		}
-		ft_lstclear(&st->dat, &dispose_syntax);
-		return (NULL);
 	}
-	return (stack_pop(st));
+	ft_lstclear(&st->dat, &dispose_syntax);
+	return (NULL);
 }
 
 t_syntax	*syntax_parse(t_list *tokens)

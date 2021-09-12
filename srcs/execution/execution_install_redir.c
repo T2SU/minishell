@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 19:28:54 by smun              #+#    #+#             */
-/*   Updated: 2021/09/01 14:52:34 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 17:28:24 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@ static void	commit_redirection(t_filedes *fd, int fileno, t_bool enable)
 		return ;
 	if (enable)
 	{
-		// fileno fd를 복사해둠
 		fd->stdfd = dup(fileno);
-		// 리다이렉션 fd로 새로이 설정
 		dup2(fd->fd, fileno);
 	}
 	else
 	{
-		// 복사해둔 fd를 다시 fileno로 복원
 		dup2(fd->stdfd, fileno);
 	}
 }
