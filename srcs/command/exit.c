@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:26:25 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 20:40:16 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 21:45:29 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ long long	ft_atol(const char *str)
 		if (*str++ == '-')
 			negative = -1;
 	}
+	while (*str == '0')
+		str++;
 	status = do_convert(str, &res, &negative);
 	if (status != 1)
 		return (status);
@@ -98,6 +100,8 @@ static t_bool	is_long_long(const char *str)
 		if (*str++ == '-')
 			negative = -1;
 	}
+	while (*str == '0')
+		str++;
 	if (ft_strlen(str) >= 20)
 		return (FALSE);
 	if (do_convert(str, &res, &negative) != 1)
