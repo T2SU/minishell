@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:05:48 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/11 23:14:50 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/12 17:28:18 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ int	command_run_cd(int argc, char *argv[], t_dict *dict)
 	char	path[PATH_MAX];
 
 	getcwd(path, PATH_MAX);
-	if (argc > 2)
-		printf("cd: too many arguments\n");
-	else if (argc == 2)
+	if (argc >= 2)
 	{
 		if (chdir(argv[1]) != -1)
 			return (change_pwd(dict, path));
