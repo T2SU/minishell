@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:26:25 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/11 17:30:30 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 19:16:30 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,64 @@ static int	is_str_num(const char *str)
 	return (res);
 }
 
+long long	ft_atol(const char *str)
+{
+	int					negative;
+	long long			res;
+	unsigned long long	tmp;
+
+	res = 0;
+	negative = 1;
+	while (*str == ' ' || *str == '\f' || *str == '\n'
+		|| *str == '\r' || *str == '\t' || *str == '\v')
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str++ == '-')
+			negative = -1;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		tmp = (unsigned long long)res;
+		tmp = tmp * 10 + (*str - '0');
+		if (tmp > 9223372036854775807 && negative == 1)
+			return (-1);
+		else if (tmp > 9223372036854775808ULL && negative == -1)
+			return (0);
+		res = res * 10 + (*str++ - '0');
+	}
+	return (res * negative);
+}
+
+static t_bool	is_long_long(const char *str)
+{
+	int					negative;
+	long long			res;
+	unsigned long long	tmp;
+
+	res = 0;
+	negative = 1;
+	while (*str == ' ' || *str == '\f' || *str == '\n'
+		|| *str == '\r' || *str == '\t' || *str == '\v')
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str++ == '-')
+			negative = -1;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		tmp = (unsigned long long)res;
+		tmp = tmp * 10 + (*str - '0');
+		if (tmp > 9223372036854775807 && negative == 1)
+			return (FALSE);
+		else if (tmp > 9223372036854775808ULL && negative == -1)
+			return (FALSE);
+		res = res * 10 + (*str++ - '0');
+	}
+	return (TRUE);
+}
+
 int	command_run_exit(int argc, char *argv[], t_dict *dict)
 {
 	(void)dict;
@@ -48,13 +106,13 @@ int	command_run_exit(int argc, char *argv[], t_dict *dict)
 		write(STDERR_FILENO, "exit\n", 5);
 	if (argc == 1)
 		exit(0);
-	else if (!is_str_num(argv[1]))
+	else if (!is_str_num(argv[1]) || !is_long_long(argv[1]))
 	{
 		raise_arg_error(argv[0], argv[1], "numeric argument required");
 		exit(255);
 	}
 	else if (argc <= 2)
-		exit(ft_atoi(argv[1]));
+		exit(ft_atol(argv[1]));
 	raise_error(argv[0], "too many arguments");
 	return (EXIT_FAILURE);
 }
