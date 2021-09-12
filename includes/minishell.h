@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/12 02:48:14 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 04:54:11 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,6 +341,8 @@ t_bool		is_same_word(const char *str1, const char *str2);
 t_bool		is_command(const char *cmd);
 t_bool		is_builtin(const char *cmd);
 char		*is_path_command(const char *cmd, t_dict *dict);
+t_bool		has_path_variable(t_dict *dict);
+t_bool		is_valid_name(char *str);
 int			command_run_builtin(int argc, char *argv[], t_dict *dict);
 int			command_run_echo(int argc, char *argv[], t_dict *dict);
 int			command_run_cd(int argc, char *argv[], t_dict *dict);
@@ -392,6 +394,7 @@ void		exit_error(void);
 t_bool		raise_system_error(const char *why);
 t_bool		raise_error(const char *why, const char *desc);
 t_bool		raise_arg_error(const char *why, const char *arg, const char *desc);
+t_bool		raise_arg_err_quote(const char *why, const char *arg, const char *desc);
 t_bool		print_arg_error(const char *app, const char *why, const char *arg,
 				const char *desc);
 t_bool		raise_system_arg_error(const char *why, const char *arg);

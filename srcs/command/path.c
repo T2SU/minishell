@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:51:17 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 02:53:42 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 03:23:25 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*is_path_command(const char *cmd, t_dict *dict)
 	if (cmd == NULL || !is_command(cmd) || is_builtin(cmd))
 		return (NULL);
 	path = dict_get(dict, "PATH");
-	if (!path)
+	if (!has_path_variable(dict))
 		return (NULL);
 	path_arr = ft_split(path, ':');
 	new_cmd = search_dir(path_arr, cmd);
@@ -78,4 +78,16 @@ char	*is_path_command(const char *cmd, t_dict *dict)
 		ret = ft_strdup(new_cmd);
 	free_char_arrays(path_arr);
 	return (ret);
+}
+
+t_bool	has_path_variable(t_dict *dict)
+{
+	char	*path;
+
+	path = dict_get(dict, "PATH");
+	if (path == NULL)
+		return (FALSE);
+	if (ft_strlen(path) == 0)
+		return (FALSE);
+	return (TRUE);
 }
