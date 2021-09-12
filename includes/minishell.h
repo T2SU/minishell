@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/12 04:54:11 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/12 19:47:35 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 # ifndef __APPLE__
 #  define __APPLE__ 0
 # endif
-
 
 typedef int	t_bool;
 
@@ -336,7 +335,6 @@ int			execution_subshell_run(t_subshell *subshell);
 ** ------------------------------------------------
 */
 
-// void		command_run(t_command *cmd, int argc, char *argv[]);
 t_bool		is_same_word(const char *str1, const char *str2);
 t_bool		is_command(const char *cmd);
 t_bool		is_builtin(const char *cmd);
@@ -394,7 +392,8 @@ void		exit_error(void);
 t_bool		raise_system_error(const char *why);
 t_bool		raise_error(const char *why, const char *desc);
 t_bool		raise_arg_error(const char *why, const char *arg, const char *desc);
-t_bool		raise_arg_err_quote(const char *why, const char *arg, const char *desc);
+t_bool		raise_arg_err_quote(const char *why, const char *arg,
+				const char *desc);
 t_bool		print_arg_error(const char *app, const char *why, const char *arg,
 				const char *desc);
 t_bool		raise_system_arg_error(const char *why, const char *arg);
@@ -415,6 +414,7 @@ enum		e_convert_type
 };
 
 char		**convert_to_array(t_list *input, enum e_convert_type type);
+int			get_vector_size(void *vector);
 
 enum e_order
 {

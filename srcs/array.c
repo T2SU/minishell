@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 16:13:00 by smun              #+#    #+#             */
-/*   Updated: 2021/09/11 17:21:28 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 20:10:30 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,16 @@ char	**convert_to_array(t_list *input, enum e_convert_type type)
 		lst = lst->next;
 	}
 	return (array);
+}
+
+int	get_vector_size(void *vector)
+{
+	void	**pvector;
+	int		i;
+
+	pvector = (void **)vector;
+	i = 0;
+	while (pvector[i])
+		i++;
+	return (i);
 }
