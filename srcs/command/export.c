@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:32:31 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 22:01:03 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 22:21:45 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ static int	run_export_with_args(int argc, char *argv[], t_dict *dict)
 	while (++i < argc)
 	{
 		if (!ft_strncmp(argv[i], "=", 2))
+		{
 			ret = invalid_exit(argv[0], argv[i]);
+			continue ;
+		}
 		idx = find_equal(argv[i]);
 		if (put_key_value(idx, argv, i, dict) != EXIT_SUCCESS)
 			ret = EXIT_FAILURE;
