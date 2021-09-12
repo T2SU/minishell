@@ -6,13 +6,13 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 22:27:38 by smun              #+#    #+#             */
-/*   Updated: 2021/09/12 20:11:38 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 22:13:27 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	flush_to_argument(char *splitted[], int max, t_list **lst)
+static void	flush_to_argument(char *arr[], int max, t_list **lst, t_bool final)
 {
 	t_list	*newlst;
 	int		i;
@@ -20,11 +20,11 @@ static void	flush_to_argument(char *splitted[], int max, t_list **lst)
 	i = -1;
 	while (++i < max)
 	{
-		if (splitted[i] == NULL)
+		if (arr[i] == NULL)
 			break ;
-		if (ft_strlen(splitted[i]) == 0)
+		if (!final && ft_strlen(arr[i]) == 0)
 			continue ;
-		newlst = ft_lstnew(safe_strdup(splitted[i]));
+		newlst = ft_lstnew(safe_strdup(arr[i]));
 		if (newlst == NULL)
 			exit_error();
 		ft_lstadd_back(lst, newlst);
@@ -49,7 +49,7 @@ static void	iterate_chunks(t_strbuf *strbuf, t_wordchunk *chunk, t_list **lst)
 	if (splitted == NULL)
 		exit_error();
 	size = get_vector_size(splitted);
-	flush_to_argument(splitted, size - 1, lst);
+	flush_to_argument(splitted, size - 1, lst, FALSE);
 	strbuf_appends(strbuf, splitted[size - 1]);
 	free_char_arrays(splitted);
 }
@@ -68,7 +68,7 @@ static void	process_word(t_word *word, t_list **lst)
 		chunklst = chunklst->next;
 	}
 	laststr = strbuf_get(&strbuf);
-	flush_to_argument((char *[]){laststr, NULL}, 1, lst);
+	flush_to_argument((char *[]){laststr, NULL}, 1, lst, TRUE);
 	free(laststr);
 }
 

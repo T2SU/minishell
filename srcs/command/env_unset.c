@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:33:15 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 21:56:36 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/12 22:07:36 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ t_bool	is_valid_name(char *str)
 {
 	int	i;
 
+	if (ft_strlen(str) == 0)
+		return (FALSE);
 	i = 0;
 	while (str[i])
 	{
