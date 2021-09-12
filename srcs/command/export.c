@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:32:31 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 04:52:54 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/12 16:57:33 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,36 @@ static int	invalid_exit(const char *why, const char *arg)
 	return (EXIT_FAILURE);
 }
 
-static int	run_export_with_args(int argc, char *argv[], t_dict *dict)
+static int	put_key_value(int idx, char **argv, int i, t_dict *dict)
 {
 	char	*key;
 	char	*value;
+	int		ret;
+
+	ret = EXIT_SUCCESS;
+	if (idx == -1)
+	{
+		key = ft_strdup(argv[i]);
+		if (!is_valid_name(key))
+			ret = invalid_exit(argv[0], argv[i]);
+		value = ft_strdup("");
+	}
+	else
+	{
+		key = ft_substr(argv[i], 0, idx);
+		value = ft_substr(argv[i], idx + 1, ft_strlen(argv[i]) - idx);
+		if (!is_valid_name(key) || !is_valid_name(value))
+			ret = invalid_exit(argv[0], argv[i]);
+	}
+	if (ret == EXIT_SUCCESS)
+		dict_put(dict, key, value, idx != -1);
+	free(key);
+	free(value);
+	return (ret);
+}
+
+static int	run_export_with_args(int argc, char *argv[], t_dict *dict)
+{
 	int		idx;
 	int		i;
 	int		ret;
@@ -31,26 +57,13 @@ static int	run_export_with_args(int argc, char *argv[], t_dict *dict)
 	while (++i < argc)
 	{
 		if (!ft_strncmp(argv[i], "=", 2))
+		{
 			ret = invalid_exit(argv[0], argv[i]);
+			continue ;
+		}
 		idx = find_equal(argv[i]);
-		if (idx == -1)
-		{
-			key = ft_strdup(argv[i]);
-			if (!is_valid_name(key))
-				ret = invalid_exit(argv[0], argv[i]);
-			value = ft_strdup("");
-			dict_put(dict, key, value, 0);
-		}
-		else
-		{
-			key = ft_substr(argv[i], 0, idx);
-			value = ft_substr(argv[i], idx + 1, ft_strlen(argv[i]) - idx);
-			if (!is_valid_name(key) || !is_valid_name(value))
-				ret = invalid_exit(argv[0], argv[i]);
-			dict_put(dict, key, value, 1);
-		}
-		free(key);
-		free(value);
+		if (!put_key_value(idx, argv, i, dict))
+			ret = EXIT_FAILURE;
 	}
 	return (ret);
 }

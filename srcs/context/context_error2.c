@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/29 18:13:17 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 04:53:37 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/12 16:13:27 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ t_bool	print_arg_err_quote(const char *app, const char *why, const char *arg,
 	{
 		write(STDERR_FILENO, "`", 1);
 		write(STDERR_FILENO, arg, ft_strlen(arg));
-		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, "'", 1);
+		write(STDERR_FILENO, ": ", 2);
 	}
 	if (desc == NULL)
 		desc = strerror(context_get()->error);
