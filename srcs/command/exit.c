@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:26:25 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 20:25:30 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/12 20:40:16 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,31 @@ static int	is_str_num(const char *str)
 	return (res);
 }
 
+static int	do_convert(const char *str, long long *pres, int *pnegative)
+{
+	unsigned long long	tmp;
+	long long			res;
+
+	res = *pres;
+	while (*str >= '0' && *str <= '9')
+	{
+		tmp = (unsigned long long)res;
+		tmp = tmp * 10 + (*str - '0');
+		if (tmp > 9223372036854775807 && *pnegative == 1)
+			return (-1);
+		else if (tmp > 9223372036854775808ULL && *pnegative == -1)
+			return (0);
+		res = res * 10 + (*str++ - '0');
+	}
+	*pres = res;
+	return (1);
+}
+
 long long	ft_atol(const char *str)
 {
-	int					negative;
-	long long			res;
-	unsigned long long	tmp;
+	int			negative;
+	long long	res;
+	int			status;
 
 	res = 0;
 	negative = 1;
@@ -57,24 +77,16 @@ long long	ft_atol(const char *str)
 		if (*str++ == '-')
 			negative = -1;
 	}
-	while (*str >= '0' && *str <= '9')
-	{
-		tmp = (unsigned long long)res;
-		tmp = tmp * 10 + (*str - '0');
-		if (tmp > 9223372036854775807 && negative == 1)
-			return (-1);
-		else if (tmp > 9223372036854775808ULL && negative == -1)
-			return (0);
-		res = res * 10 + (*str++ - '0');
-	}
+	status = do_convert(str, &res, &negative);
+	if (status != 1)
+		return (status);
 	return (res * negative);
 }
 
 static t_bool	is_long_long(const char *str)
 {
-	int					negative;
-	long long			res;
-	unsigned long long	tmp;
+	int			negative;
+	long long	res;
 
 	res = 0;
 	negative = 1;
@@ -88,16 +100,8 @@ static t_bool	is_long_long(const char *str)
 	}
 	if (ft_strlen(str) >= 20)
 		return (FALSE);
-	while (*str >= '0' && *str <= '9')
-	{
-		tmp = (unsigned long long)res;
-		tmp = tmp * 10 + (*str - '0');
-		if (tmp > 9223372036854775807 && negative == 1)
-			return (FALSE);
-		else if (tmp > 9223372036854775808ULL && negative == -1)
-			return (FALSE);
-		res = res * 10 + (*str++ - '0');
-	}
+	if (do_convert(str, &res, &negative) != 1)
+		return (FALSE);
 	return (TRUE);
 }
 
