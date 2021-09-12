@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:26:25 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 19:16:30 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/12 20:25:30 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ static t_bool	is_long_long(const char *str)
 		if (*str++ == '-')
 			negative = -1;
 	}
+	if (ft_strlen(str) >= 20)
+		return (FALSE);
 	while (*str >= '0' && *str <= '9')
 	{
 		tmp = (unsigned long long)res;
@@ -112,7 +114,7 @@ int	command_run_exit(int argc, char *argv[], t_dict *dict)
 		exit(255);
 	}
 	else if (argc <= 2)
-		exit(ft_atol(argv[1]));
+		exit((int)ft_atol(argv[1]));
 	raise_error(argv[0], "too many arguments");
 	return (EXIT_FAILURE);
 }
