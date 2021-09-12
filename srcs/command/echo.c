@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:50:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 03:29:32 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/12 23:06:05 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static t_bool	is_n_option(char *str)
 	int	i;
 
 	i = 0;
+	if (ft_strlen(str) == 0)
+		return (FALSE);
 	while (str[i])
 	{
 		if ((i == 0 && str[i] != '-') || (i != 0 && str[i] != 'n'))
@@ -81,7 +83,7 @@ int	command_run_echo(int argc, char *argv[], t_dict *dict)
 		printed_len += print(i, start, argv[i]);
 		i++;
 	}
-	if (!n_flag || printed_len == 0)
+	if (!n_flag)
 		write(STDOUT_FILENO, "\n", 1);
 	return (EXIT_SUCCESS);
 }
