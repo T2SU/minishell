@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:33:15 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 04:46:23 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/12 21:56:36 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_bool	is_valid_name(char *str)
 	i = 0;
 	while (str[i])
 	{
+		if (i == 0 && !ft_isalpha(str[i]) && str[i] != '_')
+			return (FALSE);
 		if (!(ft_isalnum(str[i]) || str[i] == '_'))
 			return (FALSE);
 		i++;
