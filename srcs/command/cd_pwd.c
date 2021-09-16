@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:05:48 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 17:56:18 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/16 15:18:00 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 int	change_pwd(t_dict *dict, char *path)
 {
-	dict_put(dict, "OLDPWD", path, 1);
+	char	*pwd;
+
+	pwd = dict_get(dict, "PWD");
+	if (pwd)
+		dict_put(dict, "OLDPWD", pwd, 1);
 	getcwd(path, PATH_MAX);
 	dict_put(dict, "PWD", path, 1);
 	return (EXIT_SUCCESS);
