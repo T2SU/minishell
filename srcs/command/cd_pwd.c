@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:05:48 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/16 15:18:00 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/17 19:30:16 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	change_pwd(t_dict *dict, char *path)
 	pwd = dict_get(dict, "PWD");
 	if (pwd)
 		dict_put(dict, "OLDPWD", pwd, 1);
+	else
+		dict_del(dict, "OLDPWD");
 	getcwd(path, PATH_MAX);
 	dict_put(dict, "PWD", path, 1);
 	return (EXIT_SUCCESS);

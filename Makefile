@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
-#    Updated: 2021/09/11 23:42:01 by hkim             ###   ########.fr        #
+#    Updated: 2021/09/17 19:21:40 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ ROOT_PATH = .
 SRCS = \
 		main \
 		variable \
+		variable_list \
 		safe_memory \
 		array \
 		wildcard \

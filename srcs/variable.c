@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:24:41 by smun              #+#    #+#             */
-/*   Updated: 2021/09/12 18:56:09 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/17 18:44:43 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*expand_variable(t_wordchunk *chunk)
 	return (ret);
 }
 
-static t_bool	is_single_dollar_sign(t_word *word)
+t_bool	is_single_dollar_sign(t_word *word)
 {
 	t_list		*lst;
 	t_wordchunk	*chunk;

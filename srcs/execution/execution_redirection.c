@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 01:24:57 by smun              #+#    #+#             */
-/*   Updated: 2021/09/12 17:28:24 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/17 19:31:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,25 @@ static void	print_redirection(const char *filename, t_redir *redir)
 
 static char	*get_file_name(t_word *word)
 {
-	char	*filename;
+	char	*var;
+	t_list	*lst;
 
+	lst = NULL;
 	if (is_wildcard(word))
-		filename = get_single_filename(word);
+		expand_wildcard(&lst);
 	else
-		filename = word_get(word, TRUE, FALSE);
-	if (filename == NULL)
-		return (NULL);
-	if (ft_strlen(filename) == 0 && is_consisted_only_variables(word))
+		word_get_as_list(word, &lst);
+	if (ft_lstsize(lst) != 1)
 	{
-		free(filename);
-		filename = word_get(word, FALSE, FALSE);
-		raise_error(filename, "ambiguous redirect");
-		free(filename);
+		ft_lstclear(&lst, &free);
+		var = word_get(word, FALSE, FALSE);
+		raise_error(var, "ambiguous redirect");
+		free(var);
 		return (NULL);
 	}
-	return (filename);
+	var = safe_strdup(lst->content);
+	ft_lstclear(&lst, &free);
+	return (var);
 }
 
 static t_bool	handle_redirection(t_execution *exec, t_redir *redir)

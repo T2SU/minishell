@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 16:17:56 by smun              #+#    #+#             */
-/*   Updated: 2021/08/18 17:32:27 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/17 18:31:09 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ char	*strbuf_get(t_strbuf *strbuf)
 		exit_error();
 	copy_chunks_into_buffer(strbuf, buffer);
 	ft_lstclear(&strbuf->head, &free);
+	strbuf->flag = 0;
 	return (buffer);
 }

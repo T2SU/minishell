@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/12 19:47:35 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/17 19:25:55 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,14 @@ int			stack_size(t_stack *stack);
 typedef struct s_strbuf
 {
 	t_list	*head;
+	int		flag;
 }	t_strbuf;
+
+enum e_strbufflag
+{
+	SBFlag_None = 0,
+	SBFlag_ForceFlushing = 1 << 0
+};
 
 typedef struct s_strchunk
 {
@@ -399,12 +406,15 @@ t_bool		print_arg_error(const char *app, const char *why, const char *arg,
 t_bool		raise_system_arg_error(const char *why, const char *arg);
 
 char		*expand_variable(t_wordchunk *chunk);
+t_bool		is_single_dollar_sign(t_word *word);
 char		*word_get(t_word *word, t_bool expand_vars,
 				t_bool disposeword_after);
+void		insert_to_list(char *str, t_list **lst);
+void		word_get_as_list(t_word *word, t_list **lst);
 t_bool		is_wildcard(t_word *word);
 void		expand_wildcard(t_list **input);
 char		*get_single_filename(t_word *word);
-t_bool		is_consisted_only_variables(t_word *word);
+t_bool		is_ambiguous_redirect(t_word *word);
 char		**parse_arguments(t_simplecmd *scmd, int *argc);
 
 enum		e_convert_type
