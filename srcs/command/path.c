@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:51:17 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/12 17:28:24 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/17 19:43:14 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,23 @@ char	*is_path_command(const char *cmd, t_dict *dict)
 t_bool	has_path_variable(t_dict *dict)
 {
 	char	*path;
+	char	**splitted;
+	t_bool	found;
+	int		i;
 
 	path = dict_get(dict, "PATH");
 	if (path == NULL)
 		return (FALSE);
 	if (ft_strlen(path) == 0)
 		return (FALSE);
-	return (TRUE);
+	splitted = ft_split(path, ':');
+	if (splitted == NULL)
+		return (FALSE);
+	i = -1;
+	found = FALSE;
+	while (splitted[++i])
+		if (ft_strlen(splitted[i]) > 0)
+			found = TRUE;
+	free_char_arrays(splitted);
+	return (found);
 }
