@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 00:17:14 by smun              #+#    #+#             */
-/*   Updated: 2021/09/12 17:25:47 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/17 23:32:11 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	context_init(char *argv[], char *envp[])
 	getcwd(path, PATH_MAX);
 	dict_put(ctx->env, "PWD", path, 1);
 	dict_del(ctx->env, "OLDPWD");
-	if (!has_path_variable(ctx->env))
+	if (!dict_get(ctx->env, "PATH"))
 		dict_put(ctx->env, "PATH",
 			"/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.", 1);
 	ctx->interactive = TRUE;
