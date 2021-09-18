@@ -6,7 +6,7 @@
 /*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 19:20:12 by smun              #+#    #+#             */
-/*   Updated: 2021/09/17 19:25:42 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/18 19:20:38 by smun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static void	iterate_chunks(t_strbuf *strbuf, t_wordchunk *chunk, t_list **lst)
 		return ;
 	}
 	iterate_variable_token(strbuf, str, lst);
+	free(str);
 }
 
 void	word_get_as_list(t_word *word, t_list **lst)
