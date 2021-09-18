@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
-#    Updated: 2021/09/17 19:35:40 by smun             ###   ########.fr        #
+#    Updated: 2021/09/19 02:01:07 by hkim             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,9 @@ SRCS = \
 		syntax/syntax
 
 SRCS_FULL = $(addsuffix .c, $(addprefix $(ROOT_PATH)/srcs/, $(SRCS)))
+SRCS_BONUS = $(addsuffix _bonus.c, $(addprefix $(ROOT_PATH)/bonus/, $(SRCS)))
 OBJ = $(SRCS_FULL:.c=.o)
+OBJ_BONUS = $(SRCS_BONUS:.c=.o)
 
 # Libft path
 LIBFT_ROOT = $(ROOT_PATH)/libft
@@ -109,18 +111,24 @@ endif
 
 NAME = minishell
 
+ifdef WITH_BONUS
+	OBJ_FILES = $(OBJ_BONUS)
+else
+	OBJ_FILES = $(OBJ)
+endif
+
 all: $(NAME)
 
 %.o : %.c
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ_FILES)
 	@make -C $(LIBFT_ROOT) bonus
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
 
 clean:
 	@make -C $(LIBFT_ROOT) clean
-	rm -rf $(OBJ)
+	rm -rf $(OBJ) $(OBJ_BONUS)
 
 fclean: clean
 	@make -C $(LIBFT_ROOT) fclean
@@ -128,7 +136,10 @@ fclean: clean
 
 re: clean all
 
+bonus :
+	make WITH_BONUS=1 all
+
 rmobj:
 	find . -name "*.o" | xargs -I{} rm {}
 
-.PHONY: all clean re fclean
+.PHONY: all clean re fclean bonus

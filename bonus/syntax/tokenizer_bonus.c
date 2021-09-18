@@ -1,0 +1,104 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenizer_bonus.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/16 22:29:41 by smun              #+#    #+#             */
+/*   Updated: 2021/09/19 01:51:35 by hkim             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+static int	dispatch_type(t_tokenizer *t, int t1, int t2, char *chars)
+{
+	const char	cur = *(t->str);
+	const char	next = *(t->str + 1);
+
+	if (next == cur)
+	{
+		chars[1] = next;
+		return (t1);
+	}
+	return (t2);
+}
+
+static int	get_token_type(t_tokenizer *t, char *chars)
+{
+	chars[0] = *t->str;
+	if (*t->str == '<')
+		return (dispatch_type(t, kLessLess, '<', chars));
+	if (*t->str == '>')
+		return (dispatch_type(t, kGreaterGreater, '>', chars));
+	if (*t->str == '|')
+		return (dispatch_type(t, kBarBar, '|', chars));
+	if (*t->str == '&')
+		return (dispatch_type(t, kAndAnd, '&', chars));
+	if (*t->str == '(')
+		return ('(');
+	if (*t->str == ')')
+		return (')');
+	return (kWord);
+}
+
+static t_list	*convert_token_to_word(t_list *lst)
+{
+	t_token		*token;
+	t_strbuf	strbuf;
+	t_word		word;
+
+	ft_memset(&strbuf, 0, sizeof(t_strbuf));
+	ft_memset(&word, 0, sizeof(t_word));
+	token = lst->content;
+	token->type = kWord;
+	strbuf_appends(&strbuf, token->chars);
+	flush_chunk(&word, &strbuf, NULL, TRUE);
+	token->word = dup_word(&word);
+	return (lst);
+}
+
+static t_list	*generate_token(t_tokenizer *t, int type, char *chars)
+{
+	t_list	*lst;
+	t_token	*token;
+
+	token = safe_malloc(sizeof(t_token));
+	ft_memset(token, 0, sizeof(t_token));
+	lst = ft_lstnew(token);
+	if (lst == NULL)
+		exit_error();
+	if (type == kWord)
+		token->word = get_word(t);
+	else
+	{
+		ft_memcpy(token->chars, chars, sizeof(token->chars));
+		t->str += ft_strlen(chars);
+		if (type == '&')
+			return (convert_token_to_word(lst));
+	}
+	token->type = type;
+	return (lst);
+}
+
+t_list	*tokenize(t_tokenizer *tokenizer)
+{
+	t_list	*lst;
+	int		type;
+	char	chars[3];
+
+	lst = NULL;
+	while (*tokenizer->str)
+	{
+		if (ft_strchr(" \t\r\n", *tokenizer->str))
+		{
+			tokenizer->str++;
+			continue ;
+		}
+		ft_memset(chars, 0, sizeof(chars));
+		type = get_token_type(tokenizer, chars);
+		ft_lstadd_back(&lst, generate_token(tokenizer, type, chars));
+	}
+	return (lst);
+}
