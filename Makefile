@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/29 17:45:46 by hkim              #+#    #+#              #
-#    Updated: 2021/09/19 02:01:07 by hkim             ###   ########.fr        #
+#    Updated: 2021/09/19 10:39:52 by smun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,12 @@ CFLAGS = -Wall -Wextra -Werror
 
 # Debug Compilation Flags
 # 나중에 제출 등에서는 아래 조건의 코멘트를 해제하여 기본적으로는 디버깅용 CFLAGS가 추가되지 않도록 해야함.
-# ifeq ($(DEBUG),1)
+ifeq ($(DEBUG),1)
 	CFLAGS += -g -fsanitize=address
-# endif
+endif
 ifeq ($(VERBOSE),1)
 	CFLAGS += -DVERBOSE=1
 endif
-
 
 ROOT_PATH = .
 SRCS = \
@@ -111,7 +110,7 @@ endif
 
 NAME = minishell
 
-ifdef WITH_BONUS
+ifeq ($(MAKECMDGOALS), bonus)
 	OBJ_FILES = $(OBJ_BONUS)
 else
 	OBJ_FILES = $(OBJ)
@@ -136,8 +135,7 @@ fclean: clean
 
 re: clean all
 
-bonus :
-	make WITH_BONUS=1 all
+bonus : all
 
 rmobj:
 	find . -name "*.o" | xargs -I{} rm {}
