@@ -6,7 +6,7 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 21:57:13 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 10:29:01 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:50:23 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	try_print_strsignal(int status)
 	}
 	status = retrieve_status(status);
 	if ((status & 0200) != 0)
-		context_print_strsignal(context_get_signal_num(status));
+		context_print_strsignal(status);
 }
 
 int	context_delisig_process(int *pstatus)
