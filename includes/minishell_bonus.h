@@ -6,12 +6,12 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:46:26 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 10:28:08 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 11:03:35 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef MINISHELL_BONUS_H
+# define MINISHELL_BONUS_H
 # include <libft.h>
 # include <stdlib.h>
 # include <stddef.h>
