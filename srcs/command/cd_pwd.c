@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smun <smun@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:05:48 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/17 19:30:16 by smun             ###   ########.fr       */
+/*   Updated: 2021/09/19 11:12:45 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,12 @@ int	command_run_cd(int argc, char *argv[], t_dict *dict)
 	if (argc == 1)
 	{
 		home = dict_get(dict, "HOME");
-		if (chdir(home) != -1)
+		if (!home)
+			raise_error(argv[0], "HOME not set");
+		else if (chdir(home) != -1)
 			return (change_pwd(dict, path));
-		raise_system_error(argv[0]);
+		else
+			raise_system_error(argv[0]);
 	}
 	else
 	{
