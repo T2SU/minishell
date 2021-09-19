@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 16:13:00 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:49:43 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:26:51 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static char	*get_content(void *content, enum e_convert_type type)
 {

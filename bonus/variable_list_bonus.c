@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 19:20:12 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:49:57 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:27:06 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 void	insert_to_list(char *str, t_list **lst)
 {

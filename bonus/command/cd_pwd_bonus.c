@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 23:05:48 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/19 01:50:06 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:28:38 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 int	change_pwd(t_dict *dict, char *path)
 {

@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 20:54:12 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:51:29 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:27:32 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 #include <fcntl.h>
 
 void	set_open_flags(int *flags, int type)

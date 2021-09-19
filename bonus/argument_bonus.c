@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 22:27:38 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:49:37 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:26:41 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 char	**parse_arguments(t_simplecmd *scmd, int *argc)
 {

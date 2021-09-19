@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 t_bool	dict_put(t_dict *dict, char *key, char *value, int equal)
 {

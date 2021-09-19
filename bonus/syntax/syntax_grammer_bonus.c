@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 00:09:04 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:51:27 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:27:26 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static t_bool	peek(t_stack *stack, int index, enum e_token sttype)
 {

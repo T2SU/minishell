@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:28:10 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:51:30 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:27:34 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 void	syntax_make_simplecmd(t_stack *st)
 {

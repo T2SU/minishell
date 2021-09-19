@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 00:17:34 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:51:34 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:27:57 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 #include <stdio.h>
 
 static void	print_word(t_word *word)
