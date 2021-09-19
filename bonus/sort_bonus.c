@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 17:04:03 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:49:54 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:27:00 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static int	ft_strlen_max(char *s1, char *s2)
 {

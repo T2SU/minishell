@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 13:46:05 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:51:25 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:27:20 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 #include <stdlib.h>
 
 static void	dispose_redirection(void *ptr)

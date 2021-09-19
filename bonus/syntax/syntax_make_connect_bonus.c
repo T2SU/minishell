@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:58:24 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:51:28 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:27:29 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static t_syntax	*bond(t_syntax *first, t_syntax *second, int type)
 {

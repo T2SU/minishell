@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 22:29:41 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:51:35 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:27:49 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static int	dispatch_type(t_tokenizer *t, int t1, int t2, char *chars)
 {

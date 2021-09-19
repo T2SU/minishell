@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/01 14:46:55 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:51:06 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:29:37 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static t_bool	prepare(t_redir *redir)
 {

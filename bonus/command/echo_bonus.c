@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 20:50:54 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/19 01:50:07 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:28:42 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static t_bool	is_n_option(char *str)
 {

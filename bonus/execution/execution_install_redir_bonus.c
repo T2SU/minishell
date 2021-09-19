@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 19:28:54 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:51:07 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:29:39 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 #include <stdio.h>
 
 static void	commit_redirection(t_filedes *fd, int fileno, t_bool enable)

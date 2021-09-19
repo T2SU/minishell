@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 20:28:20 by smun              #+#    #+#             */
-/*   Updated: 2021/09/19 01:51:32 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:27:41 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 #include <stdlib.h>
 
 void	syntax_make_wordlist(t_stack *st, t_syntax *syntax)

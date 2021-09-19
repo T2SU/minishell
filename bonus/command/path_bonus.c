@@ -6,11 +6,11 @@
 /*   By: hkim <hkim@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:51:17 by hkim              #+#    #+#             */
-/*   Updated: 2021/09/19 01:50:12 by hkim             ###   ########.fr       */
+/*   Updated: 2021/09/19 10:28:55 by hkim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 #include "dirent.h"
 
 static t_bool	find_file(struct dirent *info, const char *cmd, char **path)
